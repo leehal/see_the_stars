@@ -1,0 +1,68 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+#back aws
+application-aws.properties
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+src/main/stars_front/node_modules
+src/main/stars_front/.pnp
+src/main/stars_front/pnp.js
+src/main/stars_front/.env
+
+# testing
+src/main/stars_front/coverage
+
+# production
+src/main/stars_front/build
+
+# misc
+src/main/stars_front/.DS_Store
+src/main/stars_front/.env.local
+src/main/stars_front/.env.development.local
+src/main/stars_front/.env.test.local
+src/main/stars_front/.env.production.local
+
+src/main/stars_front/npm-debug.log*
+src/main/stars_front/yarn-debug.log*
+src/main/stars_front/yarn-error.log*
+
+# Resources
+src/main/resources/static/static
