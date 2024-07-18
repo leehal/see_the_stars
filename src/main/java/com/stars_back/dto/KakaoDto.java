@@ -11,6 +11,7 @@ import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
+import java.util.Random;
 
 @Builder
 @Data
@@ -38,10 +39,16 @@ public class KakaoDto {
     public KakaoDto() {}
 
     public Member toEntity(PasswordEncoder passwordEncoder) {
+
+        Random random = new Random();
+        int min = 111111;
+        int max = 999999;
+        String certification = String.valueOf(random.nextInt(max - min + 1) + min);
+
         return Member.builder()
                 .pwd(passwordEncoder.encode(id))
                 .mid(kakaoAccount.getEmail())
-                .nick(kakaoAccount.getProfile().getNick())
+                .nick(kakaoAccount.getProfile().getNick()+"#"+certification)
                 .image(kakaoAccount.getProfile().getProfileImageUrl())
                 .social(Social.KAKAO)
                 .authority(Authority.ROLL_USER)

@@ -21,8 +21,9 @@ public class PartyPeople {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pno")
     private Party partyPeoplePno;
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nick")
     private Member partyPeopleNick;
 
 }
+

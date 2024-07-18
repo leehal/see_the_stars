@@ -11,6 +11,8 @@ import { UserContext } from "../../context/UserStore";
 import ModalReviewImg from "./ModalReviewImg";
 import ImageModal from "./ImageModal";
 import { useParams } from "react-router-dom";
+import MyAxiosApi from "../../api/MyAxiosApi";
+import Common from "../../utils/Common";
 
 const Reviews = () => {
   const { tno } = useParams();
@@ -47,12 +49,12 @@ const Reviews = () => {
   };
 
   const openModal = () => setModalOpen(true);
-
   const clodeDeleteModal = () => setDeletemodalOpen(false);
   const openDeleteModal = (e) => {
     setDeletemodalOpen(true);
     setDeleteY(e);
   };
+  useEffect(() => {});
 
   const openUpdateModal = (review) => {
     setReviewUpdate(true);
@@ -69,9 +71,13 @@ const Reviews = () => {
 
   const getReviewList = async () => {
     try {
-      const rsp = await ReviewAxiosApi.reviewList(tno);
-      console.log(rsp.data);
-      setReviewList(rsp.data);
+      if (Common.getRefreshToken()) {
+        const rsp = await ReviewAxiosApi.reviewList(tno);
+        setReviewList(rsp.data);
+      } else {
+        const rsp = await ReviewAxiosApi.reviewList1(tno);
+        setReviewList(rsp.data);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -107,7 +113,20 @@ const Reviews = () => {
         handleUploadComplete2(urls);
         console.log(urls);
       } else {
-        handleUploadComplete(urls);
+        if (!newReview.title) {
+          alert("제목을 입력해주세요");
+          return;
+        }
+        if (!newReview.rcontent) {
+          alert("내용을 입력해주세요");
+          return;
+        }
+        if (!newReview.rate) {
+          alert("별점을 입력해주세요");
+          return;
+        } else {
+          handleUploadComplete(urls);
+        }
       }
       setRunMethod(true);
       console.log("submitReview 실행 : ", urls);
@@ -194,23 +213,21 @@ const Reviews = () => {
     getReviewList();
   }, [refresh]);
 
-  useEffect(() => {
-    console.log(tno);
-  }, []);
-
   return (
     <>
       <ReviewStyle.ReviewContainer>
         <ReviewStyle.ReviewBox>
-          <ReviewStyle.InsertButton onClick={openModal}>
-            리뷰 작성
-          </ReviewStyle.InsertButton>
+          {Common.getRefreshToken() && (
+            <ReviewStyle.InsertButton onClick={openModal}>
+              리뷰 작성
+            </ReviewStyle.InsertButton>
+          )}
           {reviewList?.map((review, index) => (
             <ReviewStyle.ReviewCard key={index}>
               <ReviewStyle.ReviewHeader>
                 <ReviewStyle.ReviewerAndRating>
                   <ReviewStyle.Reviewer>
-                    {review.rnick} 후기
+                    {review.rnick}님의 후기
                   </ReviewStyle.Reviewer>
                   <ReviewStyle.Rating>
                     {"★".repeat(review.rate)}
@@ -220,6 +237,9 @@ const Reviews = () => {
               </ReviewStyle.ReviewHeader>
 
               <ReviewStyle.ReviewBody>
+                <ReviewStyle.ReviewTitleBox>
+                  "{review.title}"
+                </ReviewStyle.ReviewTitleBox>
                 <ReviewStyle.ReviewTextBox>
                   <ReviewStyle.ReviewText>
                     {review.rcontent}

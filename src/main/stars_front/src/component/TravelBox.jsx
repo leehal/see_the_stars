@@ -45,7 +45,7 @@ const Image = styled.div`
 const TravelBox = (travel, dibs, onClickUndibs, onClickDibs, onClickTravel) => {
   return (
     <StyledTravelBox key={travel.tno} onClick={() => onClickTravel(travel.tno)}>
-      {Common.getAccessToken() && (
+      {Common.getRefreshToken() && (
         <Heart
           onClick={() =>
             dibs.some((dib) => dib.tno === travel.tno)

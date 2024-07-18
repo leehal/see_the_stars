@@ -12,5 +12,8 @@ const TravelAxiosApi = {
     };
     return await axios.post(LOGO + `/travellist`, travels);
   },
+  travel: async (tno) => {
+    return await axios.get(LOGO + `/travel?tno=${tno}`);
+  },
 };
 export default TravelAxiosApi;

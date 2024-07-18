@@ -6,7 +6,8 @@ import { PiSquareLogo } from "react-icons/pi";
 import PartyAxiosApi from "../../api/PartyAxiosApi";
 import FriendAxiosApi from "../../api/FriendAxiosApi";
 import Profile from "../../component/Profile";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import Common from "../../utils/Common";
 
 const Container = styled.div`
   position: fixed;
@@ -20,16 +21,32 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 375px) {
+    display: flex;
+  }
 `;
 
 const Content = styled.div`
   position: relative;
   width: 60%;
-  height: 70%;
+  height: auto;
+  aspect-ratio: 10 / 6;
   background-color: #fff;
   overflow-y: auto;
   border: 7px solid #000;
   box-shadow: 5px 5px #000;
+
+  @media screen and (max-width: 1024px) {
+    width: 80%;
+    height: auto;
+    aspect-ratio: 10 / 7;
+  }
+  @media screen and (max-width: 768px) {
+  }
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 const ContentLine = styled.div`
   display: flex;
@@ -58,86 +75,155 @@ const UserBox = styled.div`
   position: relative;
   margin-top: 5px;
   width: 95%;
+  justify-content: space-between;
   display: flex;
   border: 3px solid #000;
   font-size: 30px;
-  height: 10%;
+  height: 100px;
   padding-left: 10px;
-  min-height: 70px;
   background: #ffffff;
   color: #000;
 
   button {
-    position: absolute;
-    right: 5%;
-    width: 15%;
-    height: 60%;
     display: flex;
     border: none;
+    font-size: 30px;
     background: none;
+    @media screen and (max-width: 425px) {
+      font-size: 15px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    height: 60px;
+  }
+  @media screen and (max-width: 425px) {
+    height: 40px;
+    font-size: 13px;
   }
 `;
-const FriendProfile = styled.div`
-  position: absolute;
+const AddBoxUser = styled.div`
+  width: 95%;
   display: flex;
+  justify-content: center;
   align-items: center;
+  @media screen and (max-width: 425px) {
+  }
+`;
+const AgreeBoxUser = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  background: red;
+`;
+const FriendProfile = styled.div`
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 const FriendNick = styled.div`
-  position: absolute;
-  left: 30%;
-  display: flex;
-  align-items: center;
-  padding-top: 5px;
+  padding-top: 10px;
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+    padding: 0;
+  }
+  @media screen and (max-width: 425px) {
+    font-size: 13px;
+    padding: 0;
+  }
 `;
 const AgreeBtn = styled.div`
-  position: absolute;
   display: flex;
-  gap: 10px;
-  height: 50%;
-  right: 3%;
+  gap: 5px;
+  width: 40%;
+  /* background: red; */
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 const OkBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  width: 50%;
+  height: 100%;
+  background: yellow;
+
+  p {
+    padding-top: 10px;
+  }
 `;
 const NoBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  background: red;
+  height: 100%;
   cursor: pointer;
+
+  p {
+    padding-top: 10px;
+  }
 `;
 const UserBoxAll = styled(UserBox)`
   display: ${(props) => (props.show ? "flex" : "none")};
   align-items: center;
   position: relative;
   gap: 20px;
+  aspect-ratio: 10 / 2;
   margin-top: 5px;
+  justify-content: space-between;
   width: 70%;
+  background: red;
   border: 3px solid #000;
   font-size: 30px;
-  height: 10%;
-  padding-left: 10px;
-  min-height: 70px;
+  height: auto;
+  /* padding-left: 10px;
+  min-height: 70px; */
   color: #000;
 
   button {
-    position: absolute;
-    right: 5%;
-    width: 10%;
-    height: 50%;
+    width: 15%;
+    height: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
   }
+
+  @media screen and (max-width: 425px) {
+    font-size: 20px;
+  }
 `;
 const ProfileAll = styled.div`
-  position: absolute;
+  /* position: absolute; */
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
+const AllProfile = styled.div``;
 const AlluserNick = styled.div`
   position: absolute;
   display: flex;
   padding-top: 5px;
   align-items: center;
-  left: 25%;
+  left: 40%;
+`;
+const AddPriofile = styled.div`
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+const AgreePriofile = styled.div`
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const AllUser = styled.div`
@@ -157,9 +243,6 @@ const AllUser = styled.div`
   border: 3px solid #000;
   box-shadow: 2px 2px #000;
 
-  &:hover {
-  }
-
   &::-webkit-scrollbar {
     width: 16px;
   }
@@ -180,6 +263,10 @@ const AllUser = styled.div`
   &::-webkit-scrollbar-corner {
     background: #fff;
   }
+
+  @media screen and (max-width: 425px) {
+    width: 50%;
+  }
 `;
 
 const InputStyled = styled.input`
@@ -188,23 +275,37 @@ const InputStyled = styled.input`
   padding-top: 10px;
   margin: 20px;
   border: 3px solid #000;
-  background-color: #bf00ff;
+  background-color: #ff52ae;
   display: flex;
   font-size: 40px;
   justify-content: center;
   align-items: center;
   text-align: center;
-
+  @media screen and (max-width: 425px) {
+    padding: 0;
+    height: 30px;
+    font-size: 15px;
+  }
   &::placeholder {
     display: flex;
     align-items: center;
     font-size: 30px;
     color: #fff;
+
+    @media screen and (max-width: 425px) {
+      font-size: 18px;
+    }
   }
   &:focus {
     background: #fff;
     border: 1px solid #88adf1;
     outline: none;
+  }
+
+  p {
+    @media screen and (max-width: 425px) {
+      font-size: 10px;
+    }
   }
 `;
 const FriendBox = styled.div`
@@ -222,6 +323,10 @@ const FriendBox = styled.div`
   align-items: center;
   flex-direction: column;
 
+  @media screen and (max-width: 768px) {
+    width: 26%;
+  }
+
   input {
     margin-top: 10px;
     width: 90%;
@@ -234,12 +339,25 @@ const FriendBox = styled.div`
     &::placeholder {
       font-size: 30px;
       color: #000;
+      @media screen and (max-width: 768px) {
+        font-size: 25px;
+      }
+      @media screen and (max-width: 425px) {
+        font-size: 18px;
+      }
     }
 
     &:focus {
       outline: none;
       background: #fff;
       border: 1px solid #88adf1;
+    }
+    @media screen and (max-width: 768px) {
+      font-size: 30px;
+    }
+    @media screen and (max-width: 425px) {
+      font-size: 15px;
+      height: 30px;
     }
   }
 `;
@@ -250,6 +368,7 @@ const FriendAgree = styled.div`
   bottom: 0;
   height: 50%;
   z-index: 2;
+  overflow: hidden;
   background: #ff52ae;
   overflow-y: auto;
   text-align: center;
@@ -261,10 +380,6 @@ const FriendAgree = styled.div`
   border-left: 3px solid #000;
 
   display: ${(props) => (props.show ? "flex" : "none")};
-
-  p {
-    margin: 10px 0 20px 0;
-  }
 
   &::-webkit-scrollbar {
     width: 16px;
@@ -285,6 +400,28 @@ const FriendAgree = styled.div`
 
   &::-webkit-scrollbar-corner {
     background: #fff;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 30%;
+  }
+`;
+const AgreeTitleText = styled.div`
+  display: flex;
+  width: 100%;
+  height: 10%;
+  justify-content: center;
+  margin: 10px 0;
+  align-items: center;
+  p {
+    display: inline-block;
+    width: 100%;
+    height: 50%;
+    font-size: 30px;
+
+    @media screen and (max-width: 425px) {
+      width: 100%;
+      font-size: 18px;
+    }
   }
 `;
 
@@ -297,6 +434,7 @@ const FriendAdd = styled.div`
   height: 50%;
   background: #ff52ae;
   overflow-y: auto;
+  overflow-x: hidden;
   bottom: 0;
   text-align: center;
   align-items: center;
@@ -307,9 +445,6 @@ const FriendAdd = styled.div`
   border-left: 3px solid #000;
 
   display: ${(props) => (props.show ? "flex" : "none")};
-  p {
-    margin: 10px 0 20px 0;
-  }
 
   &::-webkit-scrollbar {
     width: 16px;
@@ -330,6 +465,33 @@ const FriendAdd = styled.div`
 
   &::-webkit-scrollbar-corner {
     background: #fff;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 30%;
+    font-size: 30px;
+  }
+  @media screen and (max-width: 425px) {
+    width: 40%;
+    font-size: 20px;
+  }
+`;
+const FriendTitleText = styled.div`
+  display: flex;
+  width: 100%;
+  height: 10%;
+  margin: 10px 0;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    display: inline-block;
+    width: 100%;
+    height: 50%;
+    font-size: 30px;
+    @media screen and (max-width: 425px) {
+      width: 100%;
+      font-size: 18px;
+    }
   }
 `;
 
@@ -347,7 +509,22 @@ const FriendAddBtn = styled.div`
   border: 3px solid #000;
   right: 2%;
   cursor: pointer;
-  padding-top: 9px;
+  padding-top: 10px;
+
+  @media screen and (max-width: 1024px) {
+    width: 15%;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 15%;
+    font-size: 20px;
+    height: 10%;
+  }
+  @media screen and (max-width: 425px) {
+    width: 15%;
+    font-size: 13px;
+    height: 13%;
+  }
 
   &:hover {
     background: #ff52ae;
@@ -368,8 +545,24 @@ const FriendAgreeBtn = styled.div`
   border: 3px solid #000;
   right: 2%;
   cursor: pointer;
-  padding-top: 9px;
+  padding-top: 10px;
 
+  @media screen and (max-width: 1024px) {
+    width: 15%;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 15%;
+    font-size: 20px;
+    height: 10%;
+    bottom: 18%;
+  }
+  @media screen and (max-width: 425px) {
+    width: 15%;
+    font-size: 13px;
+    height: 13%;
+    bottom: 20%;
+  }
   &:hover {
     background: #ff52ae;
     color: #fff;
@@ -382,6 +575,7 @@ const CloseButton = styled.button`
   z-index: 99;
   border: none;
   display: flex;
+
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -405,11 +599,10 @@ const FullButton = styled.button`
   background: none;
 `;
 const AddClose = styled.button`
-  position: absolute;
-  right: 0;
-  top: 2%;
-  width: 15%;
-  background: #ff52ae;
+  width: 100%;
+  display: flex;
+  background: #bf00ff;
+  justify-content: end;
   border: none;
   cursor: pointer;
 `;
@@ -432,7 +625,7 @@ const Friend = ({ closeModal }) => {
   const [showRequestModal, setShowRequestModal] = useState(false);
   const [modalFriendData, setModalFriendData] = useState(null);
   const location = useLocation();
-
+  const navigate = useNavigate();
   const fetchFriendRequests = async () => {
     try {
       const res = await FriendAxiosApi.allAccept();
@@ -485,14 +678,6 @@ const Friend = ({ closeModal }) => {
   };
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, []);
-
-  useEffect(() => {
     const fetchAllData = async () => {
       try {
         const rspUsers = await PartyAxiosApi.allUsers();
@@ -522,6 +707,10 @@ const Friend = ({ closeModal }) => {
   }, [refresh]);
 
   useEffect(() => {
+    if (!Common.getRefreshToken()) {
+      navigate("/login");
+    }
+
     if (searchAll === "") {
       setFilteredUsers([]);
       setShowFilteredUsers(false);
@@ -620,6 +809,15 @@ const Friend = ({ closeModal }) => {
     e.stopPropagation();
     closeModal();
   };
+  const 함수 = (user) => {
+    return <Profile size="50px" src={user.image} />;
+  };
+
+  const handleResize = (user) => {
+    if (window.innerWidth > 1024) {
+      return <Profile size="50px" src={user.image} />;
+    } else return <Profile size="20px" src={user.image} />;
+  };
 
   return (
     <Container onClick={(e) => e.stopPropagation()}>
@@ -640,9 +838,7 @@ const Friend = ({ closeModal }) => {
               placeholder="검색"
             />
             {searchAll !== "" && filteredUsers.length === 0 && (
-              <p style={{ color: "#000", fontSize: "30px" }}>
-                검색 결과가 없습니다.
-              </p>
+              <p style={{ color: "#000" }}>검색 결과가 없습니다.</p>
             )}
             {(searchAll === "" ? allUser : filteredUsers).map((user) => (
               <UserBoxAll
@@ -660,7 +856,10 @@ const Friend = ({ closeModal }) => {
                 }
               >
                 <ProfileAll>
-                  <Profile size="60px" src={user.image} />
+                  <AllProfile>
+                    <Profile size="50px" src={user.image} />
+                  </AllProfile>
+                  {/* {handleResize(user)} */}
                 </ProfileAll>
                 <AlluserNick>{user.nick}</AlluserNick>
                 {!allFriend.some(
@@ -720,55 +919,69 @@ const Friend = ({ closeModal }) => {
                     {friend.tf === `FALSE` ? friend.from : friend.to}
                   </FriendNick>
                   <button onClick={() => onClickDelete(friend.fno, false)}>
-                    <PiXSquare style={{ fontSize: "35px", color: "#000" }} />
+                    <PiXSquare style={{}} />
                   </button>
                 </UserBox>
               ))}
           </FriendBox>
           <FriendAddBtn onClick={toggleFriendAdd}>친구 요청</FriendAddBtn>
           <FriendAdd show={showFriendAdd}>
-            <p style={{ color: "#fff", fontSize: "30px" }}>친구 요청 대기</p>
-            {allIng.map((friend) => (
-              <UserBox key={friend.fno}>
-                <Profile size={`2.5rem`} src={friend.toProfile} />
-                <div style={{ marginLeft: "15px" }}>{friend.to}</div>
-                <button onClick={() => onClickDelete(friend.fno, false)}>
-                  <p style={{ fontSize: "25px" }}>취소</p>
-                </button>
-              </UserBox>
-            ))}
             <AddClose onClick={toggleFriendAdd}>
               <PiXSquare style={{ fontSize: "30px", color: "#414141" }} />
             </AddClose>
+            <FriendTitleText>
+              <p style={{ color: "#fff" }}>친구 요청 대기</p>
+            </FriendTitleText>
+            {allIng.map((friend) => (
+              <AddBoxUser>
+                <UserBox key={friend.fno}>
+                  <AddPriofile>
+                    <Profile size={`3rem`} src={friend.fromProfile} />
+                  </AddPriofile>
+                  <div style={{}}>{friend.to}</div>
+                  <button onClick={() => onClickDelete(friend.fno, false)}>
+                    <p style={{ fontSize: "20px", paddingRight: "5px" }}>
+                      취소
+                    </p>
+                  </button>
+                </UserBox>
+              </AddBoxUser>
+            ))}
           </FriendAdd>
           <FriendAgreeBtn onClick={toggleFriendAgree}>친구 수락</FriendAgreeBtn>
           <FriendAgree show={showFriendAgree}>
-            <p style={{ color: "#fff", fontSize: "30px" }}>친구 수락 대기</p>
-            {allAccept.map((friend) => (
-              <UserBox key={friend.fno}>
-                <Profile size={`2.5rem`} src={friend.fromProfile} />
-                <div
-                  style={{
-                    fontSize: "25px",
-                    marginLeft: "10px",
-                    marginTop: "10px",
-                  }}
-                >
-                  {friend.from}
-                </div>
-                <AgreeBtn>
-                  <OkBtn onClick={() => onClickAgree(friend.from)}>
-                    <p style={{ color: "#000", fontSize: "25px" }}>수락</p>
-                  </OkBtn>
-                  <NoBtn onClick={() => onClickReject(friend.fno)}>
-                    <p style={{ color: "#000", fontSize: "25px" }}>거절</p>
-                  </NoBtn>
-                </AgreeBtn>
-              </UserBox>
-            ))}
             <AddClose onClick={toggleFriendAgree}>
               <PiXSquare style={{ fontSize: "30px", color: "#414141" }} />
             </AddClose>
+            <AgreeTitleText>
+              <p style={{ color: "#fff" }}>친구 수락 대기</p>
+            </AgreeTitleText>
+            {allAccept.map((friend) => (
+              <AgreeBoxUser>
+                <UserBox key={friend.fno}>
+                  <AgreePriofile>
+                    <Profile size={`3rem`} src={friend.fromProfile} />
+                  </AgreePriofile>
+                  <div
+                    style={{
+                      fontSize: "25px",
+                      marginLeft: "10px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    {friend.from}
+                  </div>
+                  <AgreeBtn>
+                    <OkBtn onClick={() => onClickAgree(friend.from)}>
+                      <p style={{ color: "#000", fontSize: "25px" }}>수락</p>
+                    </OkBtn>
+                    <NoBtn onClick={() => onClickReject(friend.fno)}>
+                      <p style={{ color: "#000", fontSize: "25px" }}>거절</p>
+                    </NoBtn>
+                  </AgreeBtn>
+                </UserBox>
+              </AgreeBoxUser>
+            ))}
           </FriendAgree>
         </CenterMain>
       </Content>

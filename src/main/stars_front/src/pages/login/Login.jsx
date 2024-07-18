@@ -98,7 +98,7 @@ const Login = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    if (Common.getAccessToken()) {
+    if (Common.getRefreshToken()) {
       navigate("/");
     }
   }, []);
@@ -117,9 +117,7 @@ const Login = () => {
       console.log(res.data);
       if (res.data.grantType === "Bearer") {
         Common.setAccessToken(res.data.accessToken);
-        Common.setExpiresIn(res.data.accessTokenExpiresIn);
         Common.setRefreshToken(res.data.refreshToken);
-        Common.setRefreshExpiresIn(res.data.refreshTokenExpiresIn);
         navigate("/");
       } else {
         setMessage("아이디또는 비밀번호를 잘못 입력했습니다.");

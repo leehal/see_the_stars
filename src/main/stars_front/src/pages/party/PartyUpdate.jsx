@@ -8,7 +8,7 @@ const UserListDiv = styled.div`
   width: 100%;
   height: 200px;
   flex-direction: column;
-  border: 1px solid green;
+  border: 3px solid #000;
   overflow-y: auto;
 `;
 
@@ -39,8 +39,29 @@ const NickEmail = styled.div`
   height: 100%;
 `;
 
-const PartyUpdate = ({ closeModal, pno, memberList, myNick }) => {
-  const navigate = useNavigate();
+const ButtonBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+`;
+
+const Button = styled.button`
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  background-color: #ff3366;
+  padding: 0% 2%;
+  margin-top: 3%;
+  text-align: center;
+  border: 3px solid #000;
+  cursor: pointer;
+
+  &:hover {
+    color: #fff;
+  }
+`;
+
+const PartyUpdate = ({ closeModal, pno, setPno, memberList, lend }) => {
   const [nickList, setNickList] = useState([]);
   const [alluser, setAlluser] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]); // 선택된 유저 상태 관리
@@ -50,6 +71,8 @@ const PartyUpdate = ({ closeModal, pno, memberList, myNick }) => {
       const rsp = await PartyAxiosApi.partyMemberAdd(pno, nickList);
       if (rsp.data) {
         closeModal();
+        setPno(undefined);
+        lend((prev) => !prev);
       }
     } catch (e) {
       console.log(e);
@@ -69,10 +92,6 @@ const PartyUpdate = ({ closeModal, pno, memberList, myNick }) => {
     };
     fetchAllUsers();
   }, []);
-
-  // useEffect(() => {
-  //   console.log(pname);
-  // }, [pname]);
 
   const handleUserClick = (user) => {
     if (nickList.includes(user.nick)) {
@@ -113,7 +132,9 @@ const PartyUpdate = ({ closeModal, pno, memberList, myNick }) => {
           </UserBox>
         ))}
       </UserListDiv>
-      <button onClick={updateParty}>인원 추가</button>
+      <ButtonBox>
+        <Button onClick={updateParty}>인원 추가</Button>
+      </ButtonBox>
     </>
   );
 };

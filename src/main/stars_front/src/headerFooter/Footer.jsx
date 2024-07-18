@@ -18,6 +18,9 @@ const StyledFooter = styled.div`
 
   img {
   }
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 
 const Footer = () => {

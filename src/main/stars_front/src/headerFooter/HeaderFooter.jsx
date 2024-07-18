@@ -16,4 +16,3 @@ const HeaderFooter = () => {
 };
 
 export default HeaderFooter;
-

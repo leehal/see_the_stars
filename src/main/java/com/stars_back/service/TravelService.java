@@ -109,4 +109,8 @@ public class TravelService {
         }
         return travelDtoSet;
     }
+    public TravelDto travel(Long tno) {
+    return TravelDto.of(travelRepository.findById(tno).get());
+    }
+    
 }

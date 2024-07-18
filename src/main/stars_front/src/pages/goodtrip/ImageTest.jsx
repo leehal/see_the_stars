@@ -48,16 +48,18 @@ const ImageItem = styled.div`
 
 const ImagesGrid = ({ images }) => {
   return (
-    <ImageWrapper>
-      {images.map((image, index) => (
-        <ImageItem key={index}>
-          <MainImage src={image.src} alt={`Image ${index + 1}`} />
-          {index === 0 && images.length > 1 && (
-            <Overlay>{images.length > 999 ? "999+" : images.length}</Overlay>
-          )}
-        </ImageItem>
-      ))}
-    </ImageWrapper>
+    <ImageContainer>
+      <ImageWrapper>
+        {images.map((image, index) => (
+          <ImageItem key={index}>
+            <MainImage src={image.src} alt={`Image ${index + 1}`} />
+            {index === 0 && images.length > 1 && (
+              <Overlay>{images.length > 999 ? "999+" : images.length}</Overlay>
+            )}
+          </ImageItem>
+        ))}
+      </ImageWrapper>
+    </ImageContainer>
   );
 };
 

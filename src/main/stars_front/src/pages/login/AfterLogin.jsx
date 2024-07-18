@@ -55,13 +55,16 @@ const LogoutButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 95%;
+  width: 90%;
+  border: 2px solid #000;
   height: 30%;
-  font-size: 20px;
-  border: 3px solid #000;
+  background: #ff52ae;
+  color: #fff;
   cursor: pointer;
+  transition: all 0.2s ease-in;
+
   &:hover {
-    color: #bf00ff;
+    background: #bf00ff;
   }
 
   span {

@@ -69,32 +69,13 @@ const DayBox = styled.div`
   /* border-radius: 60%; */
   font-size: 1.2rem;
   width: 14%;
-  height: 45%;
+  height: 38%;
   position: relative;
   cursor: pointer;
   &:hover {
     background-color: #dee2e6;
   }
-  @media (max-height: 930px) {
-    height: 43%;
-  }
-  @media (max-height: 920px) {
-    height: 42%;
-  }
-  /* @media (max-height: 910px) {
-    height: 41%;
-  } */
-  @media (max-height: 900px) {
-    height: 40%;
-  }
-  @media (max-height: 880px) {
-    height: 38%;
-  }
-  @media (max-height: 850px) {
-    height: 36%;
-  }
-  @media (max-height: 830px) {
-    background-color: red;
+  @media (max-width: 1024px) {
     height: 34%;
   }
   @media (max-width: 768px) {
@@ -161,7 +142,6 @@ const CalenContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-
   box-shadow: 6px 6px 0 #aaa7a7, 14px 14px 0 #5f5d5d;
   background-color: #f4eedd;
   /* border-radius: 10px 10px 10px 10px; */

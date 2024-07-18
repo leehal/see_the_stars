@@ -10,7 +10,7 @@ import { PiChatsLight } from "react-icons/pi";
 import { FaPlus } from "react-icons/fa6";
 import Modal from "../../component/Modal";
 import PartyUpdate from "./PartyUpdate";
-import Chat from "../../image/chat.png";
+import Chat from "../../image/chatWhite.png";
 
 // 레트로 스타일 폰트 지정
 
@@ -101,7 +101,7 @@ const Map = styled.div`
   /* margin-bottom: 2%; */
   height: 15%;
   background-color: #333;
-  padding: 10px;
+  padding: 0 2%;
   box-shadow: 6px 6px 0 #000, 14px 14px 0 #000; /* 그림자 효과 */
   border: 3px solid #000;
   @media (max-width: 768px) {
@@ -116,17 +116,17 @@ const Map = styled.div`
 `;
 
 const Input = styled.input`
-  width: 90%;
+  width: 40%;
   background-color: transparent;
   border: none;
   outline: none;
   color: white;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  @media (max-width: 768px) {
-    font-size: 1rem;
+  /* position: absolute; */
+  /* background-color: red; */
+  font-size: 1.5rem;
+  @media (max-width: 830px) {
+    width: 75%;
   }
 `;
 
@@ -146,20 +146,23 @@ const MemberBox = styled.div`
 `;
 
 const Chatting = styled.div`
+  width: 22%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url(${Chat});
-  width: 30%;
-  height: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  @media (max-width: 768px) {
-    width: 10%;
+  /* background-color: red; */
+  justify-content: flex-end;
+  /* position: absolute; */
+  img {
+    width: 85px;
+    /* width: 80%; */
+  }
+  @media screen and (max-width: 768px) {
+    img {
+      width: 50px;
+    }
   }
 `;
 
-const PartyView = ({ pno, myNick, nowPname, setLend, lend, setNowPname }) => {
+const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
   const [divView, setDivView] = useState("calendar");
   const [todate, setTodate] = useState();
   const [fields, setFields] = useState([]);
@@ -217,6 +220,7 @@ const PartyView = ({ pno, myNick, nowPname, setLend, lend, setNowPname }) => {
     clickDayPlan();
   }, [todate, lend]);
 
+  // 해당 pno에 따른 계획날짜 배열
   useEffect(() => {
     const calendatWithPno = async () => {
       try {
@@ -229,7 +233,7 @@ const PartyView = ({ pno, myNick, nowPname, setLend, lend, setNowPname }) => {
     };
     calendatWithPno();
     setFocus(true);
-  }, [pno, divView]);
+  }, [pno, divView, lend]);
 
   if (divView === "calendar") {
     return (
@@ -287,7 +291,9 @@ const PartyView = ({ pno, myNick, nowPname, setLend, lend, setNowPname }) => {
                     setAddView("chat");
                     navigate(`chat/${roomId}`);
                   }}
-                />
+                >
+                  <img src={Chat} alt="" />
+                </Chatting>
               </Map>
               <AddCalendar
                 roomId={roomId}
@@ -297,7 +303,6 @@ const PartyView = ({ pno, myNick, nowPname, setLend, lend, setNowPname }) => {
                 setFields={setFields}
                 setTodate={setTodate}
                 fields={fields}
-                myNick={myNick}
                 addView={addView}
                 setAddView={setAddView}
                 setDivView={setDivView}
@@ -306,12 +311,12 @@ const PartyView = ({ pno, myNick, nowPname, setLend, lend, setNowPname }) => {
             </RightBox>
           </MainFun>
         </Container>
-        <Modal open={modalOpen} close={closeModal} header="내모임생성">
+        <Modal open={modalOpen} close={closeModal} header="파티 멤버 추가">
           <PartyUpdate
             closeModal={closeModal}
             pno={pno}
             memberList={memberList}
-            myNick={myNick}
+            setLend={lend}
           ></PartyUpdate>
         </Modal>
       </>
@@ -371,7 +376,9 @@ const PartyView = ({ pno, myNick, nowPname, setLend, lend, setNowPname }) => {
                     setAddView("chat");
                     navigate(`chat/${roomId}`);
                   }}
-                />
+                >
+                  <img src={Chat} alt="" />
+                </Chatting>
               </Map>
               <AddCalendar
                 roomId={roomId}
@@ -381,7 +388,6 @@ const PartyView = ({ pno, myNick, nowPname, setLend, lend, setNowPname }) => {
                 setFields={setFields}
                 setTodate={setTodate}
                 fields={fields}
-                myNick={myNick}
                 addView={addView}
                 setAddView={setAddView}
                 setDivView={setDivView}
@@ -390,12 +396,12 @@ const PartyView = ({ pno, myNick, nowPname, setLend, lend, setNowPname }) => {
             </RightBox>
           </MainFun>
         </Container>
-        <Modal open={modalOpen} close={closeModal} header="내모임생성">
+        <Modal open={modalOpen} close={closeModal} header="파티 멤버 추가">
           <PartyUpdate
             closeModal={closeModal}
             pno={pno}
             memberList={memberList}
-            myNick={myNick}
+            setLend={lend}
           ></PartyUpdate>
         </Modal>
       </>

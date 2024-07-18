@@ -2,12 +2,15 @@ import styled from "styled-components";
 import Logo from "../../image/Logo.jpg";
 import { useContext, useEffect, useState } from "react";
 import MyAxiosApi from "../../api/MyAxiosApi";
-import Draggable from "react-draggable";
 import { UserContext } from "../../context/UserStore";
 import HeartPixel from "../../image/New Piskel (2).gif";
 import HeartUnClickPixel from "../../image/New Piskel (3).gif";
 import Common from "../../utils/Common";
 import { useLocation, useNavigate } from "react-router-dom";
+import PrevBtnif from "../../image/prev_active.png";
+import PrevBtn from "../../image/prev_inactive.png";
+import NextBtnif from "../../image/next_active.png";
+import NextBtn from "../../image/next_inactive.png";
 
 const Container = styled.div`
   display: flex;
@@ -30,7 +33,6 @@ const SectionContainer = styled.div`
 
 const TravelBox = styled.div`
   display: flex;
-  /* cursor: pointer; */
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
@@ -59,11 +61,10 @@ const Heart = styled.div`
 
 const Image = styled.div`
   display: flex;
-  width: 80%;
+  width: 250px;
   height: 220px;
   cursor: pointer;
   border: 3px solid black;
-
   img {
     width: 100%;
     height: 100%;
@@ -101,7 +102,6 @@ const Line = styled.div`
   justify-content: space-between;
 `;
 
-// Tooltip 스타일 컴포넌트
 const Tooltip = styled.div`
   position: relative;
   display: inline-block;
@@ -113,7 +113,6 @@ const Tooltip = styled.div`
   }
 `;
 
-// TooltipText 스타일 컴포넌트
 const TooltipText = styled.span`
   visibility: hidden;
   width: 100%;
@@ -136,22 +135,63 @@ const PageNum = styled.div`
   display: flex;
   justify-content: center;
   align-content: center;
-  margin-top: 1rem;
 `;
 
 const PageButton = styled.div`
   display: flex;
   justify-content: center;
   cursor: pointer;
+  font-weight: bold;
+  font-size: 24px;
   padding: 5px;
-  background-color: ${(props) => (props.active ? "#FFD6D6" : "")};
-  border-radius: 36px;
+  color: ${(props) => (props.active ? "white" : "black")};
+  border-radius: 50%;
   width: 32px;
+  height: 32px;
+`;
+
+const PrevButton = styled.button`
+  width: 50px;
+  height: 35px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-image: url(${PrevBtn});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  text-transform: uppercase;
+  outline: none;
+  transition: all 0.3s ease;
+`;
+
+const NextButton = styled.button`
+  width: 50px;
+  height: 35px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-image: url(${NextBtn});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-transform: uppercase;
+  outline: none;
+  transition: all 0.3s ease;
 `;
 
 const TravelList = () => {
   const location = useLocation();
   const context = useContext(UserContext);
+  const [showNextInactive, setShowNextInactive] = useState(false);
+  const [showPrevInactive, setShowPrevInactive] = useState(false);
   const {
     setCurrentPage,
     currentPage,
@@ -165,6 +205,7 @@ const TravelList = () => {
   } = context;
   const navigate = useNavigate();
   const {
+    travels = [],
     travelList = [],
     dibs = [],
     city = "",
@@ -176,7 +217,9 @@ const TravelList = () => {
   };
 
   const prev = () => {
-    if (currentPage === 0) {
+    setShowPrevInactive(true);
+    setTimeout(() => setShowPrevInactive(false), 200);
+    if (currentPage === 1) {
       alert("첫번째 페이지입니다.");
     } else {
       setCurrentPage(currentPage - 1);
@@ -184,7 +227,9 @@ const TravelList = () => {
   };
 
   const next = () => {
-    if (currentPage < totalPages - 1) {
+    setShowNextInactive(true);
+    setTimeout(() => setShowNextInactive(false), 200);
+    if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     } else {
       alert("마지막 페이지입니다.");
@@ -218,80 +263,79 @@ const TravelList = () => {
   };
 
   const onClickTravel = (tno) => {
-    console.log(tno);
     setTno(tno);
     setReviewClicked(true);
     navigate(`review/${tno}`);
   };
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, []);
+
   return (
     <Container>
       <SectionContainer>
-        {travelList
-          ?.filter(
-            (e) => e.taddr.includes(city) && e.tcategory.includes(category)
-          )
-          .map((travel) => (
-            <TravelBox
-              key={travel.tno}
-              onClick={() => onClickTravel(travel.tno)}
-            >
-              <Name>
-                {travel.tname.length < 20 ? (
-                  <div>{travel.tname}</div>
-                ) : (
-                  <Tooltip>
-                    <div>{Common.rpad(travel.tname.slice(0, 17), 20, `.`)}</div>
-                    <TooltipText className="tooltiptext">
-                      {travel.tname}
-                    </TooltipText>
-                  </Tooltip>
-                )}
-              </Name>
-              <Image>
-                <img src={travel.timage || Logo} />
-              </Image>
-              <Line>
-                <Tag
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCategory(travel.tcategory);
-                  }}
-                >{`#${travel.tcategory}`}</Tag>
-              </Line>
-              {travel.taddr.length < 20 ? (
-                <div>{travel.taddr}</div>
+        {travels.map((travel) => (
+          <TravelBox key={travel.tno} onClick={() => onClickTravel(travel.tno)}>
+            <Name>
+              {travel.tname.length < 20 ? (
+                <div>{travel.tname}</div>
               ) : (
                 <Tooltip>
-                  <div>{Common.rpad(travel.taddr.slice(0, 17), 20, `.`)}</div>
+                  <div>{Common.rpad(travel.tname.slice(0, 17), 20, `.`)}</div>
                   <TooltipText className="tooltiptext">
-                    {travel.taddr}
+                    {travel.tname}
                   </TooltipText>
                 </Tooltip>
               )}
-              {Common.getAccessToken() && (
-                <Heart
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dibs.some((dib) => dib.tno === travel.tno)
-                      ? onClickUndibs(travel.tno)
-                      : onClickDibs(travel.tno);
-                  }}
-                >
-                  {dibs.some((dib) => dib.tno === travel.tno) ? (
-                    <img src={HeartPixel} alt="" />
-                  ) : (
-                    <img src={HeartUnClickPixel} alt="" />
-                  )}
-                </Heart>
-              )}
-            </TravelBox>
-          ))}
+            </Name>
+            <Image>
+              <img src={travel.timage || Logo} />
+            </Image>
+            <Line>
+              <Tag
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCategory(travel.tcategory);
+                }}
+              >{`#${travel.tcategory}`}</Tag>
+            </Line>
+            {travel.taddr.length < 20 ? (
+              <div>{travel.taddr}</div>
+            ) : (
+              <Tooltip>
+                <div>{Common.rpad(travel.taddr.slice(0, 17), 20, `.`)}</div>
+                <TooltipText className="tooltiptext">
+                  {travel.taddr}
+                </TooltipText>
+              </Tooltip>
+            )}
+            {Common.getRefreshToken() && (
+              <Heart
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dibs.some((dib) => dib.tno === travel.tno)
+                    ? onClickUndibs(travel.tno)
+                    : onClickDibs(travel.tno);
+                }}
+              >
+                {dibs.some((dib) => dib.tno === travel.tno) ? (
+                  <img src={HeartPixel} alt="" />
+                ) : (
+                  <img src={HeartUnClickPixel} alt="" />
+                )}
+              </Heart>
+            )}
+          </TravelBox>
+        ))}
         <PageNum>
-          <button onClick={prev} style={{ width: "40px", marginRight: "0px" }}>
-            &lt;
-          </button>
-          {travelList.length === 0 ? (
+          <PrevButton
+            onClick={prev}
+            style={{
+              backgroundImage: `url(${showPrevInactive ? PrevBtnif : PrevBtn})`,
+            }}
+          ></PrevButton>
+          {travels.length === 0 ? (
             <PageButton> 1 </PageButton>
           ) : (
             Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
@@ -300,8 +344,8 @@ const TravelList = () => {
                 return (
                   <PageButton
                     key={page}
-                    onClick={() => handlePageChange(page - 1)}
-                    active={currentPage === page - 1}
+                    onClick={() => handlePageChange(page)}
+                    active={currentPage === page}
                   >
                     {page}
                   </PageButton>
@@ -311,9 +355,12 @@ const TravelList = () => {
               }
             })
           )}
-          <button onClick={next} style={{ width: "40px" }}>
-            &gt;
-          </button>
+          <NextButton
+            onClick={next}
+            style={{
+              backgroundImage: `url(${showNextInactive ? NextBtnif : NextBtn})`,
+            }}
+          ></NextButton>
         </PageNum>
       </SectionContainer>
     </Container>

@@ -178,8 +178,8 @@ const FindPage = () => {
         />
       )}
       <FindBtn>
-        <Button onClick={isFindPw ? onClickReset : onClickFind}>확인</Button>
         <Button onClick={() => navigate("/login")}>취소</Button>
+        <Button onClick={isFindPw ? onClickReset : onClickFind}>확인</Button>
       </FindBtn>
     </>
   );

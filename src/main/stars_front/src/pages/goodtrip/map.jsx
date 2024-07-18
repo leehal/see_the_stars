@@ -10,6 +10,14 @@ const MapBox = styled.div`
   width: 500px;
   height: 400px;
   box-shadow: 6px 14px 0 #000, 14px 14px 0 #000; /* 그림자 효과 추가 */
+  @media screen and (max-width: 900px) {
+    width: 400px;
+    height: 400px;
+  }
+  @media screen and (max-width: 800px) {
+    width: 300px;
+    height: 400px;
+  }
 `;
 const { kakao } = window;
 
@@ -24,6 +32,25 @@ const Kakao = ({ setCity, taddr, reviewClicked }) => {
   const mapRef = useRef(null);
   const RoadViewRef = useRef(null);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 720) {
+        const mapOption = {
+          center: new kakao.maps.LatLng(36.34, 127.77),
+          level: 12,
+        };
+      } else {
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    // 초기 실행을 위해 호출
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   useEffect(() => {
     const mapContainer = mapRef.current;
     const roadviewContainer = RoadViewRef.current;
@@ -137,7 +164,7 @@ const Kakao = ({ setCity, taddr, reviewClicked }) => {
   return (
     <MapContainer>
       <div>
-        <MapBox onMouseMove={handleMouseMove}>
+        <MapBox onMouseMove={handleMouseMove} onTouchMove={handleMouseMove}>
           <div
             ref={mapRef}
             style={{

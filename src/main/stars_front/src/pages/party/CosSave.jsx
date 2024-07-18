@@ -44,44 +44,39 @@ const CosSave = ({
   fields,
   date,
   pno,
-  setTodate,
   memberList,
-  myNick,
   setDivView,
   setPlace,
   place,
+  setLend,
+  setAddView,
 }) => {
   useEffect(() => {}, [fields]);
-  // useEffect(() => {
-  //   setFields([]);
-  // }, []);
 
   const addField = () => {
     setFields([...fields, ""]);
   };
 
+  const removeEmptyCaddr = (fields) => {
+    return fields.filter((field) => field.caddr && field.caddr.trim() !== "");
+  };
+
   const saveCalendar = async () => {
+    const cleanedFields = removeEmptyCaddr(fields);
+    console.log("Cleaned fields 확인");
+    console.log(cleanedFields);
+
     try {
-      const rsp = await PartyAxiosApi.calendarCreate(pno, myNick, date, fields);
+      const rsp = await PartyAxiosApi.calendarCreate(pno, date, cleanedFields);
       console.log(`캘린더 성공 여부 : ${rsp.data}`);
       setFields([]);
       setDivView("calendar");
+      setLend((prev) => !prev);
+      setAddView("select");
     } catch (e) {
       console.log(e);
     }
-    console.log("확인");
-    console.log(fields);
   };
-
-  // const handleFieldChange = (index, field, value) => {
-  //   const newFields = fields.map((f, i) =>
-  //     i === index ? { ...f, [field]: value } : f
-  //   );
-  //   setFields(newFields);
-  // };
-  // useEffect(()=>{
-
-  // },[])
 
   return (
     <>

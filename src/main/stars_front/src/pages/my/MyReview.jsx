@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
-  height: 700px;
+  height: 90%;
   overflow-y: auto;
   flex-direction: column;
   align-items: center;
@@ -67,7 +67,6 @@ const MyReview = ({ refresh, setRefresh }) => {
   const openUpdateModal = (review) => {
     setReviewUpdate(true);
     setNewReview({
-      tno: review.tno,
       image: review.image,
       rno: review.rno,
       title: review.title,

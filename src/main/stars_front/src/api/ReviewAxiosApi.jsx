@@ -1,3 +1,4 @@
+import axios from "axios";
 import AxiosInstance from "./AxiosInstance";
 
 const Reivew = "/review";
@@ -5,6 +6,9 @@ const Reivew = "/review";
 const ReviewAxiosApi = {
   reviewList: async (tno) => {
     return await AxiosInstance.get(Reivew + `/reviewlist?tno=${tno}`);
+  },
+  reviewList1: async (tno) => {
+    return await axios.get(`/travel/reviewlist?tno=${tno}`);
   },
   submitReview: async (review) => {
     return await AxiosInstance.post(Reivew + `/reviewlist`, review);

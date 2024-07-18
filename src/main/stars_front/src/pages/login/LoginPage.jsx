@@ -13,10 +13,19 @@ const fadeIn = keyframes`
 `;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   height: 100vh;
   /* overflow: hidden; */
+  @media screen and (max-width: 786px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @media screen and (max-width: 425px) {
+    min-width: 425px;
+  }
 `;
 const FristBack = styled.div`
   position: relative;
@@ -43,10 +52,21 @@ const Box = styled.div`
   height: 700px;
   background-color: white;
   border-radius: 15px;
-  right: 200px;
-  bottom: 40px;
+  right: 15%;
+  top: 50%;
+  transform: translateY(-50%);
+
   border: 3px solid black;
   box-shadow: 4px 8px 0 #000, 8px 8px 0 #000; /* 그림자 효과 추가 */
+
+  @media screen and (max-width: 1920px) {
+    right: 10%;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 350px;
+  }
+  @media screen and (max-width: 425px) {
+  }
 `;
 
 const Logo = styled.div`

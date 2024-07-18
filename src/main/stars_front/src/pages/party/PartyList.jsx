@@ -195,11 +195,15 @@ const PartyList = ({
       try {
         const rsp = await PartyAxiosApi.pnameList();
         setPNameList(rsp.data);
-        if (pno === undefined && rsp.data.length > 0) {
-          setPno(rsp.data[0].pno);
-        }
-        if (nowPname === undefined && rsp.data.length > 0) {
-          setNowPname(rsp.data[0].pname);
+        if (rsp.data.length === 0) {
+          alert("모임이 없습니다. 모임을 생성해주세요.");
+        } else {
+          if (pno === undefined && rsp.data.length > 0) {
+            setPno(rsp.data[0].pno);
+          }
+          if (nowPname === undefined && rsp.data.length > 0) {
+            setNowPname(rsp.data[0].pname);
+          }
         }
       } catch (e) {
         console.log(e);
@@ -278,7 +282,11 @@ const PartyList = ({
 
       {!deleteModal && modalOpen && (
         <Modal2 open={modalOpen} close={closeModal} header="내모임생성">
-          <PartySave closeModal={closeModal} myNick={myNick}></PartySave>
+          <PartySave
+            closeModal={closeModal}
+            myNick={myNick}
+            setPno={setPno}
+          ></PartySave>
         </Modal2>
       )}
       {deleteModal && modalOpen && (

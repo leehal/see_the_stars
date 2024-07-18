@@ -27,6 +27,9 @@ const StyledHeader = styled.div`
       visibility: hidden;
     }
   }
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 
 const Logo = styled.div`
@@ -132,8 +135,10 @@ const MobileHeader = styled.div`
   @media (max-width: 768px) {
     display: block;
     position: fixed;
-    top: 2%;
-    right: 3%;
+    right: 0;
+    top: 0;
+    margin: 12px 10px 0 0;
+
     z-index: 999;
   }
 
@@ -220,7 +225,12 @@ const Header = () => {
   if (location.pathname.includes("/login")) {
     return null;
   }
-
+  const onClickTrip = (path) => {
+    if (!location.pathname.includes("/goodtrip")) {
+      navigate(path);
+      setIsOpen(false);
+    }
+  };
   return (
     <>
       <StyledHeader>
@@ -228,7 +238,13 @@ const Header = () => {
           <img src={LogoImg} alt="logo" onClick={() => navigate("/")} />
         </Logo>
         <Div onClick={() => handleNavigate("/party")}>내모임</Div>
-        <Div onClick={() => handleNavigate("/goodtrip")}>여행지추천</Div>
+        <Div
+          onClick={() => {
+            onClickTrip("/goodtrip");
+          }}
+        >
+          여행지추천
+        </Div>
         <Div onClick={toggleFriendModal}>
           친구
           {modalFriend && <Friend closeModal={toggleFriendModal} />}
@@ -259,8 +275,10 @@ const Header = () => {
             </Logo>
             <ul>
               <li onClick={() => handleNavigate("/party")}>내모임</li>
-              <li onClick={() => handleNavigate("/goodtrip")}>여행지추천</li>
-              <li onClick={toggleFriendModal}>친구</li>
+              <li onClick={() => onClickTrip("/goodtrip")}>여행지추천</li>
+              <li onClick={toggleFriendModal}>
+                친구{modalFriend && <Friend closeModal={toggleFriendModal} />}
+              </li>
               <li onClick={() => handleNavigate("/my")}>마이페이지</li>
             </ul>
           </HamberGerMenu>

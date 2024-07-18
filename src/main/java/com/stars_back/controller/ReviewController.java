@@ -65,5 +65,3 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.updateOneImg(imageDto.getIno(), imageDto.getImage()));
     }
 }
-
-

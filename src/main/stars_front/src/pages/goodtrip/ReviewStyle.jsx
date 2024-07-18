@@ -14,7 +14,7 @@ const ReviewStyle = {
   `,
 
   ReviewBox: styled.div`
-    width: 50%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -25,6 +25,11 @@ const ReviewStyle = {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     border: 3px solid #000; /* 두꺼운 테두리 */
+  `,
+  SubmitBox: styled.div`
+    display: flex;
+    justify-content: center;
+    width: 100%;
   `,
 
   ReviewCard: styled.div`
@@ -47,6 +52,16 @@ const ReviewStyle = {
     padding: 2%;
     margin-bottom: 10px;
     color: #fff; /* 텍스트 색상 */
+  `,
+
+  ReviewTitleBox: styled.div`
+    width: 80%;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    font-weight: bold;
+    /* color: #ff3366; */
   `,
 
   ReviewBody: styled.div`
@@ -101,8 +116,8 @@ const ReviewStyle = {
   `,
 
   ImageContainer: styled.div`
-    width: 400px;
-    height: 200px;
+    width: 80%;
+    height: 400px;
     display: flex;
     flex-wrap: wrap;
     bottom: 15px;
@@ -113,6 +128,15 @@ const ReviewStyle = {
     &:hover {
       transform: 0.2s;
       scale: 1.1;
+    }
+    @media screen and (max-width: 1200px) {
+      height: 300px;
+    }
+    @media screen and (max-width: 900px) {
+      height: 230px;
+    }
+    @media screen and (max-width: 768px) {
+      height: 150px;
     }
   `,
 

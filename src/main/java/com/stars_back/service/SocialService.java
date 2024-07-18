@@ -25,6 +25,22 @@ public class SocialService {
     private final SocialRepository socialRepository;
     private final PasswordEncoder passwordEncoder;
 
+    public static String extractNickname(String input) {
+        int index = input.indexOf('#');
+        if (index != -1) {
+            return input.substring(0, index);
+        } else {
+            return input; // '#' 문자가 없으면 원본 문자열 반환
+        }
+    }
+    public static String extractRest(String input) {
+        int index = input.indexOf('#');
+        if (index != -1) {
+            return input.substring(index + 1);
+        } else {
+            return ""; // '#' 문자가 없으면 빈 문자열 반환
+        }
+    }
     public MemberReqDto kakaoUserInfo(String kakaoToken) {
 
         HttpHeaders headers = new HttpHeaders();
@@ -42,16 +58,26 @@ public class SocialService {
             KakaoDto kakaoDto = responseEntity.getBody();
             String mid = kakaoDto.getKakaoAccount().getEmail();
             String pwd = kakaoDto.getId();
+            String nick = kakaoDto.getKakaoAccount().getProfile().getNick();
+            String image = kakaoDto.getKakaoAccount().getProfile().getProfileImageUrl();
             memberReqDto.setMid(mid);
             memberReqDto.setPwd(pwd);
-            if(socialRepository.existsByMidAndSocial(mid, Social.COMMON)||socialRepository.existsByMidAndSocial(mid,Social.NAVER)||socialRepository.existsByMidAndSocial(mid,Social.GOOGLE)) {
-                return null;
+
+            if(socialRepository.findByMid(mid).isPresent()){
+                Member member = socialRepository.findByMid(mid).get();
+                if(!extractNickname(member.getNick()).equals(nick)){
+                    member.setNick(nick+extractRest(nick));
+                    socialRepository.save(member);
+                }else if(!socialRepository.findByMid(mid).get().getImage().equals(image)) {
+                    member.setImage(image);
+                    socialRepository.save(member);
+                }
+                return memberReqDto;
             }
-            else if(!socialRepository.existsByMid(mid)){
+            else{
                 saveKakaoEntity(kakaoDto);
                 return memberReqDto;
             }
-            else return memberReqDto;
         }catch(Exception e) {
             log.error("카카오 가입 시도 중 오류 발생(카카오 서비스)");
             return null;

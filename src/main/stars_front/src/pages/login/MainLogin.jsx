@@ -5,7 +5,7 @@ import Common from "../../utils/Common";
 const MainLogin = ({ setRefresh }) => {
   return (
     <>
-      {Common.getAccessToken() ? (
+      {Common.getRefreshToken() ? (
         <AfterLogin setRefresh={setRefresh} />
       ) : (
         <BeforLogin />

@@ -30,7 +30,7 @@ const PostStyle = styled.div`
       position: relative;
       height: 50px;
       padding: 16px 64px 16px 16px;
-      background-color: #f1f1f1;
+      background-color: #ff3366;
       font-weight: 700;
       button {
         position: absolute;
@@ -41,7 +41,7 @@ const PostStyle = styled.div`
         font-size: 21px;
         font-weight: 700;
         text-align: center;
-        color: #999;
+        color: #fff;
         background-color: transparent;
         border: none;
         &:hover {
@@ -60,7 +60,8 @@ const PostStyle = styled.div`
       button {
         padding: 6px 12px;
         color: #fff;
-        background-color: #6c757d;
+        background-color: #ff3366;
+        font-weight: bold;
         border-radius: 5px;
         font-size: 13px;
       }
@@ -140,6 +141,7 @@ const DaumPostPopup = (props) => {
       <div className="postWrapper">
         <section>
           <header>
+            <h2>주소를 입력 해주세요</h2>
             <button onClick={onClose}>&times;</button>
           </header>
           <main>
@@ -159,4 +161,3 @@ const DaumPostPopup = (props) => {
 };
 
 export default DaumPostPopup;
-

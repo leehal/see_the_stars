@@ -25,6 +25,10 @@ const Container = styled.div`
   background-image: url(${Backimg});
   background-size: cover;
   background-repeat: no-repeat;
+
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 
 const Content = styled.div`
@@ -37,6 +41,9 @@ const Content = styled.div`
   @media screen and (max-width: 768px) {
     width: 90vw;
   }
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 
 const Firstp = styled.div`
@@ -48,6 +55,9 @@ const Firstp = styled.div`
   justify-content: center;
   flex-direction: column;
   justify-content: space-between;
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 
 const MainPage = styled.div`
@@ -71,11 +81,22 @@ const MainPage = styled.div`
     align-items: center;
     width: 100%;
   }
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 
 const Second = styled.div`
   width: 100%;
-  height: 80vh;
+  height: 100vh;
+
+  @media screen and (max-width: 425px) {
+    width: 100%;
+    height: 60vh;
+  }
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 
 const Login = styled.div`
@@ -127,6 +148,9 @@ const Promotion = styled.div`
     width: 100%;
     height: 25%;
   }
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 
 const Weather = styled.div`
@@ -166,6 +190,9 @@ const SlideImg = styled.div`
   @media screen and (max-width: 425px) {
     width: 100%;
     height: 100%;
+  }
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
   }
 `;
 
@@ -233,10 +260,10 @@ const RightBox = styled.div`
     bottom: 1%;
     right: 0;
     order: 1;
-    justify-content: space-between;
+    justify-content: center;
     position: absolute;
     display: flex;
-    gap: 5px;
+    gap: 10px;
   }
   @media screen and (max-width: 786px) {
     justify-content: center;
@@ -338,8 +365,8 @@ const Main = () => {
                   {[1, 2, 3, 4].map((slideNumber) => (
                     <SlideBox key={slideNumber}>
                       <Slide
-                        src={`img/poster${slideNumber}.jpg` || Basic}
-                        alt=""
+                        src={`/img/poster${slideNumber}.jpg`}
+                        alt="Poster"
                         style={{
                           objectFit: slideNumber === 3 ? "contain" : "cover",
                         }}
@@ -381,7 +408,7 @@ const Main = () => {
         </Content>
       </Container>
       <Modal open={modalOpen} close={closeModal} header="광고문의">
-        <AdInquiry />
+        <AdInquiry setModalOpen={setModalOpen} />
       </Modal>
     </>
   );

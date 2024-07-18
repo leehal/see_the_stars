@@ -18,7 +18,6 @@ import static com.stars_back.security.SecurityUtil.getCurrentMemberId;
 @Transactional
 @RequiredArgsConstructor
 public class MemberService {
-
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -59,6 +58,15 @@ public class MemberService {
                 return true;
             default:
                 return false;
+        }
+    }
+    public boolean withdraw(){
+        try {
+            Member member = memberIdFindMember();
+            memberRepository.delete(member);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

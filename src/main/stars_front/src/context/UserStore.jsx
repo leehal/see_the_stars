@@ -7,7 +7,7 @@ const UserStore = (props) => {
   );
   const [refresh, setRefrsh] = useState(false);
   const [category, setCategory] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [tno, setTno] = useState();
   const [reviewClicked, setReviewClicked] = useState(false);
 

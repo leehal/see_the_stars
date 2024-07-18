@@ -40,7 +40,7 @@ const CosUpdate = ({
   setCaddr,
   caContent,
   setPlace,
-  place,
+  todate,
 }) => {
   const [modalOpen, setModalOpen] = useState(false); // 모달 열림/닫힘 상태 관리
   const [popTrue, setPopTrue] = useState(false);
@@ -66,7 +66,6 @@ const CosUpdate = ({
           value={caContent}
           placeholder="메모"
         />
-        <p>{place}</p>
       </InputBox>
       {/* DaumPostPopup 모달을 열기 위해 modalOpen 상태를 사용 */}
       {popTrue && modalOpen && (

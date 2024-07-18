@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PartyAxiosApi from "../../api/PartyAxiosApi";
 import styled from "styled-components";
 import { UserContext } from "../../context/UserStore";
+import FriendAxiosApi from "../../api/FriendAxiosApi";
 
 const UserListDiv = styled.div`
   width: 100%;
@@ -32,7 +33,7 @@ const ProfileBox = styled.div`
   height: 100%;
 `;
 
-const NickEmail = styled.div`
+const toEmail = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,9 +84,9 @@ const Button = styled.button`
   }
 `;
 
-const PartySave = ({ closeModal, myNick }) => {
+const PartySave = ({ closeModal }) => {
   const [pname, setPname] = useState("");
-  const [nickList, setNickList] = useState([myNick]);
+  const [toList, settoList] = useState([]);
   const [alluser, setAlluser] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]); // 선택된 유저 상태 관리
 
@@ -94,7 +95,7 @@ const PartySave = ({ closeModal, myNick }) => {
       alert("모임 이름을 입력해주세요.");
     } else {
       try {
-        const rsp = await PartyAxiosApi.partyCreate(nickList, pname);
+        const rsp = await PartyAxiosApi.partyCreate(toList, pname);
         if (rsp.data) {
           closeModal();
           setPname("");
@@ -108,7 +109,7 @@ const PartySave = ({ closeModal, myNick }) => {
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        const rsp = await PartyAxiosApi.allUsers();
+        const rsp = await FriendAxiosApi.allFriends();
         setAlluser(rsp.data);
         console.log(rsp.data);
       } catch (e) {
@@ -123,16 +124,16 @@ const PartySave = ({ closeModal, myNick }) => {
   // }, [pname]);
 
   const handleUserClick = (user) => {
-    if (nickList.includes(user.nick)) {
+    if (toList.includes(user.to)) {
       // 이미 선택된 경우, 선택 해제 (배열에서 제거)
-      setNickList((prevList) => prevList.filter((n) => n !== user.nick));
+      settoList((prevList) => prevList.filter((n) => n !== user.to));
       setSelectedUsers((prevSelected) =>
-        prevSelected.filter((nick) => nick !== user.nick)
+        prevSelected.filter((to) => to !== user.to)
       );
     } else {
       // 선택되지 않은 경우, 배열에 추가
-      setNickList((prevList) => [...prevList, user.nick]);
-      setSelectedUsers((prevSelected) => [...prevSelected, user.nick]);
+      settoList((prevList) => [...prevList, user.to]);
+      setSelectedUsers((prevSelected) => [...prevSelected, user.to]);
     }
   };
 
@@ -149,7 +150,7 @@ const PartySave = ({ closeModal, myNick }) => {
           <UserBox
             key={user.email}
             onClick={() => handleUserClick(user)}
-            isSelected={selectedUsers.includes(user.nick)}
+            isSelected={selectedUsers.includes(user.to)}
           >
             <ProfileBox>
               <Profile
@@ -158,12 +159,12 @@ const PartySave = ({ closeModal, myNick }) => {
                 // onClick={() => navigate("/my")}
               />
             </ProfileBox>
-            <NickEmail>
-              <div>{user.nick}</div>
-            </NickEmail>
-            <NickEmail>
+            <toEmail>
+              <div>{user.to}</div>
+            </toEmail>
+            {/* <toEmail>
               <div>{user.email}</div>
-            </NickEmail>
+            </toEmail> */}
           </UserBox>
         ))}
       </UserListDiv>

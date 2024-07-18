@@ -108,6 +108,7 @@ const AdInquiry = ({ setModalOpen }) => {
   const [expiration, setExpiration] = useState(now.setDate(now.getDate() + 1));
   const [inputNick, setInputNick] = useState("");
   const [inputEmail, setInputEmail] = useState("");
+  const [isUploading, setIsUploading] = useState(false); // 광고중복막기
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -158,7 +159,6 @@ const AdInquiry = ({ setModalOpen }) => {
   };
 
   const onClickPay = () => {
-    window.IMP.init("262d385cf93555bb7abf3ee6769ddeea");
     window.IMP.request_pay(
       {
         pg: "kakaopay",
@@ -180,6 +180,7 @@ const AdInquiry = ({ setModalOpen }) => {
   };
 
   const handleUpload = async () => {
+    setIsUploading(true);
     const storageRef = storage.ref();
     const fileRef = storageRef.child(file.name);
     try {
@@ -193,15 +194,17 @@ const AdInquiry = ({ setModalOpen }) => {
         if (res.data) {
           alert("결제가 완료되었습니다.");
           setModalOpen(false);
+          console(setModalOpen);
         } else {
           console.log("데이터 없음");
         }
       } catch (e) {
-        console.log("저장오류");
+        console.log("저장오류:", e);
       }
     } catch (error) {
       console.error("파이어베이스 오류", error);
     }
+    setIsUploading(false);
   };
 
   useEffect(() => {
@@ -259,7 +262,9 @@ const AdInquiry = ({ setModalOpen }) => {
         </div>
         <span>가격: {price}원</span>
       </Line>
-      <button onClick={onClickPay}>광고 게재</button>
+      <button onClick={onClickPay} disabled={isUploading}>
+        광고 게재
+      </button>
     </Container>
   );
 };

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { PiXCircle } from "react-icons/pi";
 import Kakao from "./map";
 import styled, { keyframes } from "styled-components";
-import { FaHeart } from "react-icons/fa";
+import { FaEyeSlash, FaHeart } from "react-icons/fa";
 import TravelList from "./TravelList";
 import Reviews from "./Review";
 import TravelAxiosApi from "../../api/TravelAxiosApi";
@@ -14,7 +14,7 @@ import Basic from "../../image/Logo.jpg";
 import { PiSquareLogo } from "react-icons/pi";
 import { PiXSquare } from "react-icons/pi";
 import { IoSearchSharp } from "react-icons/io5";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 
 const slideUpIn = keyframes`
@@ -58,6 +58,9 @@ const SearchBox = styled.div`
   display: flex;
   margin: 0 auto;
   gap: 50px;
+  @media (max-width: 768px) {
+    width: 95%;
+  }
 `;
 const Div = styled.div`
   overflow: hidden;
@@ -65,10 +68,13 @@ const Div = styled.div`
   justify-content: center;
   border: 5px solid black;
   height: 400px;
-  width: 300px;
+  width: 40%;
   /* padding: 20px; */
   box-shadow: 6px 14px 0 #000, 14px 14px 0 #000; /* 그림자 효과 추가 */
   background-color: #f4eedd;
+  @media (max-width: 768px) {
+    /* width: 100%; */
+  }
 `;
 const Box = styled.div`
   width: 100%;
@@ -77,8 +83,7 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
-  animation: ${({ reviewClicked }) => (reviewClicked ? fadeOut : slideDownIn)}
-    0.4s ease-out forwards;
+  animation: ${slideDownIn} 0.4s ease-out forwards;
 `;
 const Title = styled.div`
   font-size: 50px;
@@ -143,18 +148,20 @@ const TravelBox = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  position: relative;
-  flex: 0 0 300px;
+  width: 100%;
   border-radius: 10px;
-
-  padding-top: 0;
-  animation: ${({ reviewClicked }) => (reviewClicked ? slideUpIn : fadeOut)}
-    0.4s ease-out forwards;
+  animation: ${slideUpIn} 0.4s ease-out forwards;
+`;
+const HeartBox = styled.div`
+  position: absolute;
+  bottom: 1%;
+  right: 4%;
 `;
 
 const Heart = styled.div`
+  position: relative;
   display: flex;
-  justify-content: center;
+  /* justify-content: flex-end; */
   cursor: pointer;
   opacity: 0.5;
   &:hover {
@@ -172,6 +179,10 @@ const Image = styled.div`
     height: 100%;
     object-fit: cover;
   }
+  /* 
+  @media (max-width: 768px) {
+    width: 90%;
+  } */
 `;
 const Close = styled.div`
   position: absolute;
@@ -191,20 +202,22 @@ const Name = styled.div`
   padding-top: 10px;
   justify-content: center;
   font-weight: bold;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   cursor: pointer;
   width: 100%;
   border-bottom: 2px solid black;
   background-color: #c33740;
   color: white;
 `;
+
 const Tag = styled.div`
   width: 100%;
   cursor: pointer;
   color: skyblue;
-  font-size: 30px;
+  font-size: 25px;
   visibility: ${({ children }) => (children === "#" ? `hidden` : `visible`)};
 `;
+
 const Line = styled.div`
   width: 100%;
   position: relative;
@@ -214,7 +227,14 @@ const Line = styled.div`
   /* justify-content: space-between; */
 `;
 
+const KaKaoBox = styled.div`
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const TaddrBox = styled.div`
+  padding: 0 4%;
   font-size: 20px;
 `;
 
@@ -229,6 +249,7 @@ const Goodtrip = () => {
     setCategory,
     currentPage,
     tno,
+    setTno,
     reviewClicked,
     setReviewClicked,
   } = context;
@@ -236,12 +257,16 @@ const Goodtrip = () => {
   const [option, setOption] = useState("이름");
   const [city, setCity] = useState("");
   const [name, setName] = useState("");
-  const [travelList, setTravelList] = useState([]);
+  const [travels, setTravels] = useState([]);
   const [dibs, setDibs] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+  const [travelList, setTravelList] = useState({});
+  const [selectedTravel, setSelectedTravel] = useState();
+  const [roadviewClick, setRoadviewClick] = useState(false);
 
   const onClickClose = () => {
     setReviewClicked(false);
+    setTno("");
     navigate(".");
     travel();
   };
@@ -282,15 +307,14 @@ const Goodtrip = () => {
 
   useEffect(() => {
     const travel = {
-      travelList,
+      totalPages,
+      travels,
+      // travelList,
       dibs,
       city,
     };
-
     navigate("", { state: travel });
-  }, [travelList, dibs, city, category, currentPage]);
-
-  const selectedTravel = travelList?.find((travel) => travel.tno === tno);
+  }, [travels, dibs, city, category, currentPage]);
 
   const travel = async () => {
     try {
@@ -301,9 +325,15 @@ const Goodtrip = () => {
         name
       );
       if (res.data) {
-        console.log(res.data);
         setTotalPages(res.data.totalPages);
-        setTravelList(res.data.travels);
+        // if (!travelList[currentPage] || travelList[currentPage].length === 0) {
+        //   setTravelList((prev) => ({
+        //     ...prev,
+        //     [currentPage]: res.data.travels,
+        //   }));
+        // }
+        console.log(res.data.travels);
+        setTravels(res.data.travels);
       } else {
         console.log("여행정보를 못불러옴");
       }
@@ -311,6 +341,11 @@ const Goodtrip = () => {
       console.log(e);
     }
   };
+  // useEffect(() => {
+  //   if (category !== "" || city !== "" || name !== "") {
+  //     setTravelList({});
+  //   }
+  // }, [category, city, name]);
 
   useEffect(() => {
     travel();
@@ -329,49 +364,70 @@ const Goodtrip = () => {
         console.log(e);
       }
     };
-    dibsList();
+    Common.getRefreshToken() && dibsList();
   }, [refresh]);
+
+  useEffect(() => {
+    const select = async () => {
+      try {
+        const res = await TravelAxiosApi.travel(tno);
+        if (res.data) {
+          setSelectedTravel(res.data);
+        } else {
+          console.log("tno에 따른 여행지가 없음");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    tno && select();
+  }, [reviewClicked]);
 
   return (
     <>
       <SearchContainer>
         <SearchBox>
           <Div>
-            {reviewClicked && selectedTravel ? (
-              <TravelBox key={selectedTravel.tno} reviewClicked={reviewClicked}>
+            {reviewClicked ? (
+              <TravelBox
+                key={selectedTravel?.tno}
+                reviewClicked={reviewClicked}
+              >
                 <Close onClick={onClickClose}>
                   <StyledPiXSquere />
                 </Close>
-                <Name>{selectedTravel.tname}</Name>
+                <Name>{selectedTravel?.tname}</Name>{" "}
                 <Image>
-                  <img src={selectedTravel.timage || Basic} alt="travel" />
+                  <img src={selectedTravel?.timage || Basic} alt="travel" />
                 </Image>
                 <Line>
-                  {Common.getAccessToken() && (
+                  <Tag
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCategory(selectedTravel?.tcategory);
+                    }}
+                  >
+                    {`#${selectedTravel?.tcategory}`}
+                  </Tag>
+                </Line>
+                <TaddrBox>{selectedTravel?.taddr}</TaddrBox>
+                <HeartBox>
+                  {Common.getRefreshToken() && (
                     <Heart
                       onClick={() =>
-                        dibs.some((dib) => dib.tno === selectedTravel.tno)
-                          ? onClickUndibs(selectedTravel.tno)
-                          : onClickDibs(selectedTravel.tno)
+                        dibs.some((dib) => dib.tno === selectedTravel?.tno)
+                          ? onClickUndibs(selectedTravel?.tno)
+                          : onClickDibs(selectedTravel?.tno)
                       }
                     >
-                      {dibs.some((dib) => dib.tno === selectedTravel.tno) ? (
+                      {dibs.some((dib) => dib.tno === selectedTravel?.tno) ? (
                         <img src={HeartPixel} alt="heart" />
                       ) : (
                         <img src={HeartUnClickPixel} alt="empty heart" />
                       )}
                     </Heart>
                   )}
-                  <Tag
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCategory(selectedTravel.tcategory);
-                    }}
-                  >
-                    {`#${selectedTravel.tcategory}`}
-                  </Tag>
-                </Line>
-                <TaddrBox>{selectedTravel?.taddr}</TaddrBox>
+                </HeartBox>
               </TravelBox>
             ) : (
               <Box reviewClicked={reviewClicked}>

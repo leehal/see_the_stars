@@ -43,23 +43,12 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
                 .authorizeRequests() // 요청에 대한 접근 권한을 설정합니다
-                .antMatchers("/", "/auth/**", "/ws/**", "/travel/**", "/elastic/**").permitAll()
+                .antMatchers("/", "/auth/**", "/ws/**", "/travel/**","/static/**").permitAll()
                 // .antMatchers().permitAll(): 특정 경로에 대해 모든 사용자에게 접근 권한을 부여합니다.
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/favicon.ico","/manifest.json").permitAll()
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider))
-                .and()
-                .cors(); // .and().cors() 추가 된 부분
-
+                .apply(new JwtSecurityConfig(tokenProvider));
         return http.build();
-    }
-    @Override  // 메소드 오버라이딩, localhost:3000 번으로 들어오는 요청 허가
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
-                .allowedMethods("*")
-                .allowedHeaders("*")
-                .allowCredentials(true);
     }
 }

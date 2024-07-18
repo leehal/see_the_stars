@@ -50,16 +50,11 @@ const Item = styled.div`
   background-size: cover;
   transition: 0.5s;
   border: 3px solid #000;
-  min-width: 200px;
-  min-width: 230px;
 
   @media screen and (max-width: 1024px) {
-    min-width: 150px;
-    min-height: 200px;
-
+    width: 30%;
+    height: 40%;
     @media screen and (max-width: 425px) {
-      min-width: 100px;
-      min-height: 150px;
     }
   }
 
@@ -196,10 +191,11 @@ const Window = styled.div`
   border: 2px solid #fff;
   box-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
   left: 100px;
-  height: 45%;
+  height: 55%;
   width: 30%;
   min-width: 270px;
   min-height: 230px;
+
   background: #ccc;
   color: #333;
   transform: translate(0, -50%);
@@ -212,12 +208,15 @@ const Window = styled.div`
 
   @media screen and (max-width: 1024px) {
     position: absolute;
-    top: 75%;
+    top: 70%;
     left: 0;
+    width: 40%;
+    height: 45%;
   }
   @media screen and (max-width: 425px) {
     min-width: 150px;
-    min-height: 130px;
+    min-height: 150px;
+    top: 70%;
   }
 `;
 const TitleBar = styled.div`

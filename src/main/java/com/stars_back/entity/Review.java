@@ -1,5 +1,7 @@
 package com.stars_back.entity;
 
+import com.stars_back.entity.Member;
+import com.stars_back.entity.Travel;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,4 +36,9 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "nick")
     private Member rnick;
+
+    @PreRemove
+    private void preRemoveReview() {
+        this.rnick = null;
+    }
 }

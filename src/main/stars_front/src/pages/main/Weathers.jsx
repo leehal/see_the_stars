@@ -53,7 +53,7 @@ const Pty = styled.div`
 const Tmp = styled.div`
   position: absolute;
   top: 40%;
-  left: 10%;
+  left: 40%;
   font-size: 40px;
 
   @media screen and (max-width: 768px) {

@@ -52,13 +52,14 @@ public class ReviewService {
         }
         return list;
     }
+
     //tno가 같은 review 리스트 보여주기
     public List<ReviewDto> findByTno(Long tno) {
         Member member = memberService.memberIdFindMember();
         List<ReviewDto> list = new ArrayList<>();
         List<Review> reviewList = reviewRepository.findByTravel_Tno(tno);
         for (Review e : reviewList) {
-            List<Image> imageList = imageRepository.findByRno(e.getRno());
+        List<Image> imageList = imageRepository.findByRno(e.getRno());
             List<ImageDto> imgList = new ArrayList<>();
             for (Image image : imageList) {
                 imgList.add(ImageDto.of(image));
@@ -67,11 +68,24 @@ public class ReviewService {
         }
         return list;
     }
+    public List<ReviewDto> reviewList(Long tno) {
+        List<ReviewDto> list = new ArrayList<>();
+        List<Review> reviewList = reviewRepository.findByTravel_Tno(tno);
+        for (Review e : reviewList) {
+            List<Image> imageList = imageRepository.findByRno(e.getRno());
+            List<ImageDto> imgList = new ArrayList<>();
+            for (Image image : imageList) {
+                imgList.add(ImageDto.of(image));
+            }
+            list.add(ReviewDto.of1(e, imgList));
+        }
+        return list;
+    }
 
     public boolean updateReview(ReviewDto dto) {
         log.warn("updateReview 실행! ! !");
         Member member = memberService.memberIdFindMember();
-        Long tno = (long)dto.getTno();
+        Long tno = (long) dto.getTno();
         Travel travel = travelRepository.findById(tno).orElseThrow(
                 () -> new RuntimeException("해당 여행지가 존재하지 않습니다."));
         boolean isTrue = false;
@@ -90,9 +104,9 @@ public class ReviewService {
         return isTrue;
     }
 
-    public boolean UpdateImage(ImageDto img){
+    public boolean UpdateImage(ImageDto img) {
         boolean isTrue = false;
-        Long rno = (long)img.getRno();
+        Long rno = (long) img.getRno();
         Optional<Review> reImg = reviewRepository.findById(rno);
         if (reImg.isPresent()) {
             Image image = Image.builder()
@@ -130,8 +144,8 @@ public class ReviewService {
                     .rnick(member)
                     .build();
             reviewRepository.save(review);
-            log.warn("review의 rno : {} ", review.getRno() );
-            for(ImageDto i : image){
+            log.warn("review의 rno : {} ", review.getRno());
+            for (ImageDto i : image) {
                 i.setRno(review.getRno());
                 Image imageEntity = i.toEntity();
                 images.add(imageEntity);
@@ -174,6 +188,7 @@ public class ReviewService {
         }
 
     }
+
     public boolean imageDelete(Long id) {
         try {
             Image image = imageRepository.findById(id).orElseThrow(
@@ -187,7 +202,7 @@ public class ReviewService {
         }
     }
 
-    public boolean updateOneImg(Long ino, String img){
+    public boolean updateOneImg(Long ino, String img) {
         try {
             Image image = imageRepository.findById(ino).orElseThrow(
                     () -> new RuntimeException("해당 이미지가 존재하지 않습니다.")

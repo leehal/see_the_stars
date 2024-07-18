@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const Common = {
-  DOMAIN: "http://localhost:8222", // Controller 주소
 
   getAccessToken: () => {
     return localStorage.getItem("accessToken");
@@ -10,12 +9,6 @@ const Common = {
   setAccessToken: (token) => {
     localStorage.setItem("accessToken", token);
   },
-  getExpiresIn: () => {
-    return localStorage.getItem("expiresIn");
-  },
-  setExpiresIn: (date) => {
-    localStorage.setItem("expiresIn", date);
-  },
 
   getRefreshToken: () => {
     return localStorage.getItem("refreshToken");
@@ -23,12 +16,6 @@ const Common = {
 
   setRefreshToken: (token) => {
     localStorage.setItem("refreshToken", token);
-  },
-  getRefreshExpiresIn: () => {
-    return localStorage.getItem("refreshExpiresIn");
-  },
-  setRefreshExpiresIn: (date) => {
-    localStorage.setItem("refreshExpiresIn", date);
   },
 
   handleUnauthorized: async () => {

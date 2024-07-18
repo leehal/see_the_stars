@@ -17,7 +17,7 @@ const Button = styled.button`
   align-items: center;
   width: 100%;
   border: none;
-  border-bottom: 3px solid #000;
+
   height: 40%;
   background: #ff52ae;
   color: #fff;

@@ -35,5 +35,8 @@ const MyAxiosApi = {
   myReviewList: async () => {
     return await AxiosInstance.get(LOGO + `/myreviewlist`);
   },
+  withdraw: async () => {
+    return await AxiosInstance.get(LOGO + "/withdraw");
+  },
 };
 export default MyAxiosApi;

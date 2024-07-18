@@ -18,7 +18,6 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin( origins = "http://localhost:3000")
 @RequestMapping("/chat")
 // 사용자가 WebSocket 연결을 설정하기 전에 필요한 데이터를 가져오거나, 특정 작업을 수행하기 위해 사용될 수 있습니다.
 public class ChatController {

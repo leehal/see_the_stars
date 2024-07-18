@@ -9,52 +9,153 @@ import { useNavigate } from "react-router-dom";
 import Profile from "../../component/Profile";
 import AuthAxiosApi from "../../api/AuthAxiosApi";
 import { storage } from "../../api/Firebase";
+import MyBack from "../../image/내가만든배경2.png";
 
 const Container = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-`;
-const Button = styled.button`
-  border-radius: 20px;
-  padding: 10px;
-  width: 150px;
-  cursor: pointer;
-  background-color: #eafccd;
-  border: none;
-  &:hover {
-    background-color: #d6f5a3;
-  }
+  gap: 7%;
+  justify-content: center;
 `;
 
+const Box = styled.div`
+  width: 90%;
+  height: 90%;
+  background-image: url(${MyBack});
+  /* border: 4px solid black; */
+  /* border: 6px solid black; */
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: space-around;
+`;
+
+const ProFileBox = styled.div`
+  width: 40%;
+  /* background-color: red; */
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  justify-content: space-evenly;
+  align-items: center;
+`;
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7%;
+`;
 const InputBox = styled.div`
   display: flex;
   align-items: center;
-  width: 70%;
-  height: 50px;
+  width: 100%;
+  height: 10%;
   padding: 0 20px;
+  justify-content: space-between;
   border: 3px solid black;
   border-radius: 10px;
+
+  div {
+    width: 60%;
+    height: 40px;
+    background: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+
+    p {
+      display: inline-block;
+      width: 100%;
+      height: 50%;
+      font-size: 1.4rem;
+      text-align: center;
+    }
+  }
 
   input {
     text-align: center;
     border: none;
     font-size: 23px;
-    width: 90%;
+    width: 30%;
     padding: 4px;
     font-weight: bold;
     background-color: transparent;
     outline: none;
     padding-top: 10px;
+
+    &::placeholder {
+      font-size: 10px;
+    }
   }
-  input::placeholder {
-    font-size: 24px;
-  }
+
   svg {
-    font-size: 24px;
+    font-size: 40px;
+  }
+  button {
+    padding: 1%;
+    font-size: 1.4rem;
+  }
+`;
+const NoneButton = styled.button`
+  background: none;
+  border: none;
+  color: rgba(0, 0, 0, 0);
+  & > * {
+    visibility: hidden;
   }
 `;
 
-const My = ({ setModalOpen, setHeader, setType, member, onModify }) => {
+const ProfileButtonBox = styled.div`
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+  /* background-color: blue; */
+`;
+const Button = styled.button`
+  width: 100px;
+  height: 30px;
+  font-size: 1.25rem;
+  /* margin-top: 20px; */
+  color: #000;
+  background: linear-gradient(to bottom, #f0f0f0, #dcdcdc);
+  /* background: linear-gradient(to top left, red, transparent 50%),
+    linear-gradient(to top right, blue, transparent 50%),
+    linear-gradient(to bottom left, violet, transparent 50%),
+    linear-gradient(to bottom right, orange, transparent 50%),
+    radial-gradient(circle, white 0%, yellow 25%, green 50%, transparent 75%); */
+  /* radial-gradient(circle, white 0%, transparent 50%); */
+  border: 2px solid #fff;
+  border-top-color: #ccc;
+  border-left-color: #ccc;
+  border-right-color: #333;
+  border-bottom-color: #333;
+  padding-top: 8px;
+  box-shadow: 1px 1px 0 0 #000;
+  cursor: pointer;
+  outline: none;
+  &:active {
+    border-top-color: #333;
+    border-left-color: #333;
+    border-right-color: #ccc;
+    border-bottom-color: #ccc;
+    background: linear-gradient(to bottom, #dcdcdc, #f0f0f0);
+  }
+`;
+
+const My = ({
+  setModalOpen,
+  setHeader,
+  setType,
+  member,
+  onModify,
+  setDelModalOpen,
+  category,
+}) => {
   const inputFile = useRef(null);
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState();
@@ -99,52 +200,76 @@ const My = ({ setModalOpen, setHeader, setType, member, onModify }) => {
   //   return <div>Initializing...</div>;
   // }
   const onClickProfile = async () => {
-    const storageRef = storage.ref();
-    const fileRef = storageRef.child(file?.name);
-    try {
-      await fileRef.put(file);
-      const url = await fileRef.getDownloadURL();
-      console.log("저장경로 확인 : " + url);
-      onModify(url, 1);
-    } catch (e) {
-      console.log(e, "파이어베이스 오류");
+    if (file) {
+      const storageRef = storage.ref();
+      const fileRef = storageRef.child(file?.name);
+      try {
+        await fileRef.put(file);
+        const url = await fileRef.getDownloadURL();
+        console.log("저장경로 확인 : " + url);
+        onModify(url, 1);
+        alert("프로필 수정이 완료");
+      } catch (e) {
+        console.log(e, "파이어베이스 오류");
+      }
     }
   };
 
   return (
     <Container>
-      <Profile
-        size="9rem"
-        onClick={onClickInputFile}
-        border={`3px solid black`}
-        src={previewUrl || member?.image}
-      >
-        <input type="file" onChange={onChangFile} ref={inputFile} hidden />
-      </Profile>
-      <button onClick={onClickProfile}>프로필수정</button>
-      <InputBox>
-        <GoPerson style={{ color: `gray` }} />
-        <div>{member?.mid}</div>
-      </InputBox>
-      {member?.social === "COMMON" && (
-        <InputBox>
-          <GoLock style={{ color: `gray` }} />
-          <div>비밀번호</div>
-          <button onClick={() => onClickEdit(2)}>수정</button>
-        </InputBox>
-      )}
-      <InputBox>
-        <GoPerson style={{ color: `gray` }} />
-        <div>{member?.nick}</div>
-        <button onClick={() => onClickEdit(3)}>수정</button>
-      </InputBox>
-      {member?.social === "COMMON" && (
-        <InputBox>
-          <GoMail style={{ color: `gray` }} />
-          <div>{member?.email}</div>
-          <button onClick={() => onClickEdit(4)}>수정</button>
-        </InputBox>
-      )}
+      <Box>
+        <ProFileBox>
+          {/* <div> */}
+          <Profile
+            size="9rem"
+            onClick={onClickInputFile}
+            border={`3px solid black`}
+            src={previewUrl || member?.image}
+          >
+            <input type="file" onChange={onChangFile} ref={inputFile} hidden />
+          </Profile>
+          <ProfileButtonBox>
+            <Button onClick={onClickProfile}>프로필수정</Button>
+            {/* </div> */}
+            <Button onClick={() => setDelModalOpen(true)}>회원탈퇴</Button>
+          </ProfileButtonBox>
+        </ProFileBox>
+        <Column>
+          <InputBox>
+            <GoPerson style={{ color: `gray` }} />
+            <div>
+              <p>{member?.mid}</p>
+            </div>
+
+            <Button>수정</Button>
+          </InputBox>
+          {member?.social === "COMMON" && (
+            <InputBox>
+              <GoLock style={{ color: `gray` }} />
+              <div>
+                <p>비밀번호</p>
+              </div>
+              <Button onClick={() => onClickEdit(2)}>수정</Button>
+            </InputBox>
+          )}
+          <InputBox>
+            <GoPerson style={{ color: `gray` }} />
+            <div>
+              <p>{member?.nick}</p>
+            </div>
+            <Button onClick={() => onClickEdit(3)}>수정</Button>
+          </InputBox>
+          {member?.social === "COMMON" && (
+            <InputBox>
+              <GoMail style={{ color: `gray` }} />
+              <div>
+                <p>{member?.email}</p>
+              </div>
+              <Button onClick={() => onClickEdit(4)}>수정</Button>
+            </InputBox>
+          )}
+        </Column>
+      </Box>
     </Container>
   );
 };

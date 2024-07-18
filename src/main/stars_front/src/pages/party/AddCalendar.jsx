@@ -149,7 +149,6 @@ const AddCalendar = ({
   setFields,
   pno,
   memberList,
-  myNick,
   addView,
   setDivView,
   setLend,
@@ -182,32 +181,6 @@ const AddCalendar = ({
     };
     getMember();
   }, []);
-
-  const connectWebsocket = () => {
-    console.log("방번호 : " + roomId);
-    if (!ws.current) {
-      ws.current = new WebSocket(Common.DOMAIN + "/ws/chat");
-      ws.current.onopen = () => {
-        console.log("connected to " + Common.DOMAIN);
-        setSocketConnected(true);
-      };
-    }
-    if (socketConnected) {
-      ws.current.send(
-        JSON.stringify({
-          type: "ENTER",
-          roomId: roomId,
-          sender: sender.nick,
-          message: "처음으로 접속 합니다.",
-        })
-      );
-    }
-    ws.current.onmessage = (evt) => {
-      const data = JSON.parse(evt.data);
-      console.log("테스트" + data.message);
-      setChatList((prevItems) => [...prevItems, data]);
-    };
-  };
 
   const onClickMsgClose = () => {
     ws.current.send(
@@ -248,30 +221,46 @@ const AddCalendar = ({
   }, [pno]);
 
   const updateCos = async () => {
-    try {
-      console.log("place : " + place);
-      const rsp = await PartyAxiosApi.updateCos(cano, caddr, caContent, place);
-      setLend((prev) => !prev);
+    if (place !== "") {
+      try {
+        console.log("place : " + place);
+        const rsp = await PartyAxiosApi.updateCos(
+          cano,
+          caddr,
+          caContent,
+          place
+        );
+        setLend((prev) => !prev);
+        setCaddr("");
+        setcaContent("");
+        setPlace("");
+        closeModal();
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
       closeModal();
-    } catch (e) {
-      console.log(e);
     }
   };
 
   const addCosOne = async () => {
-    try {
-      console.log("place : " + place);
-      const rsp = await PartyAxiosApi.cosOneSave(
-        caddr,
-        caContent,
-        pno,
-        todate,
-        place
-      );
-      setLend((prev) => !prev);
-      closeModal();
-    } catch (e) {
-      console.log(e);
+    if (caddr !== "") {
+      try {
+        console.log("place : " + place);
+        const rsp = await PartyAxiosApi.cosOneSave(
+          caddr,
+          caContent,
+          pno,
+          todate,
+          place
+        );
+        setLend((prev) => !prev);
+        closeModal();
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      alert("장소를 선택해주세요");
     }
   };
 
@@ -284,7 +273,17 @@ const AddCalendar = ({
       console.log(e);
     }
   };
-
+  const onClickPlus = () => {
+    if (todate === undefined) {
+      alert("날짜를 선택해주세요.");
+      // closeModal();
+    } else {
+      setModalOpen(true);
+      setModalIsSaUP(true);
+      setCaddr("");
+      setcaContent("");
+    }
+  };
   if (addView === "save") {
     return (
       <Container>
@@ -296,10 +295,11 @@ const AddCalendar = ({
             setFields={setFields}
             date={todate}
             fields={fields}
-            myNick={myNick}
             setDivView={setDivView}
             setPlace={setPlace}
             place={place}
+            setLend={setLend}
+            setAddView={setAddView}
           />
         </Plan>
       </Container>
@@ -320,15 +320,7 @@ const AddCalendar = ({
         <Container>
           <TodateBox>
             {todate}
-            <FaPlus
-              color="#dbd5d5"
-              onClick={() => {
-                setModalOpen(true);
-                setModalIsSaUP(true);
-                setCaddr("");
-                setcaContent("");
-              }}
-            />
+            <FaPlus color="#dbd5d5" onClick={onClickPlus} />
           </TodateBox>
           <Plan>
             {fields &&
@@ -391,8 +383,8 @@ const AddCalendar = ({
               memberList={memberList}
               setCaddr={setCaddr}
               caContent={caContent}
-              place={place}
               setPlace={setPlace}
+              todate={todate}
             ></CosUpdate>
             <CouseUpdateButtonBox>
               <CouseUpdateButton onClick={addCosOne}>추가</CouseUpdateButton>

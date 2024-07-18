@@ -18,20 +18,20 @@ import java.util.Map;
 public class PartyController {
     private final PartyService partyService;
 
-    //   save party
+//   save party
     @PostMapping("/save")
     public ResponseEntity<Boolean> createParty(@RequestBody PartyRequestDto requestDto){
         log.info(requestDto.getPname());
         log.info(requestDto.getNick().toString());
         return ResponseEntity.ok(partyService.partyInsert(requestDto));
     }
-    //    내 모임명과 해당 pno list 반환
+//    내 모임명과 해당 pno list 반환
     @GetMapping("/list")
     public ResponseEntity<List<PartyNameListDto>> myPartyList(){
-        return ResponseEntity.ok(partyService.partyView());
+       return ResponseEntity.ok(partyService.partyView());
     }
 
-    //    선택된 날짜(처음은 그 날 날짜)와 선택한 pno값을 받아 날짜에 따른 일정과 그 파티의 멤버 반환
+//    선택된 날짜(처음은 그 날 날짜)와 선택한 pno값을 받아 날짜에 따른 일정과 그 파티의 멤버 반환
 //    @GetMapping("/plan")
 //    public ResponseEntity<PartyResponseDto> mypartyInfo(@RequestParam("pno") Long pno, @RequestParam("date") String date){
 //        List<MemberResDto > memberList = partyService.partyMemberList(pno);
@@ -70,7 +70,7 @@ public class PartyController {
     public ResponseEntity<List<MemberResDto>> partyMemberLsit(@PathVariable("pno") Long pno){
         return ResponseEntity.ok(partyService.partyMemberList(pno));
     }
-    //    파티의 찜 모음 리스트
+//    파티의 찜 모음 리스트
     @PostMapping("/memDibs")
     public ResponseEntity<List<TravelDto>> pMemberDibsList(@RequestBody PmemberDibsReqDto dtos){
         return ResponseEntity.ok(partyService.membersDibsList(dtos.getMemberResDtos()));
