@@ -17,6 +17,7 @@ import pauseImageInactive from "../../image/배경 없는 정지.png";
 const Container = styled.div`
   width: 100%;
   height: auto;
+  background: #f4eedd;
   overflow-x: hidden;
   display: flex;
   justify-content: center;
@@ -31,6 +32,14 @@ const Container = styled.div`
   }
 `;
 
+const Back = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 300px;
+  /* background: #f4eedd; */
+  top: 40%;
+  z-index: -1;
+`;
 const Content = styled.div`
   width: 70vw;
   display: flex;
@@ -354,6 +363,7 @@ const Main = () => {
       <Container>
         <Content>
           <Firstp>
+            {/* <Back></Back> */}
             <Promotion>
               <Advertisement setModalOpen={setModalOpen} />
             </Promotion>

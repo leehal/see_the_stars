@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   /* margin-bottom: 1.5%; */
-  width: 100vw;
-  height: 70vh;
+  width: 100%;
+  height: 66vh;
   background-color: #f4eedd;
   display: flex; // Flexbox 활성화
   justify-content: space-between; // 양옆으로 배치

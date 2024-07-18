@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
+import MarkerImg from "../../image/카카오맵마커.png";
 
 const MapContainer = styled.div`
   width: 75%;
@@ -107,28 +108,40 @@ const Navi = ({ cosList, setDivView, setcosList }) => {
             content: `
               <div class="label"
                 style="
-                margin-bottom: 120px;
+                margin-bottom: 70px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                padding-top: 5px;
                 width: 70px;
                 height: 20px;
-                border: 1px solid black;
+                font-weight: bold;
+                border: 3px solid black;
                 border-radius: 5px;
-                background-color: blue;
-                color: white;">
+                background-color: #ffbb00;
+                color: black;">
                 ${position.caContent}
               </div>
             `,
           });
+          const markerImage = new kakao.maps.MarkerImage(
+            MarkerImg,
+            new kakao.maps.Size(15, 20),
+            { offset: new kakao.maps.Point(8, 20) }
+          );
+          const marker = new kakao.maps.Marker({
+            position: coords,
+            image: markerImage,
+          });
 
+          marker.setMap(map);
           customOverlay.setMap(map);
           bounds.extend(coords); // 범위에 좌표 추가
 
           // Polyline 경로에 좌표 추가
           linePath.push(coords);
         } catch (error) {
-          console.error("Error adding marker and overlay:", error);
+          console.error("Error adding marker and overlay:", error, position);
         }
       }
 
@@ -138,8 +151,8 @@ const Navi = ({ cosList, setDivView, setcosList }) => {
       // Polyline 생성
       const polyline = new kakao.maps.Polyline({
         path: linePath, // Polyline 경로
-        strokeWeight: 5, // 선의 두께
-        strokeColor: "#ff0000", // 선의 색
+        strokeWeight: 2, // 선의 두께
+        strokeColor: "#c33740", // 선의 색
         strokeOpacity: 1, // 선의 불투명도
         strokeStyle: "solid", // 선의 스타일
       });

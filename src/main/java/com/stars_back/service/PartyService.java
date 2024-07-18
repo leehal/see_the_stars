@@ -4,6 +4,12 @@ import com.stars_back.dto.*;
 import com.stars_back.entity.*;
 import com.stars_back.entity.Calendar;
 import com.stars_back.repository.*;
+import com.stars_back.service.ChatService;
+import com.stars_back.service.MemberService;
+import com.stars_back.dto.*;
+import com.stars_back.entity.*;
+import com.stars_back.entity.Calendar;
+import com.stars_back.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,12 +33,17 @@ public class PartyService {
     private final DibsRepository dibsRepository;
     private final TravelRepository travelRepository;
     private final ChattingRoomRepository chatRoomRepository;
+    private final ChattingRepository chattingRepository;
     private final ChatService chatService;
+
+
 
     //    party save
     public boolean partyInsert(PartyRequestDto reqDto) {
         boolean isTrue = false;
+        Member myNick = memberService.memberIdFindMember();
         List<String> nickName = reqDto.getNick();
+        nickName.add(myNick.getNick());
         String pname1 = reqDto.getPname();
 
         Party party = Party.builder()
@@ -42,17 +53,11 @@ public class PartyService {
 
         partyRepository.save(party);
 
-//        String randomId = UUID.randomUUID().toString(); // roomId 생성 PK, String 타입 // 반환이 UUID 타입 객체라 toString()을 사용해 문자열로 만들어줌.
-//        ChattingRoom room = ChattingRoom.builder()
-//                .roomId(randomId)
-//                .chatPno(party)
-//                .createdAt(LocalDateTime.now())
-//                .build();
-//        chatRoomRepository.save(room);
-
         chatService.createRoom(party);
 
-        Optional<Party> partyPname = partyRepository.findByPname(pname1);
+        Long pno =  party.getPno();
+
+        Optional<Party> partyPname = partyRepository.findById(pno);
         if (partyPname.isPresent()) {
             for (String s : nickName) {
                 Optional<Member> member = memberRepository.findByNick(s);
@@ -125,34 +130,30 @@ public class PartyService {
         return list;
     }
 
-    //    calendar insert
+    //    calendar insert 사용함.
     public boolean calendarInsert(CalendarSaveDto calendarDtos) {
         boolean isTrue = false;
         Optional<Party> party = partyRepository.findById(calendarDtos.getPno());
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        LocalDateTime dateTime = LocalDate.parse(calendarDto.getCaDate(), formatter).atStartOfDay();
-        Optional<Member> member = memberRepository.findByNick(calendarDtos.getNick());
+        Member member = memberService.memberIdFindMember();
 
         if (party.isPresent()) {
 
-            if (member.isPresent()) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분", Locale.KOREAN);
-                LocalDateTime dateTime = LocalDate.parse(calendarDtos.getDate(), formatter).atStartOfDay();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분", Locale.KOREAN);
+            LocalDateTime dateTime = LocalDate.parse(calendarDtos.getDate(), formatter).atStartOfDay();
 
-                for (CalendarDto dto : calendarDtos.getDtos()) {
-                    Calendar calendar = calendarRepository.save(
-                            Calendar.builder()
-                                    .caddr(dto.getCaddr())
-                                    .calenderPno(party.get())
-                                    .caContent(dto.getCaContent())
-                                    .calenderNick(member.get())
-                                    .caDate(dateTime)
-                                    .cplace(dto.getCplace())
-                                    .build()
-                    );
-                    calendarRepository.save(calendar);
-                    isTrue = true;
-                }
+            for (CalendarDto dto : calendarDtos.getDtos()) {
+                Calendar calendar = calendarRepository.save(
+                        Calendar.builder()
+                                .caddr(dto.getCaddr())
+                                .calenderPno(party.get())
+                                .caContent(dto.getCaContent())
+                                .calenderNick(member)
+                                .caDate(dateTime)
+                                .cplace(dto.getCplace())
+                                .build()
+                );
+                calendarRepository.save(calendar);
+                isTrue = true;
             }
         }
         return isTrue;
@@ -313,13 +314,25 @@ public class PartyService {
         return isTrue;
     }
 
-    public boolean deletePartyPeople(Long pno){
-        boolean isTrue= false;
+    public boolean deletePartyPeople(Long pno) {
+        boolean isTrue = false;
         Member member = memberService.memberIdFindMember();
         Optional<Party> party = partyRepository.findById(pno);
-        if(party.isPresent()){
-            partyPeopleReRepository.deleteByPartyPeopleNickAndPartyPeoplePno(member,party.get());
+        if (party.isPresent()) {
+            partyPeopleReRepository.deleteByPartyPeopleNickAndPartyPeoplePno(member, party.get());
             isTrue = true;
+            List<PartyPeople> partyPeople = partyPeopleReRepository.findByPartyPeoplePno(party.get());
+            if(partyPeople.isEmpty()){
+                Optional<ChattingRoom> chatRoom =  chatRoomRepository.findByChatPno(party.get());
+                if(chatRoom.isPresent()) {
+                    List<Chatting> chatMsg = chattingRepository.findByChatRoom(chatRoom.get());
+                    for (Chatting chat : chatMsg) {
+                        chattingRepository.deleteById(chat.getChno());
+                    }
+                    chatRoomRepository.deleteById(chatRoom.get().getRoomId());
+                }
+                partyRepository.deleteById(pno);
+            }
         }
         return isTrue;
     }

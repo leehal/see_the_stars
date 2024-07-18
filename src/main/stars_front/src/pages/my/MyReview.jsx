@@ -69,6 +69,7 @@ const MyReview = ({ refresh, setRefresh }) => {
     setNewReview({
       image: review.image,
       rno: review.rno,
+      tno: review.tno,
       title: review.title,
       rcontent: review.rcontent,
       rate: review.rate,
@@ -226,12 +227,15 @@ const MyReview = ({ refresh, setRefresh }) => {
             </ReviewStyle.ReviewHeader>
 
             <ReviewStyle.ReviewBody>
+              <ReviewStyle.ReviewTitleBox>
+                "{review.title}"
+              </ReviewStyle.ReviewTitleBox>
               <ReviewStyle.ReviewTextBox>
                 <ReviewStyle.ReviewText>
                   {review.rcontent}
                 </ReviewStyle.ReviewText>
               </ReviewStyle.ReviewTextBox>
-              {review.image.length > 1 && (
+              {review.image.length > 0 && (
                 <ReviewStyle.ImageContainer
                   onClick={() => openImageModal(review.image)}
                 >

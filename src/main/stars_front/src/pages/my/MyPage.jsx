@@ -17,10 +17,15 @@ import ReviewStyle from "../goodtrip/ReviewStyle";
 
 const Container = styled.div`
   display: flex;
+  width: 100%;
   height: 80vh;
   justify-content: center;
   align-items: center;
   background-color: #f4eedd;
+
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 const BoxBox = styled.div`
   width: 80%;
@@ -30,41 +35,61 @@ const BoxBox = styled.div`
   align-items: center;
   background-color: #aec6cf;
   border: 8px solid black;
+
+  @media screen and (max-width: 1024px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 const Box = styled.div`
   width: 80%;
   height: 60vh;
+  overflow: hidden;
   display: flex;
-  border-radius: 40px;
+  border-radius: 40px 0 40px 40px;
   background-color: #dc7530;
   border: 5px solid black;
   box-shadow: 6px 14px 0 #000, 14px 14px 0 #000; /* 그림자 효과 추가 */
   padding: 15px;
+
+  @media screen and (max-width: 1024px) {
+    width: 90%;
+  }
   @media screen and (max-width: 768px) {
     flex-direction: column;
   }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const Menu = styled.div`
-  min-width: 250px;
+  width: 30%;
+  /* background: red; */
   display: flex;
   font-weight: bold;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   @media screen and (max-width: 768px) {
+    width: 100%;
     flex-direction: row;
     gap: 10px;
   }
 `;
 const Div = styled.div`
   display: flex;
-  font-size: 50px;
+  font-size: 40px;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   width: 100%;
   height: 130px;
-  background-color: ${({ active }) => (active ? `white` : "transparent")};
+  background-color: ${({ active }) => (active ? `#f4eedd` : "transparent")};
   border-radius: ${({ active }) => (active ? `30px 0 0 30px` : "0")};
   z-index: 1;
   color: ${({ active }) => (active ? `#bf00ff` : "black")};
@@ -72,31 +97,63 @@ const Div = styled.div`
   &:hover {
     color: #bf00ff;
   }
+  @media screen and (max-width: 1024px) {
+    font-size: 30px;
+  }
   @media screen and (max-width: 768px) {
     flex-direction: row;
-    font-size: 30px;
+    font-size: 25px;
     height: 70px;
     width: 80%;
     border-radius: ${({ active }) => (active ? `30px 30px 0 0` : "0")};
   }
+  @media screen and (max-width: 375px) {
+    font-size: 20px;
+  }
 `;
 const MyInfor = styled.div`
   width: 100%;
-  min-height: 95%;
-  padding: 13px 0;
-  padding-right: 10px;
+  height: 100%;
+  /* min-height: 95%; */
+  /* padding: 13px 0;
+  padding-right: 10px; */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: ${({ category }) =>
-    category === `profile` ? ` 0 40px 40px 40px` : "40px"};
-  background: #fff;
+    category === `profile` ? ` 0 40px 40px 40px` : "0 0 0 40px"};
+  background: #f4eedd;
   @media screen and (max-width: 768px) {
     border-radius: ${({ category }) =>
       category === `profile`
         ? ` 0 40px 40px 40px`
+        : category === `dibs`
+        ? `none`
         : category === `reviews`
         ? `  40px 0 40px 40px`
         : "40px"};
-    min-height: 80%;
+    /* min-height: 80%; */
+  }
+`;
+const Button = styled.button`
+  width: 100px;
+  height: 50px;
+  padding-top: 10px;
+  font-size: 25px;
+  /* font-weight: bold; */
+  border-radius: 10px;
+  background: #fff;
+  border: none;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    background: #c33740;
+    color: #fff;
+  }
+  @media screen and (max-width: 768px) {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -251,14 +308,17 @@ const MyPage = () => {
               >
                 내가 쓴 후기
               </Div>
+              {category === "profile" && (
+                <Button onClick={() => setDelModalOpen(true)}>회원탈퇴</Button>
+              )}
             </Menu>
             <MyInfor category={category}>{onMenu()}</MyInfor>
           </Box>
         </BoxBox>
       </Container>
-      <Modal open={modalOpen} close={closeModal} header={header}>
+      <Modal2 open={modalOpen} close={closeModal} header={header}>
         {onEdit(type)}
-      </Modal>
+      </Modal2>
       <Modal2
         open={delModalOpen}
         close={() => setDelModalOpen(false)}

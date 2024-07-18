@@ -16,19 +16,33 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   background-color: #2c475a;
+  /* overflow-y: auto; */
   border-right: 6px solid black;
-  gap: 10px;
+  /* gap: 10px; */
   flex-direction: column;
   box-shadow: 0 4px 6px rgba(0, 0.1, 0.1, 0.1);
-  overflow-y: auto;
   z-index: 1;
   transition: transform 0.3s ease;
   @media (max-width: 768px) {
     width: 30%;
-    height: 100%;
+    height: 66vh;
     display: ${({ isOpen }) => (isOpen ? "flex" : "none")}; /* 가시성 제어 */
     z-index: 99;
     position: fixed;
+  }
+`;
+
+const PnameBox = styled.div`
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow-y: auto;
+  gap: 10px;
+  @media (max-width: 768px) {
+    height: 100%;
   }
 `;
 
@@ -39,11 +53,9 @@ const ToggleButton = styled.div`
   cursor: pointer;
   width: 10%;
   height: 7%;
-  /* background-color: red; */
   display: flex;
   align-items: center;
   justify-content: center;
-  /* top: 10px; */
   @media (min-width: 769px) {
     display: none;
   }
@@ -108,7 +120,7 @@ const ListIconBox = styled.div`
 const PartyName = styled.div`
   position: relative;
   width: 80%;
-  height: 6%;
+  height: 50px;
   background-color: #aec6cf;
   color: black;
   display: flex;
@@ -127,12 +139,8 @@ const PartyName = styled.div`
     position: absolute;
     right: 2%;
   }
-  @media (max-width: 1023px) {
+  /* @media (max-width: 1023px) {
     font-size: 1rem;
-  }
-  /* @media (max-width: 720px) {
-    height: 10%;
-    width: 80%;
   } */
 `;
 
@@ -244,40 +252,42 @@ const PartyList = ({
             />
           </ListIconBox>
         </ListBox>
-        {pNameList &&
-          pNameList.map((p) =>
-            pno === p.pno ? (
-              <PartyName
-                key={p.pno}
-                onClick={() => {
-                  setPno(p.pno);
-                  setNowPname(p.pname);
-                }}
-                style={{ background: `#c33740` }}
-              >
-                <p>{p.pname}</p>
-                <PiXSquare
+        <PnameBox>
+          {pNameList &&
+            pNameList.map((p) =>
+              pno === p.pno ? (
+                <PartyName
+                  key={p.pno}
                   onClick={() => {
-                    setDeleteModal(true);
-                    setModalOpen(true);
+                    setPno(p.pno);
+                    setNowPname(p.pname);
                   }}
-                />
-              </PartyName>
-            ) : (
-              <PartyName
-                key={p.pno}
-                onClick={() => {
-                  setPno(p.pno);
-                  setNowPname(p.pname);
-                  if (location.pathname !== "/party") {
-                    navigate("/party");
-                  }
-                }}
-              >
-                <p>{p.pname}</p>
-              </PartyName>
-            )
-          )}
+                  style={{ background: `#c33740` }}
+                >
+                  <p>{p.pname}</p>
+                  <PiXSquare
+                    onClick={() => {
+                      setDeleteModal(true);
+                      setModalOpen(true);
+                    }}
+                  />
+                </PartyName>
+              ) : (
+                <PartyName
+                  key={p.pno}
+                  onClick={() => {
+                    setPno(p.pno);
+                    setNowPname(p.pname);
+                    if (location.pathname !== "/party") {
+                      navigate("/party");
+                    }
+                  }}
+                >
+                  <p>{p.pname}</p>
+                </PartyName>
+              )
+            )}
+        </PnameBox>
       </Container>
 
       {!deleteModal && modalOpen && (

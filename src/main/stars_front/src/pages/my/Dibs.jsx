@@ -13,6 +13,7 @@ const Container = styled.div`
   overflow-y: auto;
   align-items: center;
   justify-content: center;
+  height: 100%;
 `;
 
 const TravelBox = styled.div`

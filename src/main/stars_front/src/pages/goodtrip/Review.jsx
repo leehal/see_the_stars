@@ -245,7 +245,7 @@ const Reviews = () => {
                     {review.rcontent}
                   </ReviewStyle.ReviewText>
                 </ReviewStyle.ReviewTextBox>
-                {review.image.length > 1 && (
+                {review.image.length > 0 && (
                   <ReviewStyle.ImageContainer
                     onClick={() => openImageModal(review.image)}
                   >

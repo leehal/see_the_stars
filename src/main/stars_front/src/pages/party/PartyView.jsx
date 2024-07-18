@@ -19,10 +19,11 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 85%;
-  /* position: relative; */
   height: 100%;
   background-color: #f4eedd;
   color: #fff; /* 레트로 색상 */
+  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
+
   @media (max-width: 768px) {
     width: 100%;
     height: 100%;
@@ -173,10 +174,19 @@ const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
   const [newName, setNewName] = useState("");
   const [focus, setFocus] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const closeModal = () => setModalOpen(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (pno === undefined) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [pno]);
 
   const goUpdate = async (e) => {
     if (e.key === "Enter") {
@@ -238,7 +248,7 @@ const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
   if (divView === "calendar") {
     return (
       <>
-        <Container>
+        <Container disabled={isDisabled}>
           <MainFun>
             <LeftBox>
               <CalendarBox

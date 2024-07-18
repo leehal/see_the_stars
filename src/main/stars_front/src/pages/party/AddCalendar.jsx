@@ -60,6 +60,9 @@ const TodateBox = styled.div`
     font-weight: bold;
   }
 `;
+const Save = styled.div`
+  overflow-y: auto;
+`;
 
 const OnePlan = styled.div`
   width: 100%;
@@ -289,18 +292,20 @@ const AddCalendar = ({
       <Container>
         <Plan>
           <TodateBox>{todate}</TodateBox>
-          <CosSave
-            memberList={memberList}
-            pno={pno}
-            setFields={setFields}
-            date={todate}
-            fields={fields}
-            setDivView={setDivView}
-            setPlace={setPlace}
-            place={place}
-            setLend={setLend}
-            setAddView={setAddView}
-          />
+          <Save>
+            <CosSave
+              memberList={memberList}
+              pno={pno}
+              setFields={setFields}
+              date={todate}
+              fields={fields}
+              setDivView={setDivView}
+              setPlace={setPlace}
+              place={place}
+              setLend={setLend}
+              setAddView={setAddView}
+            />
+          </Save>
         </Plan>
       </Container>
     );

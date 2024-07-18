@@ -16,64 +16,111 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   gap: 7%;
+  align-items: center;
   justify-content: center;
 `;
 
 const Box = styled.div`
   width: 90%;
   height: 90%;
-  background-image: url(${MyBack});
+  /* background-image: url(${MyBack}); */
   /* border: 4px solid black; */
   /* border: 6px solid black; */
   /* background-position: center; */
+  /* background: red; */
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  background: #fff;
+  justify-content: center;
+
+  @media screen and (max-width: 1024px) {
+    width: 90%;
+    justify-content: space-evenly;
+  }
+  @media screen and (max-width: 425px) {
+    width: 90%;
+    justify-content: space-between;
+  }
 `;
 
 const ProFileBox = styled.div`
   width: 40%;
+  height: 80%;
   /* background-color: red; */
-
   display: flex;
+  /* background: red; */
   flex-direction: column;
   flex-wrap: wrap;
-
   justify-content: space-evenly;
   align-items: center;
+
+  @media screen and (max-width: 768px) {
+    width: 30%;
+    align-items: center;
+  }
+  @media screen and (max-width: 425px) {
+    width: 30%;
+    justify-content: center;
+    gap: 20px;
+  }
 `;
 const Column = styled.div`
   display: flex;
+  width: 50%;
+  height: 80%;
   flex-direction: column;
-  justify-content: center;
-  gap: 7%;
+  /* background: #fff; */
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 2%;
+
+  @media screen and (max-width: 425px) {
+    width: 65%;
+  }
 `;
 const InputBox = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 10%;
+  width: 80%;
+  height: 15%;
   padding: 0 20px;
+  background: #f3f3f3;
   justify-content: space-between;
-  border: 3px solid black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /* border: 2px solid black; */
   border-radius: 10px;
 
+  @media screen and (max-width: 1024px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 425px) {
+    width: 100%;
+    padding: 0 10px;
+  }
+
   div {
-    width: 60%;
-    height: 40px;
-    background: yellow;
+    width: 50%;
+    height: 25px;
+    /* background: yellow; */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 25px;
 
     p {
       display: inline-block;
       width: 100%;
-      height: 50%;
-      font-size: 1.4rem;
+      height: 75%;
+      font-size: 25px;
       text-align: center;
+
+      @media screen and (max-width: 1024px) {
+        font-size: 20px;
+      }
+      @media screen and (max-width: 425px) {
+        font-size: 18px;
+      }
     }
   }
 
@@ -96,9 +143,65 @@ const InputBox = styled.div`
   svg {
     font-size: 40px;
   }
-  button {
-    padding: 1%;
-    font-size: 1.4rem;
+`;
+const Button = styled.button`
+  width: 80px;
+  height: 30px;
+  font-size: 25px;
+  /* margin-top: 20px; */
+  padding-top: 5px;
+  color: #fff;
+  background: linear-gradient(to bottom, #d45353, #dd7777);
+  border: 2px solid #fff;
+  border-top-color: #ccc;
+  border-left-color: #ccc;
+  border-right-color: #333;
+  border-bottom-color: #333;
+  box-shadow: 1px 1px 0 0 #000;
+  cursor: pointer;
+  outline: none;
+  &:active {
+    border-top-color: #333;
+    border-left-color: #333;
+    border-right-color: #ccc;
+    border-bottom-color: #ccc;
+    background: linear-gradient(to bottom, #d45353, #dd7777);
+  }
+  @media screen and (max-width: 1024px) {
+    width: 60px;
+    font-size: 20px;
+  }
+`;
+const ButtonF = styled.button`
+  width: 100px;
+  /* height: 30px; */
+  font-size: 25px;
+  /* margin-top: 20px; */
+  padding-top: 10px;
+  color: #fff;
+  background: linear-gradient(to bottom, #d45353, #dd7777);
+
+  border: 2px solid #fff;
+  border-top-color: #ccc;
+  border-left-color: #ccc;
+  border-right-color: #333;
+  border-bottom-color: #333;
+  box-shadow: 1px 1px 0 0 #000;
+  cursor: pointer;
+  outline: none;
+  &:active {
+    border-top-color: #333;
+    border-left-color: #333;
+    border-right-color: #ccc;
+    border-bottom-color: #ccc;
+    background: linear-gradient(to bottom, #d45353, #dd7777);
+  }
+  @media screen and (max-width: 425px) {
+    width: 80px;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 375px) {
+    font-size: 18px;
   }
 `;
 const NoneButton = styled.button`
@@ -109,41 +212,21 @@ const NoneButton = styled.button`
     visibility: hidden;
   }
 `;
+const BinBox = styled.button`
+  width: 100px;
+  height: 30px;
+  background: none;
+  border: none;
+`;
 
 const ProfileButtonBox = styled.div`
   width: 90%;
   display: flex;
   justify-content: space-around;
   /* background-color: blue; */
-`;
-const Button = styled.button`
-  width: 100px;
-  height: 30px;
-  font-size: 1.25rem;
-  /* margin-top: 20px; */
-  color: #000;
-  background: linear-gradient(to bottom, #f0f0f0, #dcdcdc);
-  /* background: linear-gradient(to top left, red, transparent 50%),
-    linear-gradient(to top right, blue, transparent 50%),
-    linear-gradient(to bottom left, violet, transparent 50%),
-    linear-gradient(to bottom right, orange, transparent 50%),
-    radial-gradient(circle, white 0%, yellow 25%, green 50%, transparent 75%); */
-  /* radial-gradient(circle, white 0%, transparent 50%); */
-  border: 2px solid #fff;
-  border-top-color: #ccc;
-  border-left-color: #ccc;
-  border-right-color: #333;
-  border-bottom-color: #333;
-  padding-top: 8px;
-  box-shadow: 1px 1px 0 0 #000;
-  cursor: pointer;
-  outline: none;
-  &:active {
-    border-top-color: #333;
-    border-left-color: #333;
-    border-right-color: #ccc;
-    border-bottom-color: #ccc;
-    background: linear-gradient(to bottom, #dcdcdc, #f0f0f0);
+
+  @media screen and (max-width: 1024px) {
+    width: 80%;
   }
 `;
 
@@ -153,12 +236,12 @@ const My = ({
   setType,
   member,
   onModify,
-  setDelModalOpen,
   category,
 }) => {
   const inputFile = useRef(null);
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState();
+  const [size, setSize] = useState("9rem");
 
   const onChangFile = (e) => {
     const selectedFile = e.target.files[0];
@@ -215,23 +298,42 @@ const My = ({
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setSize("9rem");
+      } else if (window.innerWidth > 425) {
+        setSize("7rem");
+      } else {
+        setSize("5rem");
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    // 초기 실행을 위해 호출
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <Container>
       <Box>
         <ProFileBox>
           {/* <div> */}
           <Profile
-            size="9rem"
+            size={size}
             onClick={onClickInputFile}
-            border={`3px solid black`}
+            // border={`1px solid black`}
             src={previewUrl || member?.image}
           >
             <input type="file" onChange={onChangFile} ref={inputFile} hidden />
           </Profile>
           <ProfileButtonBox>
-            <Button onClick={onClickProfile}>프로필수정</Button>
+            <ButtonF onClick={onClickProfile}>프로필수정</ButtonF>
             {/* </div> */}
-            <Button onClick={() => setDelModalOpen(true)}>회원탈퇴</Button>
           </ProfileButtonBox>
         </ProFileBox>
         <Column>
@@ -240,8 +342,7 @@ const My = ({
             <div>
               <p>{member?.mid}</p>
             </div>
-
-            <Button>수정</Button>
+            <BinBox></BinBox>
           </InputBox>
           {member?.social === "COMMON" && (
             <InputBox>
