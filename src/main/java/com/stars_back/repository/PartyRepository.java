@@ -8,8 +8,4 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PartyRepository extends JpaRepository<Party,Long> {
-    Optional<Party> findByPname(String pname);
-
-//    List<>
-}
+public interface PartyRepository extends JpaRepository<Party,Long> {}
