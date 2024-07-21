@@ -12,20 +12,17 @@ const MapContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  /* border-radius: 10px 10px 10px 10px; */
   background-color: #c33740;
   box-shadow: 6px 6px 0 #000, 14px 14px 0 #000; /* 그림자 효과 추가 */
   @media (max-width: 768px) {
     width: 80%;
-    height: 90%;
+    height: 80%;
   }
 `;
 const MapHeader = styled.div`
   width: 100%;
   height: 11.5%;
-  /* border-radius: 0 10px 0 0; */
   background-color: #c33740;
-  /* border-bottom: solid 4px #000; */
   display: flex;
   justify-content: flex-end;
   position: relative;
@@ -33,8 +30,8 @@ const MapHeader = styled.div`
   color: #f4eedd;
   @media (max-width: 768px) {
     font-size: 1.5rem;
-    padding: 0.2rem;
-    height: 8%;
+    /* padding: 0.2rem; */
+    height: 15%;
   }
 `;
 
@@ -91,15 +88,15 @@ const Navi = ({ cosList, setDivView, setcosList }) => {
 
     // 모든 주소에 대해 좌표 검색 및 마커와 오버레이 추가
     const addMarkersAndOverlays = async () => {
-      if (cosList.length === 0) {
-        setcosList([
-          {
-            caddr: "서울특별시 강남구 강남구 테헤란로14길 6",
-            caContent: "입력값 X",
-          },
-        ]);
-      }
       for (const position of cosList) {
+        if (cosList.length === 0) {
+          setcosList([
+            {
+              caddr: "서울특별시 강남구 강남구 테헤란로14길 6",
+              caContent: "입력값 X",
+            },
+          ]);
+        }
         try {
           const coords = await getCoordinates(position.caddr);
 
@@ -173,16 +170,6 @@ const Navi = ({ cosList, setDivView, setcosList }) => {
           cursor="pointer"
           onClick={() => {
             setDivView("calendar");
-            if (location.pathname !== "/party") {
-              navigate("/party");
-            }
-          }}
-        />
-        <FaMapMarkerAlt
-          fontSize="30px"
-          cursor="pointer"
-          onClick={() => {
-            setDivView("navi");
             if (location.pathname !== "/party") {
               navigate("/party");
             }

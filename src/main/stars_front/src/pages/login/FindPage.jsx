@@ -94,6 +94,9 @@ const FindPage = () => {
   };
 
   const find = async () => {
+    if (isFindId) {
+      navigate("/login");
+    }
     try {
       const res = await AuthAxiosApi.findInfo(inputEmail);
       console.log(res.data);

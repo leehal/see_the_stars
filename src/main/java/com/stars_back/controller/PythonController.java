@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@CrossOrigin( origins = "http://localhost:5000")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")

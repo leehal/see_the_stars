@@ -5,8 +5,7 @@ import Navi from "../goodtrip/navi";
 import AddCalendar from "./AddCalendar";
 import PartyAxiosApi from "../../api/PartyAxiosApi";
 import Profile from "../../component/Profile";
-import { useLocation, useNavigate } from "react-router-dom";
-import { PiChatsLight } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import Modal from "../../component/Modal";
 import PartyUpdate from "./PartyUpdate";
@@ -123,8 +122,6 @@ const Input = styled.input`
   outline: none;
   color: white;
   display: flex;
-  /* position: absolute; */
-  /* background-color: red; */
   font-size: 1.5rem;
   @media (max-width: 830px) {
     width: 75%;
@@ -137,6 +134,7 @@ const MemberBox = styled.div`
   justify-content: right;
   align-items: center;
   @media (max-width: 768px) {
+    top: 49px;
     order: 3;
     position: absolute;
     display: flex;
@@ -149,12 +147,9 @@ const MemberBox = styled.div`
 const Chatting = styled.div`
   width: 22%;
   display: flex;
-  /* background-color: red; */
   justify-content: flex-end;
-  /* position: absolute; */
   img {
     width: 85px;
-    /* width: 80%; */
   }
   @media screen and (max-width: 768px) {
     img {
@@ -215,7 +210,16 @@ const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
     pMemberList();
     setFields([]);
     setDivView("calendar");
-  }, [pno, addView]);
+    // setTodate();
+  }, [pno, lend]);
+
+  useEffect(() => {
+    setFields([]);
+  }, [pno, addView, divView]);
+
+  useEffect(() => {
+    setTodate();
+  }, [pno]);
 
   useEffect(() => {
     const clickDayPlan = async () => {
@@ -245,177 +249,99 @@ const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
     setFocus(true);
   }, [pno, divView, lend]);
 
-  if (divView === "calendar") {
-    return (
-      <>
-        <Container disabled={isDisabled}>
-          <MainFun>
-            <LeftBox>
-              <CalendarBox
-                pno={pno}
-                setTodate={setTodate}
-                setDivView={setDivView}
-                setAddView={setAddView}
-                plan={plan}
-              ></CalendarBox>
-            </LeftBox>
-            <RightBox>
-              <MemberBox>
-                <Profiles>
-                  {memberList &&
-                    memberList.map((member) => (
-                      <Profile
-                        size={`2rem`}
-                        src={member.image}
-                        // onClick={() => navigate("/my")}
-                      />
-                    ))}
-                </Profiles>
-                <FaPlus color="#584ec2" onClick={() => setModalOpen(true)} />
-              </MemberBox>
-              <Map>
-                {focus ? (
-                  <Input
-                    readOnly={true}
-                    type="text"
-                    value={nowPname}
-                    defaultValue={nowPname}
-                    onFocus={() => setFocus(false)}
-                  />
-                ) : (
-                  <Input
-                    readOnly={false}
-                    type="text"
-                    placeholder={"모임 이름을 입력하세요."}
-                    // onFocus={(e) => (e.target.value = "")}
-                    onChange={(e) => {
-                      setNewName(e.target.value);
-                    }}
-                    onKeyDown={goUpdate}
-                  />
-                )}
-                <Chatting
-                  // color="#fff"
-                  // fontSize="50px"
-                  onClick={() => {
-                    setAddView("chat");
-                    navigate(`chat/${roomId}`);
+  const leftBoxChange = () => {
+    if (divView === "calendar") {
+      return (
+        <CalendarBox
+          pno={pno}
+          setTodate={setTodate}
+          setDivView={setDivView}
+          setAddView={setAddView}
+          plan={plan}
+          todate={todate}
+        ></CalendarBox>
+      );
+    } else {
+      return (
+        <Navi
+          cosList={fields}
+          todate={todate}
+          setDivView={setDivView}
+          setcosList={setFields}
+        ></Navi>
+      );
+    }
+  };
+
+  return (
+    <>
+      <Container disabled={isDisabled}>
+        <MainFun>
+          <LeftBox>{leftBoxChange()}</LeftBox>
+          <RightBox>
+            <MemberBox>
+              <Profiles>
+                {memberList &&
+                  memberList.map((member) => (
+                    <Profile size={`2rem`} src={member.image} />
+                  ))}
+              </Profiles>
+              <FaPlus color="#584ec2" onClick={() => setModalOpen(true)} />
+            </MemberBox>
+            <Map>
+              {focus ? (
+                <Input
+                  readOnly={true}
+                  type="text"
+                  value={nowPname}
+                  defaultValue={nowPname}
+                  onFocus={() => setFocus(false)}
+                />
+              ) : (
+                <Input
+                  readOnly={false}
+                  type="text"
+                  placeholder={"모임 이름을 입력하세요."}
+                  onChange={(e) => {
+                    setNewName(e.target.value);
                   }}
-                >
-                  <img src={Chat} alt="" />
-                </Chatting>
-              </Map>
-              <AddCalendar
-                roomId={roomId}
-                memberList={memberList}
-                pno={pno}
-                todate={todate}
-                setFields={setFields}
-                setTodate={setTodate}
-                fields={fields}
-                addView={addView}
-                setAddView={setAddView}
-                setDivView={setDivView}
-                setLend={setLend}
-              />
-            </RightBox>
-          </MainFun>
-        </Container>
-        <Modal open={modalOpen} close={closeModal} header="파티 멤버 추가">
-          <PartyUpdate
-            closeModal={closeModal}
-            pno={pno}
-            memberList={memberList}
-            setLend={lend}
-          ></PartyUpdate>
-        </Modal>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Container>
-          <MainFun>
-            <LeftBox>
-              <Navi
-                cosList={fields}
-                todate={todate}
-                setDivView={setDivView}
-                setcosList={setFields}
-              ></Navi>
-            </LeftBox>
-            <RightBox>
-              <MemberBox>
-                <Profiles>
-                  {memberList &&
-                    memberList.map((member) => (
-                      <Profile
-                        size={`2rem`}
-                        src={member.image}
-                        // onClick={() => navigate("/my")}
-                      />
-                    ))}
-                </Profiles>
-                <FaPlus color="#584ec2" onClick={() => setModalOpen(true)} />
-              </MemberBox>
-              <Map>
-                {focus ? (
-                  <Input
-                    readOnly={true}
-                    type="text"
-                    value={nowPname}
-                    defaultValue={nowPname}
-                    onFocus={() => setFocus(false)}
-                  />
-                ) : (
-                  <Input
-                    readOnly={false}
-                    type="text"
-                    placeholder={"모임 이름을 입력하세요."}
-                    // onFocus={(e) => (e.target.value = "")}
-                    onChange={(e) => {
-                      setNewName(e.target.value);
-                    }}
-                    onKeyDown={goUpdate}
-                  />
-                )}
-                <Chatting
-                  // color="#fff"
-                  // fontSize="50px"
-                  onClick={() => {
-                    setAddView("chat");
-                    navigate(`chat/${roomId}`);
-                  }}
-                >
-                  <img src={Chat} alt="" />
-                </Chatting>
-              </Map>
-              <AddCalendar
-                roomId={roomId}
-                memberList={memberList}
-                pno={pno}
-                todate={todate}
-                setFields={setFields}
-                setTodate={setTodate}
-                fields={fields}
-                addView={addView}
-                setAddView={setAddView}
-                setDivView={setDivView}
-                setLend={setLend}
-              />
-            </RightBox>
-          </MainFun>
-        </Container>
-        <Modal open={modalOpen} close={closeModal} header="파티 멤버 추가">
-          <PartyUpdate
-            closeModal={closeModal}
-            pno={pno}
-            memberList={memberList}
-            setLend={lend}
-          ></PartyUpdate>
-        </Modal>
-      </>
-    );
-  }
+                  onKeyDown={goUpdate}
+                />
+              )}
+              <Chatting
+                onClick={() => {
+                  setAddView("chat");
+                  navigate(`chat/${roomId}`);
+                }}
+              >
+                <img src={Chat} alt="" />
+              </Chatting>
+            </Map>
+            <AddCalendar
+              roomId={roomId}
+              memberList={memberList}
+              pno={pno}
+              todate={todate}
+              setFields={setFields}
+              setTodate={setTodate}
+              fields={fields}
+              addView={addView}
+              setAddView={setAddView}
+              setDivView={setDivView}
+              setLend={setLend}
+            />
+          </RightBox>
+        </MainFun>
+      </Container>
+      <Modal open={modalOpen} close={closeModal} header="파티 멤버 추가">
+        <PartyUpdate
+          closeModal={closeModal}
+          pno={pno}
+          memberList={memberList}
+          setLend={setLend}
+        ></PartyUpdate>
+      </Modal>
+    </>
+  );
 };
 export default PartyView;

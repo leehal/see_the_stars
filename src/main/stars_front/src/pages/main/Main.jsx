@@ -139,7 +139,7 @@ const Promotion = styled.div`
   justify-content: start;
   width: 60%;
   height: 20%;
-  background: #fff;
+  background: #ccc;
   overflow: hidden;
   margin-top: 25px;
   border: 5px solid #000;

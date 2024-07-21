@@ -48,18 +48,36 @@ const slideDownIn = keyframes`
 
 const SearchContainer = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
-  position: relative;
   height: 450px;
+  width: 100%;
   border: 4px solid black;
   background-color: #aec6cf;
+  @media (max-width: 768px) {
+    height: 100vh;
+  }
+  @media (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 const SearchBox = styled.div`
   display: flex;
+  justify-content: center;
+  gap: 60px;
+  align-items: center;
+  /* gap: 30px; */
   margin: 0 auto;
-  gap: 50px;
+  width: 100%;
+  height: 100%;
+
   @media (max-width: 768px) {
     width: 95%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
   }
 `;
 const Div = styled.div`
@@ -68,12 +86,13 @@ const Div = styled.div`
   justify-content: center;
   border: 5px solid black;
   height: 400px;
-  width: 40%;
-  /* padding: 20px; */
+  width: 25%;
+  min-width: 300px;
   box-shadow: 6px 14px 0 #000, 14px 14px 0 #000; /* 그림자 효과 추가 */
   background-color: #f4eedd;
   @media (max-width: 768px) {
-    /* width: 100%; */
+    order: 2;
+    width: 100%;
   }
 `;
 const Box = styled.div`
@@ -146,8 +165,9 @@ const Input = styled.div`
 const TravelBox = styled.div`
   display: flex;
   flex-direction: column;
+  /* background: red; */
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   width: 100%;
   border-radius: 10px;
   animation: ${slideUpIn} 0.4s ease-out forwards;
@@ -173,6 +193,10 @@ const Image = styled.div`
   width: 80%;
   height: 220px;
   cursor: pointer;
+
+  @media screen and (max-width: 768px) {
+    width: 40%;
+  }
 
   img {
     width: 100%;
@@ -211,6 +235,7 @@ const Name = styled.div`
 `;
 
 const Tag = styled.div`
+  display: flex;
   width: 100%;
   cursor: pointer;
   color: skyblue;
@@ -219,12 +244,15 @@ const Tag = styled.div`
 `;
 
 const Line = styled.div`
-  width: 100%;
-  position: relative;
-  left: 11%;
-  display: flex;
+  width: 80%;
+  justify-content: flex-start;
   align-items: flex-start;
+  display: flex;
   /* justify-content: space-between; */
+
+  @media (max-width: 768px) {
+    width: 40%;
+  }
 `;
 
 const KaKaoBox = styled.div`
@@ -235,7 +263,7 @@ const KaKaoBox = styled.div`
 
 const TaddrBox = styled.div`
   padding: 0 4%;
-  font-size: 20px;
+  font-size: 23px;
 `;
 
 const Goodtrip = () => {

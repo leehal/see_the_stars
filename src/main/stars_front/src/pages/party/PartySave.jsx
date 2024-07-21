@@ -1,9 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Profile from "../../component/Profile";
-import { useNavigate } from "react-router-dom";
 import PartyAxiosApi from "../../api/PartyAxiosApi";
 import styled from "styled-components";
-import { UserContext } from "../../context/UserStore";
 import FriendAxiosApi from "../../api/FriendAxiosApi";
 
 const UserListDiv = styled.div`
@@ -30,14 +28,6 @@ const ProfileBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 20%;
-  height: 100%;
-`;
-
-const toEmail = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
   height: 100%;
 `;
 
@@ -111,7 +101,6 @@ const PartySave = ({ closeModal }) => {
       try {
         const rsp = await FriendAxiosApi.allFriends();
         setAlluser(rsp.data);
-        console.log(rsp.data);
       } catch (e) {
         console.log(e);
       }
@@ -119,21 +108,18 @@ const PartySave = ({ closeModal }) => {
     fetchAllUsers();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(pname);
-  // }, [pname]);
-
   const handleUserClick = (user) => {
-    if (toList.includes(user.to)) {
+    const nick = user.tf === `FALSE` ? user.from : user.to;
+    if (toList.includes(nick)) {
       // 이미 선택된 경우, 선택 해제 (배열에서 제거)
-      settoList((prevList) => prevList.filter((n) => n !== user.to));
+      settoList((prevList) => prevList.filter((n) => n !== nick));
       setSelectedUsers((prevSelected) =>
-        prevSelected.filter((to) => to !== user.to)
+        prevSelected.filter((from) => from !== nick)
       );
     } else {
       // 선택되지 않은 경우, 배열에 추가
-      settoList((prevList) => [...prevList, user.to]);
-      setSelectedUsers((prevSelected) => [...prevSelected, user.to]);
+      settoList((prevList) => [...prevList, nick]);
+      setSelectedUsers((prevSelected) => [...prevSelected, nick]);
     }
   };
 
@@ -150,7 +136,9 @@ const PartySave = ({ closeModal }) => {
           <UserBox
             key={user.email}
             onClick={() => handleUserClick(user)}
-            isSelected={selectedUsers.includes(user.to)}
+            isSelected={selectedUsers.includes(
+              user.tf === `FALSE` ? user.from : user.to
+            )}
           >
             <ProfileBox>
               <Profile
@@ -160,7 +148,7 @@ const PartySave = ({ closeModal }) => {
               />
             </ProfileBox>
             <toEmail>
-              <div>{user.to}</div>
+              <div>{user.tf === `FALSE` ? user.from : user.to}</div>
             </toEmail>
             {/* <toEmail>
               <div>{user.email}</div>

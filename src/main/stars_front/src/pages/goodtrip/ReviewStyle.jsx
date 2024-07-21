@@ -11,6 +11,9 @@ const ReviewStyle = {
     background-color: #f4eedd;
     padding: 20px 0;
     font-family: "VT323", monospace; /* 레트로 스타일 폰트 */
+    @media screen and (max-width: 375px) {
+      min-width: 375px;
+    }
   `,
 
   ReviewBox: styled.div`
@@ -25,6 +28,10 @@ const ReviewStyle = {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     border: 3px solid #000; /* 두꺼운 테두리 */
+
+    @media screen and (max-width: 1024px) {
+      width: 100%;
+    }
   `,
   SubmitBox: styled.div`
     display: flex;

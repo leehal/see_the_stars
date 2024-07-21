@@ -16,6 +16,15 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   background-color: #f4eedd;
+  width: 100%;
+  height: auto;
+  @media (max-width: 375px) {
+    min-width: 375px;
+  }
+  /* overflow: hidden;
+  width: 100%;
+  height: auto; */
+  /* background: red; */
 `;
 
 const SectionContainer = styled.div`
@@ -23,12 +32,18 @@ const SectionContainer = styled.div`
   width: 70%;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 50px;
-  padding: 60px;
+  padding: 20px;
   box-shadow: 5px 5px 11px -2px #ccc;
+  overflow: hidden;
   background-color: #aec6cf;
   border: 6px solid black;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const TravelBox = styled.div`
@@ -37,13 +52,17 @@ const TravelBox = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  position: relative;
-  flex: 0 0 300px;
+  /* position: relative; */
+  flex: 0 0 30%;
   height: 390px;
   border: 6px solid black;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   background-color: #f4eedd;
   box-shadow: 6px 14px 0 #000, 14px 14px 0 #000; /* 그림자 효과 추가 */
+
+  @media (max-width: 425px) {
+    flex: 0 0 25%;
+  }
 `;
 
 const Heart = styled.div`
@@ -339,7 +358,7 @@ const TravelList = () => {
             <PageButton> 1 </PageButton>
           ) : (
             Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-              const startPage = Math.floor(currentPage / 10) * 10 + 1;
+              const startPage = Math.floor((currentPage-1) / 10) * 10 + 1;
               if (page >= startPage && page < startPage + 10) {
                 return (
                   <PageButton

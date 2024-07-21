@@ -3,20 +3,29 @@ import styled from "styled-components";
 import Maparea from "./maparea";
 
 const MapContainer = styled.div`
-  width: 50%;
+  width: 40%;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    order: 1;
+  }
 `;
 const MapBox = styled.div`
   border: 4px solid black;
-  width: 500px;
+  width: 80%;
   height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 6px 14px 0 #000, 14px 14px 0 #000; /* 그림자 효과 추가 */
-  @media screen and (max-width: 900px) {
-    width: 400px;
-    height: 400px;
+  @media screen and (max-width: 1024px) {
+    width: 100%;
   }
-  @media screen and (max-width: 800px) {
-    width: 300px;
-    height: 400px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
+  @media screen and (max-width: 425px) {
+    height: 300px;
   }
 `;
 const { kakao } = window;

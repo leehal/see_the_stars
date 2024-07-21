@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import PartyAxiosApi from "../../api/PartyAxiosApi";
 import Common from "../../utils/Common";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -34,7 +33,7 @@ const YearSpan = styled.span`
 `;
 const Box1 = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: right;
   align-items: flex-end;
   padding-bottom: 2%;
   width: 20%;
@@ -69,7 +68,7 @@ const DayBox = styled.div`
   /* border-radius: 60%; */
   font-size: 1.2rem;
   width: 14%;
-  height: 38%;
+  height: 35%;
   position: relative;
   cursor: pointer;
   &:hover {
@@ -144,6 +143,7 @@ const CalenContainer = styled.div`
   flex-direction: column;
   box-shadow: 6px 6px 0 #aaa7a7, 14px 14px 0 #5f5d5d;
   background-color: #f4eedd;
+  overflow-y: auto;
   /* border-radius: 10px 10px 10px 10px; */
   @media (max-width: 768px) {
     position: relative;
@@ -171,7 +171,7 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
 `;
-const CalendarBox = ({ setTodate, setDivView, setAddView, plan }) => {
+const CalendarBox = ({ setTodate, setDivView, setAddView, plan, todate }) => {
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth());
@@ -340,6 +340,22 @@ const CalendarBox = ({ setTodate, setDivView, setAddView, plan }) => {
     }
     return calendar;
   };
+  const onClickPre = () => {
+    if (month === 0) {
+      setMonth(11);
+      setYear(year - 1);
+    } else {
+      setMonth(month - 1);
+    }
+  };
+  const onClickNext = () => {
+    if (month === 11) {
+      setMonth(0);
+      setYear(year + 1);
+    } else {
+      setMonth(month + 1);
+    }
+  };
 
   return (
     <>
@@ -348,38 +364,24 @@ const CalendarBox = ({ setTodate, setDivView, setAddView, plan }) => {
         <Year>
           <YearSpan>{year}</YearSpan>
           <Box1>
-            <FaCalendarAlt
-              fontSize="30px"
-              cursor="pointer"
-              onClick={() => {
-                setDivView("calendar");
-                if (location.pathname !== "/party") {
-                  navigate("/party");
-                }
-              }}
-            />
             <FaMapMarkerAlt
               fontSize="30px"
               cursor="pointer"
               onClick={() => {
-                setDivView("navi");
-                if (location.pathname !== "/party") {
-                  navigate("/party");
+                if (todate === "") {
+                } else {
+                  setDivView("navi");
                 }
               }}
             />
           </Box1>
         </Year>
         <Head>
-          <Button onClick={() => setMonth(month === 0 ? 11 : month - 1)}>
-            &lt;
-          </Button>
+          <Button onClick={onClickPre}>&lt;</Button>
           <div>
             <Span>{month + 1}월</Span>
           </div>
-          <Button onClick={() => setMonth(month === 11 ? 0 : month + 1)}>
-            &gt;
-          </Button>
+          <Button onClick={onClickNext}>&gt;</Button>
         </Head>
         <Box>
           <Week>Sun</Week>

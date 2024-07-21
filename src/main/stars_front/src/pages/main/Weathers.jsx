@@ -99,6 +99,39 @@ const WeatherImg = styled.div`
     display: none;
   }
 `;
+const ErrorContainer = styled.div`
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  transform: translate(-50%, -50%);
+  background: #fff;
+  font-size: 20px;
+  color: #000000;
+  border-radius: 10px;
+  text-align: center;
+`;
+
+const Button = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
 
 const IconWrapper = styled.div`
   position: absolute;
@@ -178,6 +211,8 @@ const Weather = () => {
   const [region2, setRegion2] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [permissionDenied, setPermissionDenied] = useState(false);
 
   const getGeocodeKakao = async (lat, lng) => {
     try {
@@ -207,10 +242,30 @@ const Weather = () => {
 
   const onError = (error) => {
     console.error(error);
+    if (error.code === error.PERMISSION_DENIED) {
+      setError("위치 정보 접근이 거부되었습니다.");
+      setPermissionDenied(true);
+    } else {
+      setError("위치 정보를 가져올 수 없습니다.");
+      setPermissionDenied(false);
+    }
+  };
+
+  const requestLocationPermission = () => {
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    });
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    if (!navigator.geolocation) {
+      setError("이 브라우저는 위치 정보를 지원하지 않습니다.");
+      return;
+    }
+
+    requestLocationPermission(); // 컴포넌트 초기화 시 위치 접근 요청
   }, []);
 
   useEffect(() => {
@@ -367,6 +422,16 @@ const Weather = () => {
 
   return (
     <Container>
+      {error && (
+        <ErrorContainer>
+          <div>{error}</div>
+          {permissionDenied && (
+            <Button onClick={requestLocationPermission}>
+              위치 정보 접근 요청
+            </Button>
+          )}
+        </ErrorContainer>
+      )}
       <WeatherImg>
         <IconTime>{getTimeIcon()}</IconTime>
         <IconWrapper weather={weather.sky}>{getWeatherIcon()}</IconWrapper>

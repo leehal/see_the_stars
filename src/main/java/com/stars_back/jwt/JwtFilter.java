@@ -23,7 +23,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private final TokenProvider tokenProvider;
 
     private static final List<String> EXCLUDE_URLS = List.of(
-            "/", "/auth/**", "/ws/**", "/travel/**", "/elastic/**", "/favicon.ico","/manifest.json","/static/**","/img/**"
+            "/", "/auth/**", "/ws/**", "/travel/**","/api/**", "/elastic/**", "/favicon.ico","/manifest.json","/static/**","/img/**"
     );
 
     private String resolveToken(HttpServletRequest request) {

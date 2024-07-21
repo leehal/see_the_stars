@@ -43,6 +43,7 @@ const Content = styled.div`
     aspect-ratio: 10 / 7;
   }
   @media screen and (max-width: 768px) {
+    width: 100%;
   }
   @media screen and (max-width: 375px) {
     min-width: 375px;
@@ -77,9 +78,10 @@ const UserBox = styled.div`
   width: 95%;
   justify-content: space-between;
   display: flex;
+  aspect-ratio: 10 / 5;
   border: 3px solid #000;
   font-size: 30px;
-  height: 100px;
+
   padding-left: 10px;
   background: #ffffff;
   color: #000;
@@ -115,11 +117,15 @@ const AgreeBoxUser = styled.div`
   justify-content: center;
   align-items: center;
   height: 50%;
-  background: red;
+  /* background: red; */
 `;
 const FriendProfile = styled.div`
   @media screen and (max-width: 768px) {
     display: none;
+  }
+  @media screen and (max-width: 425px) {
+    font-size: 13px;
+    padding: 0;
   }
 `;
 const FriendNick = styled.div`
@@ -149,10 +155,14 @@ const OkBtn = styled.div`
   cursor: pointer;
   width: 50%;
   height: 100%;
-  background: yellow;
 
   p {
     padding-top: 10px;
+    font-size: 25px;
+
+    @media screen and (max-width: 425px) {
+      font-size: 15px;
+    }
   }
 `;
 const NoBtn = styled.div`
@@ -160,12 +170,16 @@ const NoBtn = styled.div`
   justify-content: center;
   align-items: center;
   width: 50%;
-  background: red;
+  /* background: red; */
   height: 100%;
   cursor: pointer;
 
   p {
     padding-top: 10px;
+    font-size: 25px;
+    @media screen and (max-width: 425px) {
+      font-size: 15px;
+    }
   }
 `;
 const UserBoxAll = styled(UserBox)`
@@ -177,7 +191,7 @@ const UserBoxAll = styled(UserBox)`
   margin-top: 5px;
   justify-content: space-between;
   width: 70%;
-  background: red;
+  /* background: red; */
   border: 3px solid #000;
   font-size: 30px;
   height: auto;
@@ -264,6 +278,12 @@ const AllUser = styled.div`
     background: #fff;
   }
 
+  @media screen and (max-width: 1024px) {
+    width: 40%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 45%;
+  }
   @media screen and (max-width: 425px) {
     width: 50%;
   }
@@ -323,6 +343,9 @@ const FriendBox = styled.div`
   align-items: center;
   flex-direction: column;
 
+  @media screen and (max-width: 1024px) {
+    width: 30%;
+  }
   @media screen and (max-width: 768px) {
     width: 26%;
   }
@@ -403,6 +426,9 @@ const FriendAgree = styled.div`
   }
   @media screen and (max-width: 1024px) {
     width: 30%;
+  }
+  @media screen and (max-width: 425px) {
+    width: 40%;
   }
 `;
 const AgreeTitleText = styled.div`
@@ -494,78 +520,101 @@ const FriendTitleText = styled.div`
     }
   }
 `;
-
-const FriendAddBtn = styled.div`
-  position: absolute;
-  width: 10%;
-  height: 7%;
-  z-index: 1;
+const ButtonContainer = styled.div`
+  width: 15%;
+  height: 30%;
   display: flex;
   justify-content: center;
-  transition: all 0.2s ease-in;
-  font-size: 30px;
-  background: #bf00ff;
-  bottom: 5%;
-  border: 3px solid #000;
-  right: 2%;
-  cursor: pointer;
-  padding-top: 10px;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  gap: 20px;
+  right: 0;
+  bottom: 0;
 
-  @media screen and (max-width: 1024px) {
-    width: 15%;
-    font-size: 20px;
+  @media screen and (max-width: 425px) {
+    width: 20%;
   }
-  @media screen and (max-width: 768px) {
-    width: 15%;
-    font-size: 20px;
-    height: 10%;
+`;
+const FriendAddBtn = styled.div`
+  display: flex;
+  width: 90%;
+  height: 30%;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #d45353, #dd7777);
+
+  border: 2px solid #fff;
+  border-top-color: #ccc;
+  border-left-color: #ccc;
+  border-right-color: #333;
+  border-bottom-color: #333;
+  box-shadow: 1px 1px 0 0 #000;
+  cursor: pointer;
+  outline: none;
+  &:active {
+    border-top-color: #333;
+    border-left-color: #333;
+    border-right-color: #ccc;
+    border-bottom-color: #ccc;
+    background: linear-gradient(to bottom, #d45353, #dd7777);
+  }
+
+  p {
+    font-size: 25px;
+    color: #fff;
+    padding-top: 10px;
+    text-align: center;
+    @media screen and (max-width: 425px) {
+      font-size: 20px;
+    }
+    @media screen and (max-width: 375px) {
+      font-size: 18px;
+    }
   }
   @media screen and (max-width: 425px) {
-    width: 15%;
-    font-size: 13px;
-    height: 13%;
-  }
-
-  &:hover {
-    background: #ff52ae;
-    color: #fff;
+    width: 85%;
   }
 `;
 const FriendAgreeBtn = styled.div`
-  position: absolute;
-  width: 10%;
-  height: 7%;
-  z-index: 1;
   display: flex;
+  width: 90%;
+  height: 30%;
   justify-content: center;
-  transition: all 0.2s ease-in;
-  font-size: 30px;
-  background: #bf00ff;
-  bottom: 15%;
-  border: 3px solid #000;
-  right: 2%;
-  cursor: pointer;
-  padding-top: 10px;
+  align-items: center;
+  background: linear-gradient(to bottom, #d45353, #dd7777);
 
-  @media screen and (max-width: 1024px) {
-    width: 15%;
-    font-size: 20px;
+  border: 2px solid #fff;
+  border-top-color: #ccc;
+  border-left-color: #ccc;
+  border-right-color: #333;
+  border-bottom-color: #333;
+  box-shadow: 1px 1px 0 0 #000;
+  cursor: pointer;
+  outline: none;
+  &:active {
+    border-top-color: #333;
+    border-left-color: #333;
+    border-right-color: #ccc;
+    border-bottom-color: #ccc;
+    background: linear-gradient(to bottom, #d45353, #dd7777);
   }
-  @media screen and (max-width: 768px) {
-    width: 15%;
-    font-size: 20px;
-    height: 10%;
-    bottom: 18%;
-  }
-  @media screen and (max-width: 425px) {
-    width: 15%;
-    font-size: 13px;
-    height: 13%;
-    bottom: 20%;
-  }
-  &:hover {
-    background: #ff52ae;
+
+  p {
     color: #fff;
+    font-size: 25px;
+    padding-top: 10px;
+    text-align: center;
+    @media screen and (max-width: 425px) {
+      font-size: 20px;
+    }
+    @media screen and (max-width: 375px) {
+      font-size: 18px;
+    }
+  }
+
+  @media screen and (max-width: 425px) {
+    width: 85%;
   }
 `;
 
@@ -924,7 +973,14 @@ const Friend = ({ closeModal }) => {
                 </UserBox>
               ))}
           </FriendBox>
-          <FriendAddBtn onClick={toggleFriendAdd}>친구 요청</FriendAddBtn>
+          <ButtonContainer>
+            <FriendAddBtn onClick={toggleFriendAdd}>
+              <p>친구 요청</p>
+            </FriendAddBtn>
+            <FriendAgreeBtn onClick={toggleFriendAgree}>
+              <p> 친구 수락</p>
+            </FriendAgreeBtn>
+          </ButtonContainer>
           <FriendAdd show={showFriendAdd}>
             <AddClose onClick={toggleFriendAdd}>
               <PiXSquare style={{ fontSize: "30px", color: "#414141" }} />
@@ -948,7 +1004,7 @@ const Friend = ({ closeModal }) => {
               </AddBoxUser>
             ))}
           </FriendAdd>
-          <FriendAgreeBtn onClick={toggleFriendAgree}>친구 수락</FriendAgreeBtn>
+
           <FriendAgree show={showFriendAgree}>
             <AddClose onClick={toggleFriendAgree}>
               <PiXSquare style={{ fontSize: "30px", color: "#414141" }} />
@@ -973,10 +1029,10 @@ const Friend = ({ closeModal }) => {
                   </div>
                   <AgreeBtn>
                     <OkBtn onClick={() => onClickAgree(friend.from)}>
-                      <p style={{ color: "#000", fontSize: "25px" }}>수락</p>
+                      <p>수락</p>
                     </OkBtn>
                     <NoBtn onClick={() => onClickReject(friend.fno)}>
-                      <p style={{ color: "#000", fontSize: "25px" }}>거절</p>
+                      <p>거절</p>
                     </NoBtn>
                   </AgreeBtn>
                 </UserBox>

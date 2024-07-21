@@ -110,10 +110,9 @@ const InputBox = styled.div`
 
     p {
       display: inline-block;
-      width: 100%;
+      width: 50%;
       height: 75%;
       font-size: 25px;
-      text-align: center;
 
       @media screen and (max-width: 1024px) {
         font-size: 20px;
@@ -213,7 +212,7 @@ const NoneButton = styled.button`
   }
 `;
 const BinBox = styled.button`
-  width: 100px;
+  width: 80px;
   height: 30px;
   background: none;
   border: none;
@@ -301,7 +300,7 @@ const My = ({
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
-        setSize("9rem");
+        setSize("10rem");
       } else if (window.innerWidth > 425) {
         setSize("7rem");
       } else {
@@ -340,7 +339,7 @@ const My = ({
           <InputBox>
             <GoPerson style={{ color: `gray` }} />
             <div>
-              <p>{member?.mid}</p>
+              <p>ID</p>
             </div>
             <BinBox></BinBox>
           </InputBox>
@@ -348,7 +347,7 @@ const My = ({
             <InputBox>
               <GoLock style={{ color: `gray` }} />
               <div>
-                <p>비밀번호</p>
+                <p>PassWord</p>
               </div>
               <Button onClick={() => onClickEdit(2)}>수정</Button>
             </InputBox>
@@ -356,7 +355,7 @@ const My = ({
           <InputBox>
             <GoPerson style={{ color: `gray` }} />
             <div>
-              <p>{member?.nick}</p>
+              <p>닉네임</p>
             </div>
             <Button onClick={() => onClickEdit(3)}>수정</Button>
           </InputBox>
@@ -364,7 +363,7 @@ const My = ({
             <InputBox>
               <GoMail style={{ color: `gray` }} />
               <div>
-                <p>{member?.email}</p>
+                <p>Email</p>
               </div>
               <Button onClick={() => onClickEdit(4)}>수정</Button>
             </InputBox>

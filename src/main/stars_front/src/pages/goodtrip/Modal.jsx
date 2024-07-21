@@ -23,7 +23,7 @@ const ModalStyle = styled.div`
 
   section {
     width: 90%;
-    max-width: 450px;
+    max-width: 375px;
     margin: 0 auto;
     background-color: #f4eedd;
     /* 모서리 테두리를 다르게 주어 튀어나온 느낌 */
@@ -43,6 +43,7 @@ const ModalStyle = styled.div`
       padding: 16px 64px 16px 16px;
       background-color: #bf00ff; /* 레트로 보라색 */
       font-weight: 900;
+
       color: #fff;
       border-bottom: solid #000 4px;
       /* border-bottom: 3px solid #ffcc00; 레트로 스타일 테두리 */

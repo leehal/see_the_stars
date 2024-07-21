@@ -6,11 +6,8 @@ import { FaPlus } from "react-icons/fa";
 import CosUpdate from "./CosUpdate";
 import { FaMinus } from "react-icons/fa";
 import Modal2 from "../goodtrip/Modal";
-import Common from "../../utils/Common";
 import MyAxiosApi from "../../api/MyAxiosApi";
-import { Outlet, useNavigate } from "react-router-dom";
-
-const { kakao } = window;
+import { Outlet } from "react-router-dom";
 
 const Container = styled.div`
   width: 80%;
@@ -20,8 +17,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  /* padding: 20px; */
-  /* border-radius: 10px; */
   border: 6px solid #000;
   box-shadow: 6px 6px 0 #000, 14px 14px 0 #000;
   color: #000;
@@ -32,9 +27,6 @@ const Container = styled.div`
     box-shadow: none;
     margin-top: 5px;
   }
-  /* @media (max-width: 480px) {
-    order: 2;
-  } */
 `;
 
 const Plan = styled.div`
@@ -68,12 +60,10 @@ const OnePlan = styled.div`
   width: 100%;
   height: 100%;
   margin: 5px;
-  /* border-radius: 10px; */
   background-color: #fff;
   border: 4px solid #000;
   font-size: 1.5rem;
   font-weight: bold;
-  /* padding: 10px; */
   box-sizing: border-box;
   color: #000;
   @media (max-width: 1023px) {
@@ -96,10 +86,7 @@ const OnePlanBody = styled.div`
 `;
 
 const OnePlanFoot = styled.div`
-  /* border-top: 4px solid #000; */
   width: 100%;
-  /* height: 20%; */
-  /* background-color: #000a5c; */
   justify-content: right;
   display: flex;
 `;
@@ -167,9 +154,7 @@ const AddCalendar = ({
   const [place, setPlace] = useState(""); // 장소 이름 상태 추가
 
   const ws = useRef(null);
-  const [socketConnected, setSocketConnected] = useState(false);
   const [sender, setSender] = useState("");
-  const [chatList, setChatList] = useState([]);
 
   useEffect(() => {
     // 이메일로 회원 정보 가져 오기
@@ -195,8 +180,6 @@ const AddCalendar = ({
       })
     );
     ws.current.close();
-    // setSocketConnected(false);
-    // setAddView("select")
   };
 
   const closeModal = () => {
@@ -211,12 +194,6 @@ const AddCalendar = ({
         onClickMsgClose();
       }
     }
-    // else {
-    //   console.log("오긴 하니? 연결됨?");
-    //   if (addView === "chat") {
-    //     connectWebsocket();
-    //   }
-    // }
   }, [addView]);
 
   useEffect(() => {
@@ -328,7 +305,8 @@ const AddCalendar = ({
             <FaPlus color="#dbd5d5" onClick={onClickPlus} />
           </TodateBox>
           <Plan>
-            {fields &&
+            {todate &&
+              fields &&
               fields.map((one) => (
                 <>
                   <OnePlan>

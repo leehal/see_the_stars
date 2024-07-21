@@ -13,5 +13,4 @@ class TotalApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

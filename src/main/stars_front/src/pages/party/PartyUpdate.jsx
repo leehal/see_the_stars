@@ -3,6 +3,7 @@ import Profile from "../../component/Profile";
 import { useNavigate } from "react-router-dom";
 import PartyAxiosApi from "../../api/PartyAxiosApi";
 import styled from "styled-components";
+import FriendAxiosApi from "../../api/FriendAxiosApi";
 
 const UserListDiv = styled.div`
   width: 100%;
@@ -61,7 +62,7 @@ const Button = styled.button`
   }
 `;
 
-const PartyUpdate = ({ closeModal, pno, setPno, memberList, lend }) => {
+const PartyUpdate = ({ closeModal, pno, setPno, memberList, setLend }) => {
   const [nickList, setNickList] = useState([]);
   const [alluser, setAlluser] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]); // 선택된 유저 상태 관리
@@ -72,7 +73,8 @@ const PartyUpdate = ({ closeModal, pno, setPno, memberList, lend }) => {
       if (rsp.data) {
         closeModal();
         setPno(undefined);
-        lend((prev) => !prev);
+
+        setLend((prev) => !prev);
       }
     } catch (e) {
       console.log(e);
@@ -82,10 +84,17 @@ const PartyUpdate = ({ closeModal, pno, setPno, memberList, lend }) => {
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        const rsp = await PartyAxiosApi.allUsers();
+        const rsp = await FriendAxiosApi.allFriends();
         const memberIds = memberList.map((member) => member.nick);
+        console.log(rsp.data);
+        console.log("친구");
 
-        setAlluser(rsp.data.filter((user) => !memberIds.includes(user.nick)));
+        setAlluser(
+          rsp.data.filter(
+            (user) =>
+              !memberIds.includes(user.tf === `FALSE` ? user.from : user.to)
+          )
+        );
       } catch (e) {
         console.log(e);
       }
@@ -94,16 +103,16 @@ const PartyUpdate = ({ closeModal, pno, setPno, memberList, lend }) => {
   }, []);
 
   const handleUserClick = (user) => {
-    if (nickList.includes(user.nick)) {
+    if (nickList.includes(user.from)) {
       // 이미 선택된 경우, 선택 해제 (배열에서 제거)
-      setNickList((prevList) => prevList.filter((n) => n !== user.nick));
+      setNickList((prevList) => prevList.filter((n) => n !== user.from));
       setSelectedUsers((prevSelected) =>
-        prevSelected.filter((nick) => nick !== user.nick)
+        prevSelected.filter((from) => from !== user.from)
       );
     } else {
       // 선택되지 않은 경우, 배열에 추가
-      setNickList((prevList) => [...prevList, user.nick]);
-      setSelectedUsers((prevSelected) => [...prevSelected, user.nick]);
+      setNickList((prevList) => [...prevList, user.from]);
+      setSelectedUsers((prevSelected) => [...prevSelected, user.from]);
     }
   };
 
@@ -114,17 +123,17 @@ const PartyUpdate = ({ closeModal, pno, setPno, memberList, lend }) => {
           <UserBox
             key={user.email}
             onClick={() => handleUserClick(user)}
-            isSelected={selectedUsers.includes(user.nick)}
+            isSelected={selectedUsers.includes(user.from)}
           >
             <ProfileBox>
               <Profile
                 size={`2rem`}
-                src={user.image}
+                src={user.img}
                 // onClick={() => navigate("/my")}
               />
             </ProfileBox>
             <NickEmail>
-              <div>{user.nick}</div>
+              <div>{user.tf === `FALSE` ? user.from : user.to}</div>
             </NickEmail>
             <NickEmail>
               <div>{user.email}</div>

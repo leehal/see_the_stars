@@ -154,15 +154,15 @@ const Div = styled.div`
 `;
 
 const ButtonBox = styled.div`
-  width: 30%;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 `;
 
 const Button = styled.button`
   cursor: pointer;
-  width: 80px;
+  width: 20%;
   background-color: #ff3366;
   color: #fff;
   padding: 5px;
@@ -225,6 +225,7 @@ const PartyList = ({
       await PartyAxiosApi.deletepno(partyno);
       setDeleteModal(false);
       setLend((prev) => !prev);
+      setPno(undefined);
       closeModal();
     } catch (e) {
       console.log(e);

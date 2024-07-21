@@ -7,6 +7,7 @@ const InputBox = styled.div`
   align-items: center;
   width: 70%;
   height: 50px;
+  margin-top: 10px;
   padding: 0 20px;
   border: 3px solid black;
   border-radius: 10px;
@@ -31,9 +32,10 @@ const InputBox = styled.div`
 `;
 const Error = styled.div`
   color: #ff3f3f;
-  width: 280px;
-  font-size: 12px;
-  justify-content: flex-start;
+  margin-top: 10px;
+  width: 100%;
+  font-size: 20px;
+  justify-content: center;
   display: ${({ children }) => (children === "" ? `none` : `flex`)};
 `;
 

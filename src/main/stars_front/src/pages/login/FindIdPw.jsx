@@ -6,7 +6,7 @@ import Common from "../../utils/Common";
 
 const Container = styled.div`
   display: flex;
-  height: 100px;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -17,6 +17,7 @@ const InputBox = styled.div`
   align-items: center;
   width: 70%;
   height: 50px;
+  margin-top: 10px;
   padding: 0 20px;
   border: 3px solid black;
   border-radius: 10px;
@@ -41,9 +42,11 @@ const InputBox = styled.div`
 `;
 const Error = styled.div`
   color: #ff3f3f;
-  width: 280px;
-  font-size: 12px;
-  justify-content: flex-start;
+  font-size: 20px;
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  justify-content: center;
   display: ${({ children }) => (children === "" ? `none` : `flex`)};
 `;
 
@@ -91,31 +94,33 @@ const FindIdPw = ({
 
   return (
     <>
-      <InputBox>
-        <GoMail style={{ color: `gray` }} />
-        <input
-          type="text"
-          placeholder="이메일"
-          onChange={(e) => setInputEmail(e.target.value)}
-          value={inputEmail}
-          onBlur={onBlureMail}
-          onKeyDown={(e) => Common.onKeyDownEnter(e, onClickFind)}
-        />
-      </InputBox>
-      {category === `pw` && (
+      <Container>
         <InputBox>
-          <GoPerson style={{ color: `gray` }} />
+          <GoMail style={{ color: `gray` }} />
           <input
             type="text"
-            placeholder="아이디"
-            onChange={(e) => setInputId(e.target.value)}
-            onBlur={onBlurId}
-            maxLength={20}
+            placeholder="이메일"
+            onChange={(e) => setInputEmail(e.target.value)}
+            value={inputEmail}
+            onBlur={onBlureMail}
             onKeyDown={(e) => Common.onKeyDownEnter(e, onClickFind)}
           />
         </InputBox>
-      )}
-      <Error>{message}</Error>
+        {category === `pw` && (
+          <InputBox>
+            <GoPerson style={{ color: `gray` }} />
+            <input
+              type="text"
+              placeholder="아이디"
+              onChange={(e) => setInputId(e.target.value)}
+              onBlur={onBlurId}
+              maxLength={20}
+              onKeyDown={(e) => Common.onKeyDownEnter(e, onClickFind)}
+            />
+          </InputBox>
+        )}
+        <Error>{message}</Error>
+      </Container>
     </>
   );
 };

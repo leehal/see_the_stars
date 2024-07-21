@@ -43,12 +43,20 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
                 .authorizeRequests() // 요청에 대한 접근 권한을 설정합니다
-                .antMatchers("/", "/auth/**", "/ws/**", "/travel/**","/static/**").permitAll()
+                .antMatchers("/", "/auth/**", "/ws/**","/api/**", "/travel/**","/static/**").permitAll()
                 // .antMatchers().permitAll(): 특정 경로에 대해 모든 사용자에게 접근 권한을 부여합니다.
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/favicon.ico","/manifest.json").permitAll()
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
         return http.build();
+    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5000", "https://seethestars.store")
+                .allowedMethods("*")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }

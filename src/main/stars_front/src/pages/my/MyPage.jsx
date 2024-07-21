@@ -153,7 +153,13 @@ const Button = styled.button`
     width: 200px;
     height: 50px;
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+  }
+  @media screen and (max-width: 425px) {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 30px;
   }
 `;
 
