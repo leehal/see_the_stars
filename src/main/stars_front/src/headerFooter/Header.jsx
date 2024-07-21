@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Friend from "../pages/friend/Friend";
 import LogoImg from "../image/LogoBPr.png";
+import Common from "../utils/Common";
 
 const StyledHeader = styled.div`
   position: relative;
@@ -200,8 +201,15 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const toggleFriendModal = () => {
-    setModalFriend(!modalFriend);
+  const openFriendModal = () => {
+    if (Common.getRefreshToken()) {
+      setModalFriend(true);
+    } else {
+      navigate("/login");
+    }
+  };
+  const closeFriendModal = () => {
+    setModalFriend(false);
   };
 
   const toggleMenu = () => {
@@ -245,9 +253,9 @@ const Header = () => {
         >
           여행지추천
         </Div>
-        <Div onClick={toggleFriendModal}>
+        <Div onClick={openFriendModal}>
           친구
-          {modalFriend && <Friend closeModal={toggleFriendModal} />}
+          {modalFriend && <Friend closeModal={setModalFriend(false)} />}
         </Div>
         <Div onClick={() => handleNavigate("/my")}>마이페이지</Div>
       </StyledHeader>
@@ -276,8 +284,8 @@ const Header = () => {
             <ul>
               <li onClick={() => handleNavigate("/party")}>내모임</li>
               <li onClick={() => onClickTrip("/goodtrip")}>여행지추천</li>
-              <li onClick={toggleFriendModal}>
-                친구{modalFriend && <Friend closeModal={toggleFriendModal} />}
+              <li onClick={openFriendModal}>
+                친구{modalFriend && <Friend closeModal={closeFriendModal} />}
               </li>
               <li onClick={() => handleNavigate("/my")}>마이페이지</li>
             </ul>

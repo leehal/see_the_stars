@@ -58,9 +58,7 @@ const KakaoLogin = ({ radius }) => {
       const res = await AuthAxiosApi.kakao(token);
       if (res.data.grantType === "Bearer") {
         Common.setAccessToken(res.data.accessToken);
-        Common.setExpiresIn(res.data.accessTokenExpiresIn);
         Common.setRefreshToken(res.data.refreshToken);
-        Common.setRefreshExpiresIn(res.data.refreshTokenExpiresIn);
         navigate("/");
       }
     } catch (e) {

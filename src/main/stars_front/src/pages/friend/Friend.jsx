@@ -756,10 +756,6 @@ const Friend = ({ closeModal }) => {
   }, [refresh]);
 
   useEffect(() => {
-    if (!Common.getRefreshToken()) {
-      navigate("/login");
-    }
-
     if (searchAll === "") {
       setFilteredUsers([]);
       setShowFilteredUsers(false);
@@ -857,15 +853,6 @@ const Friend = ({ closeModal }) => {
   const FullFriendM = (e) => {
     e.stopPropagation();
     closeModal();
-  };
-  const 함수 = (user) => {
-    return <Profile size="50px" src={user.image} />;
-  };
-
-  const handleResize = (user) => {
-    if (window.innerWidth > 1024) {
-      return <Profile size="50px" src={user.image} />;
-    } else return <Profile size="20px" src={user.image} />;
   };
 
   return (
