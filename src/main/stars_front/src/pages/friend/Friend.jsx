@@ -730,6 +730,7 @@ const Friend = ({ closeModal }) => {
     const fetchAllData = async () => {
       try {
         const rspUsers = await PartyAxiosApi.allUsers();
+        console.log(rspUsers.data);
         setAllUser(rspUsers.data);
 
         const rspFriends = await FriendAxiosApi.allFriends();
@@ -796,6 +797,7 @@ const Friend = ({ closeModal }) => {
         return;
       }
       setIsRequesting(true);
+      console.log(nick);
       const res = await FriendAxiosApi.friendApplication(nick);
       if (res) {
         alert("친구신청 메세지를 보냈습니다.");

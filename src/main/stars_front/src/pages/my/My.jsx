@@ -331,7 +331,9 @@ const My = ({
             <input type="file" onChange={onChangFile} ref={inputFile} hidden />
           </Profile>
           <ProfileButtonBox>
-            <ButtonF onClick={onClickProfile}>프로필수정</ButtonF>
+            {member?.social === "COMMON" && (
+              <ButtonF onClick={onClickProfile}>프로필수정</ButtonF>
+            )}
             {/* </div> */}
           </ProfileButtonBox>
         </ProFileBox>
@@ -357,7 +359,9 @@ const My = ({
             <div>
               <p>닉네임</p>
             </div>
-            <Button onClick={() => onClickEdit(3)}>수정</Button>
+            {member?.social === "COMMON" && (
+              <Button onClick={() => onClickEdit(3)}>수정</Button>
+            )}
           </InputBox>
           {member?.social === "COMMON" && (
             <InputBox>

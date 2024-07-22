@@ -199,9 +199,9 @@ const PartyChat = () => {
   useEffect(() => {
     // console.log("방번호 : " + roomId);
     if (!ws.current) {
-      ws.current = new WebSocket(Common.DOMAIN + "/ws/chat");
+      ws.current = new WebSocket("/ws/chat");
       ws.current.onopen = () => {
-        console.log("connected to " + Common.DOMAIN);
+        console.log("connected to ");
         setSocketConnected(true);
       };
     }

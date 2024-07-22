@@ -31,10 +31,9 @@ const PartyAxiosApi = {
     };
     return await AxiosInstance.post(LOGO + `/memDibs`, list);
   },
-  calendarCreate: async (pno, nick, date, fields) => {
+  calendarCreate: async (pno, date, fields) => {
     const save = {
       pno: pno,
-      nick: nick,
       date: date,
       dtos: fields,
     };

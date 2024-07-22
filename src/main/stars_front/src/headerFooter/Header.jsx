@@ -204,6 +204,8 @@ const Header = () => {
   const openFriendModal = () => {
     if (Common.getRefreshToken()) {
       setModalFriend(true);
+      console.log("모달확인");
+      console.log(modalFriend);
     } else {
       navigate("/login");
     }
@@ -255,7 +257,7 @@ const Header = () => {
         </Div>
         <Div onClick={openFriendModal}>
           친구
-          {modalFriend && <Friend closeModal={setModalFriend(false)} />}
+          {modalFriend && <Friend closeModal={closeFriendModal} />}
         </Div>
         <Div onClick={() => handleNavigate("/my")}>마이페이지</Div>
       </StyledHeader>

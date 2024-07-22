@@ -30,6 +30,7 @@ public class FriendService {
     //친구신청
     public Boolean friendApplication(String nick) {
         Member from = memberService.memberIdFindMember();
+        log.warn(nick);
         Member to = memberRepository.findByNick(nick)
                 .orElseThrow(() -> new NoSuchElementException("맴버를 찾을수없습니다: " + nick));
         Friend friend = friendRepository.save(

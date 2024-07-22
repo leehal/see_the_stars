@@ -57,6 +57,7 @@ const Common = {
     const minute = ("0" + date.getMinutes()).slice(-2);
     return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
   },
+
   jasonFormatDate: (timestamp) => {
     const date = new Date(timestamp);
     const year = date.getFullYear();

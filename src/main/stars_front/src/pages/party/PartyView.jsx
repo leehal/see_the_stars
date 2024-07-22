@@ -160,7 +160,7 @@ const Chatting = styled.div`
 
 const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
   const [divView, setDivView] = useState("calendar");
-  const [todate, setTodate] = useState();
+  const [todate, setTodate] = useState("");
   const [fields, setFields] = useState([]);
   const [memberList, setMemberList] = useState([]);
   const [addView, setAddView] = useState("select");

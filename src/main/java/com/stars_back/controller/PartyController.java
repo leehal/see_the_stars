@@ -62,6 +62,7 @@ public class PartyController {
     @PostMapping("/csave")
     public ResponseEntity<Boolean> calendarSave(@RequestBody CalendarSaveDto calendarSaveDto){
         boolean isTrue = false;
+        log.warn(calendarSaveDto.getDate());
         isTrue = partyService.calendarInsert(calendarSaveDto);
         return ResponseEntity.ok(isTrue);
     }
