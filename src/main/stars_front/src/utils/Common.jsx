@@ -27,11 +27,7 @@ const Common = {
       },
     };
     try {
-      const res = await axios.post(
-        `${Common.DOMAIN}/auth/refresh`,
-        refreshToken,
-        config
-      );
+      const res = await axios.post(`/auth/refresh`, refreshToken, config);
       console.log(res.data);
       Common.setAccessToken(res.data.accessToken);
       Common.setExpiresIn(res.data.accessTokenExpiresIn);
