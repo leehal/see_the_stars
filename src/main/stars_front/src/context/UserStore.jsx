@@ -5,7 +5,7 @@ const UserStore = (props) => {
   const [nick, setNick] = useState(
     localStorage.getItem("nick") || "닉네임을 입력해주세요."
   );
-  const [refresh, setRefrsh] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [category, setCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [tno, setTno] = useState();
@@ -21,7 +21,7 @@ const UserStore = (props) => {
         nick,
         setNick,
         refresh,
-        setRefrsh,
+        setRefresh,
         category,
         setCategory,
         currentPage,

@@ -62,7 +62,7 @@ const Button = styled.button`
   }
 `;
 
-const PartyUpdate = ({ closeModal, pno, setPno, memberList, setLend }) => {
+const PartyUpdate = ({ closeModal, pno, memberList, setLend }) => {
   const [nickList, setNickList] = useState([]);
   const [alluser, setAlluser] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]); // 선택된 유저 상태 관리
@@ -71,10 +71,8 @@ const PartyUpdate = ({ closeModal, pno, setPno, memberList, setLend }) => {
     try {
       const rsp = await PartyAxiosApi.partyMemberAdd(pno, nickList);
       if (rsp.data) {
-        closeModal();
-        setPno(undefined);
-
         setLend((prev) => !prev);
+        closeModal();
       }
     } catch (e) {
       console.log(e);
@@ -86,8 +84,8 @@ const PartyUpdate = ({ closeModal, pno, setPno, memberList, setLend }) => {
       try {
         const rsp = await FriendAxiosApi.allFriends();
         const memberIds = memberList.map((member) => member.nick);
-        console.log(rsp.data);
-        console.log("친구");
+        //         console.log(rsp.data);
+        //         console.log("친구");
 
         setAlluser(
           rsp.data.filter(
