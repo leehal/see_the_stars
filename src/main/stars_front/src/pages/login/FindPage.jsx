@@ -99,7 +99,7 @@ const FindPage = () => {
     }
     try {
       const res = await AuthAxiosApi.findInfo(inputEmail);
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data) {
         if (category === "id") {
           setId(res.data);
@@ -130,7 +130,7 @@ const FindPage = () => {
     try {
       const res = await AuthAxiosApi.resetPw(inputId, checkPw);
       if (res.data) {
-        console.log(res.data);
+        // console.log(res.data);
         navigate("/login");
       } else {
         console.log("비밀번호 수정 오류");

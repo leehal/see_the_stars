@@ -76,9 +76,6 @@ const Logo = styled.div`
   font-size: 3rem;
   font-weight: bold;
 `;
-const AnimatedContainer = styled.div`
-  animation: ${fadeIn} 0.5s ease-in-out;
-`;
 
 const LoginPage = () => {
   const navigate = useNavigate();

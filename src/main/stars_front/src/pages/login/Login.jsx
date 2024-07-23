@@ -114,7 +114,7 @@ const Login = () => {
   const login = async () => {
     try {
       const res = await AuthAxiosApi.login(inputId, inputPw);
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.grantType === "Bearer") {
         Common.setAccessToken(res.data.accessToken);
         Common.setRefreshToken(res.data.refreshToken);

@@ -7,9 +7,6 @@ const PartyAxiosApi = {
     return await AxiosInstance.get(LOGO + "/list");
   },
   partyCreate: async (nickList, pname1) => {
-    console.log(nickList);
-    console.log(pname1);
-
     const pSaveDto = {
       nick: nickList,
       pname: pname1,
@@ -40,7 +37,6 @@ const PartyAxiosApi = {
     return await AxiosInstance.post(LOGO + "/csave", save);
   },
   oneDayView: async (pno, date) => {
-    console.log(" 정보 " + pno + " " + date);
     return await AxiosInstance.get(LOGO + `/calendarOne/${pno}/${date}`);
   },
   updatePname: async (pno, pname) => {

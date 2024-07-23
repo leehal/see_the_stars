@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { GoPerson } from "react-icons/go";
-import { useState } from "react";
 import AuthAxiosApi from "../../api/AuthAxiosApi";
 import Common from "../../utils/Common";
 
@@ -48,7 +47,7 @@ const EditId = ({
   const existId = async (id) => {
     try {
       const rsp = await AuthAxiosApi.existInfo(id, 1);
-      console.log(`아이디:` + rsp.data);
+      // console.log(`아이디:` + rsp.data);
       if (rsp.data) {
         setMessage("사용할 수 없는 아이디입니다. 다른 아이디를 입력해주세요");
       } else {

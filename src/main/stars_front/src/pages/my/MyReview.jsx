@@ -1,12 +1,7 @@
 import styled from "styled-components";
-import { FaHeart } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import TravelAxiosApi from "../../api/TravelAxiosApi";
 import Logo from "../../image/Logo.jpg";
-import HeartPixel from "../../image/New Piskel (2).gif";
-import HeartUnClickPixel from "../../image/New Piskel (3).gif";
 import MyAxiosApi from "../../api/MyAxiosApi";
-import Common from "../../utils/Common";
 import ReviewStyle from "../goodtrip/ReviewStyle";
 import Modal from "../../component/Modal";
 import ReviewFireBase from "../goodtrip/ReviewFireBase";

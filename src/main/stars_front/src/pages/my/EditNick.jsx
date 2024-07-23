@@ -87,7 +87,7 @@ const EditNick = ({
   const existNick = async (nick) => {
     try {
       const rsp = await AuthAxiosApi.existInfo(nick, 3);
-      console.log(`닉네임:` + rsp.data);
+      // console.log(`닉네임:` + rsp.data);
       if (rsp.data) {
         setMessage("사용할 수 없는 닉네임입니다. 다른 닉네임을 입력해주세요");
         setIsNick(false);

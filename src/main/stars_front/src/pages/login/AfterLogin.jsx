@@ -80,8 +80,6 @@ const LogoutButton = styled.div`
 const AfterLogin = ({ setRefresh }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState();
-  // const [profile, setProfile] = useState();
-  // const [id, setId] = useState();
 
   const onClickLogout = () => {
     alert("로그아웃 됬습니다");
@@ -93,12 +91,8 @@ const AfterLogin = ({ setRefresh }) => {
     const memberDetail = async () => {
       try {
         const res = await MyAxiosApi.memberDetail();
-        console.log(res.data);
         if (res.data) {
           setUser(res.data);
-          // setProfile(res.data.image);
-          // setId(res.data.mid);
-          // setNick(res.data.nick);
         } else {
           console.log("데이터 없음");
         }

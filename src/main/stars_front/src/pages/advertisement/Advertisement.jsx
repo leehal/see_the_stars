@@ -126,7 +126,7 @@ const Advertisement = ({ setModalOpen }) => {
     const fetchAdList = async () => {
       try {
         const res = await AuthAxiosApi.adList(now);
-        console.log(res.data);
+//         console.log(res.data);
         if (res.data) {
           setAdList(res.data);
         } else {

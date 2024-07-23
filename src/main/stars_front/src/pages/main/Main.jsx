@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Weathers from "./Weathers";
 import Festival from "./Festival";
@@ -7,7 +6,6 @@ import Advertisement from "../advertisement/Advertisement";
 import AdInquiry from "../advertisement/AdInquiry";
 import React, { useState, useEffect } from "react";
 import Modal from "../../component/Modal";
-import Basic from "../../image/Logo.jpg";
 import Backimg from "../../image/retro_bg_15.jpg";
 import playImageActive from "../../image/재생 버튼.png";
 import playImageInactive from "../../image/배경 없는 재생.png";
@@ -328,7 +326,6 @@ const Spacer = styled.div`
 `;
 
 const Main = () => {
-  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -345,10 +342,6 @@ const Main = () => {
 
     return () => clearInterval(intervalId);
   }, [isPlaying]);
-
-  const togglePlay = () => {
-    setIsPlaying((prevState) => !prevState);
-  };
 
   const stopSlide = () => {
     setIsPlaying(false);

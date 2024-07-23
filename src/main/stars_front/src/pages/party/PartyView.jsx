@@ -10,6 +10,7 @@ import { FaPlus } from "react-icons/fa6";
 import Modal from "../../component/Modal";
 import PartyUpdate from "./PartyUpdate";
 import Chat from "../../image/chatWhite.png";
+import Common from "../../utils/Common";
 
 // 레트로 스타일 폰트 지정
 
@@ -186,7 +187,7 @@ const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
   const goUpdate = async (e) => {
     if (e.key === "Enter") {
       try {
-        console.log("확인 : " + pno + " " + newName);
+        // console.log("확인 : " + pno + " " + newName);
         const rsp = await PartyAxiosApi.updatePname(pno, newName);
         setFocus(true);
         setNowPname(newName);
@@ -207,7 +208,7 @@ const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
         console.log(e);
       }
     };
-    pMemberList();
+    Common.getRefreshToken() && pMemberList();
     setFields([]);
     setDivView("calendar");
     // setTodate();
@@ -215,7 +216,7 @@ const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
 
   useEffect(() => {
     setFields([]);
-  }, [pno, addView, divView]);
+  }, [pno, addView]);
 
   useEffect(() => {
     setTodate();
@@ -225,13 +226,12 @@ const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
     const clickDayPlan = async () => {
       try {
         const res = await PartyAxiosApi.oneDayView(pno, todate);
-
         setFields(res.data);
       } catch (e) {
         console.log(e);
       }
     };
-    clickDayPlan();
+    Common.getRefreshToken() && clickDayPlan();
   }, [todate, lend]);
 
   // 해당 pno에 따른 계획날짜 배열
@@ -245,7 +245,7 @@ const PartyView = ({ pno, nowPname, setLend, lend, setNowPname }) => {
         console.log(e);
       }
     };
-    calendatWithPno();
+    Common.getRefreshToken() && calendatWithPno();
     setFocus(true);
   }, [pno, divView, lend]);
 

@@ -1,15 +1,8 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import MyAxiosApi from "../../api/MyAxiosApi";
-import Common from "../../utils/Common";
-import LoginAxiosApi from "../../api/AuthAxiosApi";
-import { GoPerson, GoLock, GoMail, GoEye, GoEyeClosed } from "react-icons/go";
-import { UserContext } from "../../context/UserStore";
-import { useNavigate } from "react-router-dom";
+import { GoPerson, GoLock, GoMail } from "react-icons/go";
 import Profile from "../../component/Profile";
-import AuthAxiosApi from "../../api/AuthAxiosApi";
 import { storage } from "../../api/Firebase";
-import MyBack from "../../image/내가만든배경2.png";
 
 const Container = styled.div`
   width: 100%;
@@ -23,11 +16,6 @@ const Container = styled.div`
 const Box = styled.div`
   width: 90%;
   height: 90%;
-  /* background-image: url(${MyBack}); */
-  /* border: 4px solid black; */
-  /* border: 6px solid black; */
-  /* background-position: center; */
-  /* background: red; */
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
@@ -203,14 +191,7 @@ const ButtonF = styled.button`
     font-size: 18px;
   }
 `;
-const NoneButton = styled.button`
-  background: none;
-  border: none;
-  color: rgba(0, 0, 0, 0);
-  & > * {
-    visibility: hidden;
-  }
-`;
+
 const BinBox = styled.button`
   width: 80px;
   height: 30px;
@@ -222,21 +203,13 @@ const ProfileButtonBox = styled.div`
   width: 90%;
   display: flex;
   justify-content: space-around;
-  /* background-color: blue; */
 
   @media screen and (max-width: 1024px) {
     width: 80%;
   }
 `;
 
-const My = ({
-  setModalOpen,
-  setHeader,
-  setType,
-  member,
-  onModify,
-  category,
-}) => {
+const My = ({ setModalOpen, setHeader, setType, member, onModify }) => {
   const inputFile = useRef(null);
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState();
@@ -278,9 +251,6 @@ const My = ({
     }
   };
 
-  // if (isLoading) {
-  //   return <div>Initializing...</div>;
-  // }
   const onClickProfile = async () => {
     if (file) {
       const storageRef = storage.ref();

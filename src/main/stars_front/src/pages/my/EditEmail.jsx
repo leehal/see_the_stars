@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import AuthAxiosApi from "../../api/AuthAxiosApi";
-import { GoPerson, GoLock, GoMail, GoEye, GoEyeClosed } from "react-icons/go";
+import { GoLock, GoMail } from "react-icons/go";
 
 const Container = styled.div`
   width: 100%;

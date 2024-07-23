@@ -105,12 +105,8 @@ const PartyChat = () => {
   const [inputMsg, setInputMsg] = useState("");
   const [chatList, setChatList] = useState([]);
   const [sender, setSender] = useState("");
-  // const [chatList, setChatList] = useState([]);
   const { roomId } = useParams();
-  // const [sender, setSender] = useState("");
-  // const [roomName, setRoomName] = useState(""); // 채팅방 이름
   const ws = useRef(null);
-  //   const navigate = useNavigate(); // useNavigate 훅 추가
 
   const onChangMsg = (e) => {
     setInputMsg(e.target.value);
@@ -162,7 +158,6 @@ const PartyChat = () => {
     const getMember = async () => {
       try {
         const rsp = await MyAxiosApi.memberDetail();
-        console.log(rsp.data.nick);
         setSender(rsp.data);
       } catch (error) {
         console.log(error);
@@ -176,8 +171,6 @@ const PartyChat = () => {
     const getChatRoom = async () => {
       try {
         const rsp = await ChatAxiosApi.chatDetail(roomId);
-        console.log(rsp.data.roomId);
-        // setRoomName(rsp.data.name);
       } catch (error) {
         console.log(error);
       }
@@ -185,8 +178,6 @@ const PartyChat = () => {
     const getViewMessage = async () => {
       try {
         const rsp = await ChatAxiosApi.chatViewMesage(roomId);
-        console.log("확인");
-        console.log(rsp.data);
         setChatList(rsp.data);
       } catch (error) {
         console.log(error);
@@ -197,7 +188,6 @@ const PartyChat = () => {
   }, []);
 
   useEffect(() => {
-    // console.log("방번호 : " + roomId);
     if (!ws.current) {
       ws.current = new WebSocket("/ws/chat");
       ws.current.onopen = () => {
@@ -234,7 +224,6 @@ const PartyChat = () => {
 
   return (
     <ChatContainer>
-      {/* <ChatHeader>채팅방 {roomName}</ChatHeader> */}
       <MessagesContainer ref={chatContainerRef}>
         {chatList.map((chat, index) => (
           <Div key={index} isSender={chat.sender === sender.nick}>
@@ -268,9 +257,7 @@ const PartyChat = () => {
           onKeyUp={onEnterKey}
           onKeyDown={goChatMsg}
         />
-        {/* <SendButton onClick={onClickMsgSend}>전송</SendButton> */}
       </div>
-      {/* <CloseButton onClick={onClickMsgClose}>채팅 종료 하기</CloseButton> */}
     </ChatContainer>
   );
 };

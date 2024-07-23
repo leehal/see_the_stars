@@ -210,7 +210,6 @@ const Weather = () => {
   const [region1, setRegion1] = useState("");
   const [region2, setRegion2] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [permissionDenied, setPermissionDenied] = useState(false);
 
@@ -280,7 +279,7 @@ const Weather = () => {
       if (coords) {
         try {
           const response = await axios.get(
-            `http://127.0.0.1:5000/api/weather2?x=${coords.x}&y=${coords.y}`
+            `https://seethestars.store/api/weather2?x=${coords.x}&y=${coords.y}`
           );
           setWeather(response.data);
           console.log(response.data);

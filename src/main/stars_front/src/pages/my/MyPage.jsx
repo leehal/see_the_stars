@@ -2,12 +2,9 @@ import styled from "styled-components";
 import Dibs from "./Dibs";
 import My from "./My";
 import { useEffect, useState } from "react";
-import Modal from "../../component/Modal";
-import EditId from "./EditId";
 import EditPw from "./EditPw";
 import EditNick from "./EditNick";
 import EditEamil from "./EditEmail";
-import { UserContext } from "../../context/UserStore";
 import { useNavigate } from "react-router-dom";
 import MyAxiosApi from "../../api/MyAxiosApi";
 import Common from "../../utils/Common";
@@ -114,9 +111,6 @@ const Div = styled.div`
 const MyInfor = styled.div`
   width: 100%;
   height: 100%;
-  /* min-height: 95%; */
-  /* padding: 13px 0;
-  padding-right: 10px; */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: ${({ category }) =>
     category === `profile` ? ` 0 40px 40px 40px` : "0 0 0 40px"};
@@ -130,7 +124,6 @@ const MyInfor = styled.div`
         : category === `reviews`
         ? `  40px 0 40px 40px`
         : "40px"};
-    /* min-height: 80%; */
   }
 `;
 const Button = styled.button`
@@ -138,7 +131,6 @@ const Button = styled.button`
   height: 50px;
   padding-top: 10px;
   font-size: 25px;
-  /* font-weight: bold; */
   border-radius: 10px;
   background: #fff;
   border: none;
@@ -224,7 +216,7 @@ const MyPage = () => {
     try {
       const res = await MyAxiosApi.editInfo(info, inputType);
       if (res.data) {
-        console.log("수정성공");
+        // console.log("수정성공");
         closeModal();
       } else {
         console.log("수정실패");
@@ -274,7 +266,7 @@ const MyPage = () => {
     const memberDetail = async () => {
       try {
         const res = await MyAxiosApi.memberDetail();
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data) {
           setMember(res.data);
         } else {
@@ -286,9 +278,6 @@ const MyPage = () => {
     };
     memberDetail();
   }, [modalOpen]);
-  useEffect(() => {
-    console.log(category);
-  }, [category]);
 
   return (
     <>

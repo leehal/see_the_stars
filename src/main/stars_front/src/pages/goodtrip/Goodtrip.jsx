@@ -1,20 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { PiXCircle } from "react-icons/pi";
 import Kakao from "./map";
 import styled, { keyframes } from "styled-components";
-import { FaEyeSlash, FaHeart } from "react-icons/fa";
-import TravelList from "./TravelList";
-import Reviews from "./Review";
 import TravelAxiosApi from "../../api/TravelAxiosApi";
 import MyAxiosApi from "../../api/MyAxiosApi";
 import Common from "../../utils/Common";
 import HeartPixel from "../../image/New Piskel (2).gif";
 import HeartUnClickPixel from "../../image/New Piskel (3).gif";
 import Basic from "../../image/Logo.jpg";
-import { PiSquareLogo } from "react-icons/pi";
 import { PiXSquare } from "react-icons/pi";
 import { IoSearchSharp } from "react-icons/io5";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 
 const slideUpIn = keyframes`
@@ -25,14 +20,6 @@ const slideUpIn = keyframes`
   to {
     transform: translateY(0);
     opacity: 1;
-  }
-`;
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
   }
 `;
 const slideDownIn = keyframes`
@@ -67,7 +54,6 @@ const SearchBox = styled.div`
   justify-content: center;
   gap: 60px;
   align-items: center;
-  /* gap: 30px; */
   margin: 0 auto;
   width: 100%;
   height: 100%;
@@ -165,7 +151,6 @@ const Input = styled.div`
 const TravelBox = styled.div`
   display: flex;
   flex-direction: column;
-  /* background: red; */
   align-items: center;
   gap: 10px;
   width: 100%;
@@ -181,7 +166,6 @@ const HeartBox = styled.div`
 const Heart = styled.div`
   position: relative;
   display: flex;
-  /* justify-content: flex-end; */
   cursor: pointer;
   opacity: 0.5;
   &:hover {
@@ -203,10 +187,6 @@ const Image = styled.div`
     height: 100%;
     object-fit: cover;
   }
-  /* 
-  @media (max-width: 768px) {
-    width: 90%;
-  } */
 `;
 const Close = styled.div`
   position: absolute;
@@ -226,7 +206,6 @@ const Name = styled.div`
   padding-top: 10px;
   justify-content: center;
   font-weight: bold;
-  /* margin: 0 auto; */
   cursor: pointer;
   width: 100%;
   border-bottom: 2px solid black;
@@ -248,16 +227,9 @@ const Line = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   display: flex;
-  /* justify-content: space-between; */
 
   @media (max-width: 768px) {
     width: 40%;
-  }
-`;
-
-const KaKaoBox = styled.div`
-  @media screen and (max-width: 768px) {
-    display: none;
   }
 `;
 
@@ -288,9 +260,7 @@ const Goodtrip = () => {
   const [travels, setTravels] = useState([]);
   const [dibs, setDibs] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [travelList, setTravelList] = useState({});
   const [selectedTravel, setSelectedTravel] = useState();
-  const [roadviewClick, setRoadviewClick] = useState(false);
 
   const onClickClose = () => {
     setReviewClicked(false);
@@ -303,7 +273,7 @@ const Goodtrip = () => {
     try {
       const res = await MyAxiosApi.dibs(tno);
       if (res.data) {
-        console.log("성공");
+        // console.log("성공");
         setRefresh(!refresh);
       } else {
         console.log("실패");
@@ -317,7 +287,7 @@ const Goodtrip = () => {
     try {
       const res = await MyAxiosApi.undibs(tno);
       if (res.data) {
-        console.log("성공");
+        // console.log("성공");
         setRefresh(!refresh);
       } else {
         console.log("실패");
@@ -337,12 +307,11 @@ const Goodtrip = () => {
     const travel = {
       totalPages,
       travels,
-      // travelList,
       dibs,
       city,
     };
     navigate("", { state: travel });
-  }, [travels, dibs, city, category, currentPage]);
+  }, [travels, dibs, city, category, currentPage, refresh]);
 
   const travel = async () => {
     try {
@@ -354,13 +323,6 @@ const Goodtrip = () => {
       );
       if (res.data) {
         setTotalPages(res.data.totalPages);
-        // if (!travelList[currentPage] || travelList[currentPage].length === 0) {
-        //   setTravelList((prev) => ({
-        //     ...prev,
-        //     [currentPage]: res.data.travels,
-        //   }));
-        // }
-        console.log(res.data.travels);
         setTravels(res.data.travels);
       } else {
         console.log("여행정보를 못불러옴");
@@ -369,11 +331,6 @@ const Goodtrip = () => {
       console.log(e);
     }
   };
-  // useEffect(() => {
-  //   if (category !== "" || city !== "" || name !== "") {
-  //     setTravelList({});
-  //   }
-  // }, [category, city, name]);
 
   useEffect(() => {
     travel();

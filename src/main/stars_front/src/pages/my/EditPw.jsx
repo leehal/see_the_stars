@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { GoLock, GoEye, GoEyeClosed } from "react-icons/go";
-import AuthAxiosApi from "../../api/AuthAxiosApi";
 import MyAxiosApi from "../../api/MyAxiosApi";
 
 const Container = styled.div`
@@ -78,7 +77,6 @@ const EditPw = ({ input, setInput, message, setMessage, onModify }) => {
   const [curPw, setCurPw] = useState("");
   const [checkPw, setCheckPw] = useState("");
   const [pwMessage, setPwMessage] = useState("");
-  const [isPw, setIsPw] = useState(false);
   const [isCurPw, setIsCurPw] = useState(false);
 
   const onClickPw = () => {
@@ -97,7 +95,7 @@ const EditPw = ({ input, setInput, message, setMessage, onModify }) => {
     try {
       const res = await MyAxiosApi.checkPw(curPw);
       if (res.data) {
-        console.log("비밀번호 일치");
+        // console.log("비밀번호 일치");
         setPwMessage("");
         setIsCurPw(true);
       } else {

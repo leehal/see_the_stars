@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Common from "../../utils/Common";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { FaCalendarAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Year = styled.div`
@@ -175,19 +174,6 @@ const CalendarBox = ({ setTodate, setDivView, setAddView, plan, todate }) => {
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth());
-  const location = useLocation();
-  const navigate = useNavigate();
-  // const [plan, setPlan] = useState([]); // 이미 저장된 날짜들 파란색으로 칠해주기 위함
-
-  // const checkDayBoxSelected = (e) => {
-  //   if (!e.currentTarget.classList.contains("selected")) {
-  //     setAddView("save");
-  //   }
-  // };
-
-  function formatNumber(number) {
-    return number.toString().padStart(2, "0");
-  }
 
   const formatDate = (date) => {
     // date 객체에서 연도, 월, 일을 추출
@@ -227,8 +213,6 @@ const CalendarBox = ({ setTodate, setDivView, setAddView, plan, todate }) => {
         const preDay = daysInLastMonth - firstDayOfWeek + i + 1;
         const date = new Date(year, month - 1, preDay);
         const formattedDate = formatDate(date);
-        console.log(plan[0] === "2024-07-17");
-        console.log(formattedDate);
         if (plan.includes(formattedDate)) {
           console.log(plan.includes(formattedDate));
           calendar.push(
@@ -245,7 +229,6 @@ const CalendarBox = ({ setTodate, setDivView, setAddView, plan, todate }) => {
             </DayBox>
           );
         } else {
-          console.log(plan.includes(formattedDate));
           calendar.push(
             <DayBox
               key={`last-${i + 1}`}
@@ -274,7 +257,6 @@ const CalendarBox = ({ setTodate, setDivView, setAddView, plan, todate }) => {
                 fontWeight: `bold`,
                 backgroundColor: `#2c475a`,
               }}
-              // className={"selected"}
               onClick={(e) => {
                 setTodate(Common.formatDate(date));
                 setDivView("calendar");
@@ -359,7 +341,6 @@ const CalendarBox = ({ setTodate, setDivView, setAddView, plan, todate }) => {
 
   return (
     <>
-      {/* <Container> */}
       <CalenContainer>
         <Year>
           <YearSpan>{year}</YearSpan>
@@ -394,7 +375,6 @@ const CalendarBox = ({ setTodate, setDivView, setAddView, plan, todate }) => {
           <CalendarDiv>{createCalendar()}</CalendarDiv>
         </Box>
       </CalenContainer>
-      {/* </Container> */}
     </>
   );
 };

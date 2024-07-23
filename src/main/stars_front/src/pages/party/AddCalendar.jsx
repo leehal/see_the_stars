@@ -8,6 +8,7 @@ import { FaMinus } from "react-icons/fa";
 import Modal2 from "../goodtrip/Modal";
 import MyAxiosApi from "../../api/MyAxiosApi";
 import { Outlet } from "react-router-dom";
+import Common from "../../utils/Common";
 
 const Container = styled.div`
   width: 80%;
@@ -143,7 +144,6 @@ const AddCalendar = ({
   setDivView,
   setLend,
   setAddView,
-  divView,
   roomId,
 }) => {
   const [modalOpen, setModalOpen] = useState(false); // 모달 열림/닫힘 상태 관리
@@ -161,13 +161,13 @@ const AddCalendar = ({
     const getMember = async () => {
       try {
         const rsp = await MyAxiosApi.memberDetail();
-        console.log(rsp.data.nick);
+        // console.log(rsp.data.nick);
         setSender(rsp.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getMember();
+    Common.getRefreshToken() && getMember();
   }, []);
 
   const onClickMsgClose = () => {

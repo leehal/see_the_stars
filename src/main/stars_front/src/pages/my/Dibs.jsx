@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { FaHeart } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import TravelAxiosApi from "../../api/TravelAxiosApi";
 import MyAxiosApi from "../../api/MyAxiosApi";
 import Common from "../../utils/Common";
 import { useNavigate } from "react-router-dom";
@@ -142,7 +141,7 @@ const Dibs = ({ refresh, setRefresh }) => {
       try {
         const res = await MyAxiosApi.dibsList();
         if (res.data) {
-          console.log(res.data);
+          // console.log(res.data);
           setDibs(res.data);
         } else {
           console.log("찜정보를 못불러옴");

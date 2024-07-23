@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.6b5ac6c5.css",
-    "main.js": "/static/js/main.670bbe5b.js",
+    "main.js": "/static/js/main.0b1c5a8c.js",
     "static/js/453.de9d4bd2.chunk.js": "/static/js/453.de9d4bd2.chunk.js",
     "static/media/retro_bg_15.jpg": "/static/media/retro_bg_15.72702db05ea785cbdd7b.jpg",
     "static/media/Silver.ttf": "/static/media/Silver.d45a6c7412c4474f72d8.ttf",
@@ -11,7 +11,6 @@
     "static/media/로고.png": "/static/media/로고.4d1c3d93e63ad4a5f964.png",
     "static/media/광명동굴.jpg": "/static/media/광명동굴.842d4a7363b8e1d04906.jpg",
     "static/media/지중해마을.jpg": "/static/media/지중해마을.6a3c25fc352eff8aad6b.jpg",
-    "static/media/내가만든배경2.png": "/static/media/내가만든배경2.8f727d347666fe7555a6.png",
     "static/media/에버랜드.jpg": "/static/media/에버랜드.e09413e1ade602470bee.jpg",
     "static/media/중동성당.jpg": "/static/media/중동성당.320cc1bd60f565810a8c.jpg",
     "static/media/LogoBPr.png": "/static/media/LogoBPr.b4f93d4c7a5ef3c9b6f8.png",
@@ -21,11 +20,11 @@
     "static/media/Logo.jpg": "/static/media/Logo.1c68648c8e1b29697a58.jpg",
     "index.html": "/index.html",
     "main.6b5ac6c5.css.map": "/static/css/main.6b5ac6c5.css.map",
-    "main.670bbe5b.js.map": "/static/js/main.670bbe5b.js.map",
+    "main.0b1c5a8c.js.map": "/static/js/main.0b1c5a8c.js.map",
     "453.de9d4bd2.chunk.js.map": "/static/js/453.de9d4bd2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6b5ac6c5.css",
-    "static/js/main.670bbe5b.js"
+    "static/js/main.0b1c5a8c.js"
   ]
 }

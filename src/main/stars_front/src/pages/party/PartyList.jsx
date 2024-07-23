@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PiXSquare } from "react-icons/pi";
 import Modal2 from "../goodtrip/Modal";
 import Heart from "../../image/New Piskel (2).gif";
+import Common from "../../utils/Common";
 
 const Container = styled.div`
   width: 15%;
@@ -16,9 +17,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   background-color: #2c475a;
-  /* overflow-y: auto; */
   border-right: 6px solid black;
-  /* gap: 10px; */
   flex-direction: column;
   box-shadow: 0 4px 6px rgba(0, 0.1, 0.1, 0.1);
   z-index: 1;
@@ -217,7 +216,7 @@ const PartyList = ({
         console.log(e);
       }
     };
-    PartyName();
+    Common.getRefreshToken() && PartyName();
   }, [modalOpen, lend]);
 
   const deleteParty = async (partyno) => {

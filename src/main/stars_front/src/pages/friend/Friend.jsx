@@ -730,7 +730,6 @@ const Friend = ({ closeModal }) => {
     const fetchAllData = async () => {
       try {
         const rspUsers = await PartyAxiosApi.allUsers();
-        console.log(rspUsers.data);
         setAllUser(rspUsers.data);
 
         const rspFriends = await FriendAxiosApi.allFriends();

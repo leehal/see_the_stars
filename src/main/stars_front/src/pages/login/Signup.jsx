@@ -95,7 +95,6 @@ const Error = styled.div`
 
 const Signup = () => {
   const navigate = useNavigate();
-  const context = useContext(UserContext);
 
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
