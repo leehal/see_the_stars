@@ -104,12 +104,15 @@ const EditNick = ({
 
   return (
     <Container>
+          <InputBox>
+            <input placeholder={member.nick} disabled={true} />
+          </InputBox>
       <InputBox>
         <LockIcon style={{ color: `gray` }} />
         <input
           style={{ fontSize: `25px`, paddingTop: `5px` }}
           type="text"
-          placeholder="닉네임"
+          placeholder="새 닉네임"
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => Common.onKeyDownEnter(e, onClickNick)}
         />

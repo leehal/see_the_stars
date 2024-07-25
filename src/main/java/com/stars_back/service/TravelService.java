@@ -51,7 +51,7 @@ public class TravelService {
 
     // 모든 여행 전체 조회
     public Map<String, Object> selectAllTravels(int page, String category, String city, String name) {
-        Pageable pageable = PageRequest.of(page,12);
+        Pageable pageable = PageRequest.of(page-1,12);
         List<Travel> travels;
         String change;
         if(city.equals("서울특별시")){

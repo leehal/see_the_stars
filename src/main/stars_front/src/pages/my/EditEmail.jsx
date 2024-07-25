@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import AuthAxiosApi from "../../api/AuthAxiosApi";
 import { GoLock, GoMail } from "react-icons/go";
+import emailjs from "@emailjs/browser";
 
 const Container = styled.div`
   width: 100%;
@@ -114,19 +115,27 @@ const EditEamil = ({
     }
   };
 
-  const onCert = async (email) => {
+const onCert = async (email) => {
+    const certification = Math.floor(Math.random() * 900000) + 100000;
+    setCheckCert(certification);
+    const templateParams = {
+      email: email,
+      certification: certification,
+    };
     try {
-      const rsp = await AuthAxiosApi.certEmail(email);
-      console.log(`인증번호:` + rsp.data);
-      if (rsp.data) {
-        setCheckCert(rsp.data);
-        setIsClickCert(true);
-        setCheckEmail(email);
-      }
+      await emailjs.send(
+        "service_kr7pxmb",
+        "template_lrutw4m",
+        templateParams,
+        "WQbPpTPtl4ML1Reqd"
+      );
+      setIsClickCert(true);
+      setCheckEmail(email);
     } catch (e) {
       console.log(e);
     }
   };
+
 
   const onClickModify = async () => {
     console.log(checkCert);
@@ -143,16 +152,20 @@ const EditEamil = ({
 
   return (
     <Container>
+          <InputBox>
+            <input placeholder={member.email} disabled={true} />
+          </InputBox>
       <InputBox>
         <EmailIcon style={{ color: `gray` }} />
         <input
           style={{ fontSize: `25px`, paddingTop: `5px` }}
           type="text"
-          placeholder="이메일"
+          placeholder="새 이메일"
           onChange={(e) => onChangeEmail(e)}
           // onKeyDown={(e) =>
           //   Common.onKeyDownEnter(e, isClickCert ? onClickJoin : onClickCert)
           // }
+          disabled={isClickCert}
         />
         <Binbox></Binbox>
       </InputBox>

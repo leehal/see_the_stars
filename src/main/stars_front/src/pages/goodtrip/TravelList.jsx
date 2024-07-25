@@ -31,9 +31,8 @@ const SectionContainer = styled.div`
   margin: 50px 0;
   width: 70%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
   gap: 50px;
   padding: 20px;
   box-shadow: 5px 5px 11px -2px #ccc;
@@ -44,6 +43,15 @@ const SectionContainer = styled.div`
   @media (max-width: 768px) {
     width: 100%;
   }
+`;
+
+const TravelContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 50px;
 `;
 
 const TravelBox = styled.div`
@@ -294,59 +302,64 @@ const TravelList = () => {
   return (
     <Container>
       <SectionContainer>
-        {travels.map((travel) => (
-          <TravelBox key={travel.tno} onClick={() => onClickTravel(travel.tno)}>
-            <Name>
-              {travel.tname.length < 20 ? (
-                <div>{travel.tname}</div>
+        <TravelContainer>
+          {travels.map((travel) => (
+            <TravelBox
+              key={travel.tno}
+              onClick={() => onClickTravel(travel.tno)}
+            >
+              <Name>
+                {travel.tname.length < 20 ? (
+                  <div>{travel.tname}</div>
+                ) : (
+                  <Tooltip>
+                    <div>{Common.rpad(travel.tname.slice(0, 17), 20, `.`)}</div>
+                    <TooltipText className="tooltiptext">
+                      {travel.tname}
+                    </TooltipText>
+                  </Tooltip>
+                )}
+              </Name>
+              <Image>
+                <img src={travel.timage || Logo} />
+              </Image>
+              <Line>
+                <Tag
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCategory(travel.tcategory);
+                  }}
+                >{`#${travel.tcategory}`}</Tag>
+              </Line>
+              {travel.taddr.length < 20 ? (
+                <div>{travel.taddr}</div>
               ) : (
                 <Tooltip>
-                  <div>{Common.rpad(travel.tname.slice(0, 17), 20, `.`)}</div>
+                  <div>{Common.rpad(travel.taddr.slice(0, 17), 20, `.`)}</div>
                   <TooltipText className="tooltiptext">
-                    {travel.tname}
+                    {travel.taddr}
                   </TooltipText>
                 </Tooltip>
               )}
-            </Name>
-            <Image>
-              <img src={travel.timage || Logo} />
-            </Image>
-            <Line>
-              <Tag
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setCategory(travel.tcategory);
-                }}
-              >{`#${travel.tcategory}`}</Tag>
-            </Line>
-            {travel.taddr.length < 20 ? (
-              <div>{travel.taddr}</div>
-            ) : (
-              <Tooltip>
-                <div>{Common.rpad(travel.taddr.slice(0, 17), 20, `.`)}</div>
-                <TooltipText className="tooltiptext">
-                  {travel.taddr}
-                </TooltipText>
-              </Tooltip>
-            )}
-            {Common.getRefreshToken() && (
-              <Heart
-                onClick={(e) => {
-                  e.stopPropagation();
-                  dibs.some((dib) => dib.tno === travel.tno)
-                    ? onClickUndibs(travel.tno)
-                    : onClickDibs(travel.tno);
-                }}
-              >
-                {dibs.some((dib) => dib.tno === travel.tno) ? (
-                  <img src={HeartPixel} alt="" />
-                ) : (
-                  <img src={HeartUnClickPixel} alt="" />
-                )}
-              </Heart>
-            )}
-          </TravelBox>
-        ))}
+              {Common.getRefreshToken() && (
+                <Heart
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dibs.some((dib) => dib.tno === travel.tno)
+                      ? onClickUndibs(travel.tno)
+                      : onClickDibs(travel.tno);
+                  }}
+                >
+                  {dibs.some((dib) => dib.tno === travel.tno) ? (
+                    <img src={HeartPixel} alt="" />
+                  ) : (
+                    <img src={HeartUnClickPixel} alt="" />
+                  )}
+                </Heart>
+              )}
+            </TravelBox>
+          ))}
+        </TravelContainer>
         <PageNum>
           <PrevButton
             onClick={prev}
@@ -358,7 +371,7 @@ const TravelList = () => {
             <PageButton> 1 </PageButton>
           ) : (
             Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-              const startPage = Math.floor((currentPage-1) / 10) * 10 + 1;
+              const startPage = Math.floor((currentPage - 1) / 10) * 10 + 1;
               if (page >= startPage && page < startPage + 10) {
                 return (
                   <PageButton

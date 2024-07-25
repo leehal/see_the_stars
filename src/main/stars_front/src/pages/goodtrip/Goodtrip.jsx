@@ -9,7 +9,7 @@ import HeartUnClickPixel from "../../image/New Piskel (3).gif";
 import Basic from "../../image/Logo.jpg";
 import { PiXSquare } from "react-icons/pi";
 import { IoSearchSharp } from "react-icons/io5";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserStore";
 
 const slideUpIn = keyframes`
@@ -239,6 +239,7 @@ const TaddrBox = styled.div`
 `;
 
 const Goodtrip = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const context = useContext(UserContext);
@@ -247,6 +248,7 @@ const Goodtrip = () => {
     setRefresh,
     category,
     setCategory,
+    setCurrentPage,
     currentPage,
     tno,
     setTno,
@@ -261,6 +263,7 @@ const Goodtrip = () => {
   const [dibs, setDibs] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedTravel, setSelectedTravel] = useState();
+  const [lend, setLend] = useState(false);
 
   const onClickClose = () => {
     setReviewClicked(false);
@@ -273,8 +276,9 @@ const Goodtrip = () => {
     try {
       const res = await MyAxiosApi.dibs(tno);
       if (res.data) {
-        // console.log("성공");
-        setRefresh(!refresh);
+        location.pathname.includes("/review")
+          ? setLend(!lend)
+          : setRefresh(!refresh);
       } else {
         console.log("실패");
       }
@@ -287,8 +291,9 @@ const Goodtrip = () => {
     try {
       const res = await MyAxiosApi.undibs(tno);
       if (res.data) {
-        // console.log("성공");
-        setRefresh(!refresh);
+        location.pathname.includes("/review")
+          ? setLend(!lend)
+          : setRefresh(!refresh);
       } else {
         console.log("실패");
       }
@@ -300,6 +305,7 @@ const Goodtrip = () => {
   const onClickSearch = () => {
     if (inputRef.current) {
       setName(inputRef.current.value);
+      setCurrentPage(1);
     }
   };
 
@@ -350,7 +356,7 @@ const Goodtrip = () => {
       }
     };
     Common.getRefreshToken() && dibsList();
-  }, [refresh]);
+  }, [refresh, lend]);
 
   useEffect(() => {
     const select = async () => {
@@ -390,6 +396,7 @@ const Goodtrip = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       setCategory(selectedTravel?.tcategory);
+                      setCurrentPage(1);
                     }}
                   >
                     {`#${selectedTravel?.tcategory}`}
@@ -437,6 +444,7 @@ const Goodtrip = () => {
                     <select
                       onChange={(e) => {
                         setCategory(e.target.value);
+                        setCurrentPage(1);
                       }}
                     >
                       <option value="관광">관광</option>
@@ -447,8 +455,18 @@ const Goodtrip = () => {
                   )}
                 </Input>
                 <Line>
-                  <Tag onClick={() => setCity("")}>{`#${city}`}</Tag>
-                  <Tag onClick={() => setCategory("")}>{`#${category}`}</Tag>
+                  <Tag
+                    onClick={() => {
+                      setCity("");
+                      setCurrentPage(1);
+                    }}
+                  >{`#${city}`}</Tag>
+                  <Tag
+                    onClick={() => {
+                      setCategory("");
+                      setCurrentPage(1);
+                    }}
+                  >{`#${category}`}</Tag>
                   <Tag
                     onClick={() => {
                       setName("");
@@ -465,6 +483,7 @@ const Goodtrip = () => {
             setCity={setCity}
             taddr={selectedTravel?.taddr}
             reviewClicked={reviewClicked}
+            setCurrentPage={setCurrentPage}
           />
         </SearchBox>
       </SearchContainer>

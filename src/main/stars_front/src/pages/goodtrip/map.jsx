@@ -30,7 +30,7 @@ const MapBox = styled.div`
 `;
 const { kakao } = window;
 
-const Kakao = ({ setCity, taddr, reviewClicked }) => {
+const Kakao = ({ setCity, taddr, reviewClicked, setCurrentPage }) => {
   const [overlayContent, setOverlayContent] = useState(null);
   const [overlayPosition, setOverlayPosition] = useState({ x: 0, y: 0 });
   const [places, setPlaces] = useState([]);
@@ -101,6 +101,7 @@ const Kakao = ({ setCity, taddr, reviewClicked }) => {
       kakao.maps.event.addListener(polygon, "click", function (e) {
         // searchPlaces(area.cities.map((city) => `${city} 맛집`)); // 도시 이름을 이용해 장소 검색
         setCity(area.name);
+        setCurrentPage(1);
       });
     }
     Maparea.areas.forEach(displayArea);

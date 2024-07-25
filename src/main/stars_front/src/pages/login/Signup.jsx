@@ -5,6 +5,7 @@ import AuthAxiosApi from "../../api/AuthAxiosApi";
 import { GoPerson, GoLock, GoMail, GoEye, GoEyeClosed } from "react-icons/go";
 import { UserContext } from "../../context/UserStore";
 import { useNavigate } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 
 const Container = styled.div`
   position: relative;
@@ -231,26 +232,30 @@ const Signup = () => {
 
   const onClickCert = async () => {
     if (isId && isPw && isNick && isEmail) {
-      // try {
-      //   const rsp = await LoginAxiosApi.certEmail(inputEmail);
-      //   console.log(`인증번호:` + rsp.data);
-      //   if (rsp.data) {
-      //     setCheckCert(rsp.data);
-      setIsClickCert(true);
-      setCheckEmail(inputEmail);
-      //   } else {
-      //     setCheckCert("");
-      //   }
-      // } catch (e) {
-      //   console.log(e);
-      // }
+      const certification = Math.floor(Math.random() * 900000) + 100000;
+      setCheckCert(certification);
+      const templateParams = {
+        email: inputEmail,
+        certification: certification,
+      };
+      try {
+        await emailjs.send(
+          "service_kr7pxmb",
+          "template_lrutw4m",
+          templateParams,
+          "WQbPpTPtl4ML1Reqd"
+        );
+        setIsClickCert(true);
+        setCheckEmail(inputEmail);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
   const login = async () => {
     try {
       const res = await AuthAxiosApi.login(inputId, inputPw);
-      console.log(res.data);
       if (res.data.grantType === "Bearer") {
         Common.setAccessToken(res.data.accessToken);
         Common.setRefreshToken(res.data.refreshToken);
@@ -264,19 +269,17 @@ const Signup = () => {
   };
 
   const onBlurCert = () => {
-    // console.log(inputCert, checkCert);
-    // if (inputCert == checkCert) {
-    //   setIsCert(true);
-    //   setCertMessage("");
-    // } else {
-    //   setCertMessage("인증번호를 정확하게 다시 입력해 주세요.");
-    //   setIsCert(false);
-    // }
+    if (inputCert == checkCert) {
+      setIsCert(true);
+      setCertMessage("");
+    } else {
+      setCertMessage("인증번호를 정확하게 다시 입력해 주세요.");
+      setIsCert(false);
+    }
   };
 
   const onClickJoin = async () => {
-    console.log(isId, isPw, isNick, isEmail, isCert);
-    if (isId && isPw && isNick && isEmail) {
+    if (isId && isPw && isNick && isEmail&&isCert) {
       try {
         const rsp = await AuthAxiosApi.signup(
           inputEmail,
@@ -373,6 +376,7 @@ const Signup = () => {
                   isClickCert ? onClickJoin : onClickCert
                 )
               }
+              disabled={isClickCert}
             />
           </InputBox>
           <Error>{idMessage}</Error>

@@ -311,7 +311,7 @@ const My = ({ setModalOpen, setHeader, setType, member, onModify }) => {
           <InputBox>
             <GoPerson style={{ color: `gray` }} />
             <div>
-              <p>ID</p>
+              <p>{member?.mid}</p>
             </div>
             <BinBox></BinBox>
           </InputBox>

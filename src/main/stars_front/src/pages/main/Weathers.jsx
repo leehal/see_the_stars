@@ -10,6 +10,7 @@ import {
 } from "react-icons/ti";
 import { MdOutlineNightlight } from "react-icons/md";
 import { WiRainMix, WiShowers, WiDaySunny } from "react-icons/wi";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 
 const City = styled.div`
   position: absolute;
@@ -99,25 +100,25 @@ const WeatherImg = styled.div`
     display: none;
   }
 `;
-const ErrorContainer = styled.div`
-  position: fixed;
-  width: 200px;
-  height: 200px;
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%);
-  transform: translate(-50%, -50%);
-  background: #fff;
-  font-size: 20px;
-  color: #000000;
-  border-radius: 10px;
-  text-align: center;
-`;
+// const ErrorContainer = styled.div`
+//   position: fixed;
+//   width: 200px;
+//   height: 200px;
+//   z-index: 9999;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: column;
+//   top: 30%;
+//   left: 50%;
+//   transform: translate(-50%);
+//   transform: translate(-50%, -50%);
+//   background: #fff;
+//   font-size: 20px;
+//   color: #000000;
+//   border-radius: 10px;
+//   text-align: center;
+// `;
 
 const Button = styled.button`
   background-color: #007bff;
@@ -210,8 +211,42 @@ const Weather = () => {
   const [region1, setRegion1] = useState("");
   const [region2, setRegion2] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [error, setError] = useState(null);
+  const [error, setError] = useState();
   const [permissionDenied, setPermissionDenied] = useState(false);
+
+  const onError = (error) => {
+    console.error(error);
+    if (error.code === error.PERMISSION_DENIED) {
+      setError("위치 정보 접근이 거부되었습니다.");
+      setPermissionDenied(true);
+    } else {
+      setError("위치 정보를 가져올 수 없습니다.");
+      setPermissionDenied(false);
+    }
+  };
+
+  const onSuccess = (position) => {
+    setLocation({
+      lat: position.coords.latitude,
+      long: position.coords.longitude,
+    });
+  };
+  const requestLocationPermission = () => {
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    });
+  };
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setError("이 브라우저는 위치 정보를 지원하지 않습니다.");
+      return;
+    }
+
+    requestLocationPermission(); // 컴포넌트 초기화 시 위치 접근 요청
+  }, [])
 
   const getGeocodeKakao = async (lat, lng) => {
     try {
@@ -231,41 +266,6 @@ const Weather = () => {
       console.error("Kakao Geocoding error:", error);
     }
   };
-
-  const onSuccess = (position) => {
-    setLocation({
-      lat: position.coords.latitude,
-      long: position.coords.longitude,
-    });
-  };
-
-  const onError = (error) => {
-    console.error(error);
-    if (error.code === error.PERMISSION_DENIED) {
-      setError("위치 정보 접근이 거부되었습니다.");
-      setPermissionDenied(true);
-    } else {
-      setError("위치 정보를 가져올 수 없습니다.");
-      setPermissionDenied(false);
-    }
-  };
-
-  const requestLocationPermission = () => {
-    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
-    });
-  };
-
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      setError("이 브라우저는 위치 정보를 지원하지 않습니다.");
-      return;
-    }
-
-    requestLocationPermission(); // 컴포넌트 초기화 시 위치 접근 요청
-  }, []);
 
   useEffect(() => {
     if (location.lat !== 0 && location.long !== 0) {
@@ -421,16 +421,6 @@ const Weather = () => {
 
   return (
     <Container>
-      {error && (
-        <ErrorContainer>
-          <div>{error}</div>
-          {permissionDenied && (
-            <Button onClick={requestLocationPermission}>
-              위치 정보 접근 요청
-            </Button>
-          )}
-        </ErrorContainer>
-      )}
       <WeatherImg>
         <IconTime>{getTimeIcon()}</IconTime>
         <IconWrapper weather={weather.sky}>{getWeatherIcon()}</IconWrapper>

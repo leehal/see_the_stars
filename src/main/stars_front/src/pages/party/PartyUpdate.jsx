@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Profile from "../../component/Profile";
-import { useNavigate } from "react-router-dom";
 import PartyAxiosApi from "../../api/PartyAxiosApi";
 import styled from "styled-components";
 import FriendAxiosApi from "../../api/FriendAxiosApi";
@@ -84,8 +83,8 @@ const PartyUpdate = ({ closeModal, pno, memberList, setLend }) => {
       try {
         const rsp = await FriendAxiosApi.allFriends();
         const memberIds = memberList.map((member) => member.nick);
-        //         console.log(rsp.data);
-        //         console.log("친구");
+        console.log(rsp.data);
+        console.log("친구");
 
         setAlluser(
           rsp.data.filter(
@@ -101,16 +100,17 @@ const PartyUpdate = ({ closeModal, pno, memberList, setLend }) => {
   }, []);
 
   const handleUserClick = (user) => {
-    if (nickList.includes(user.from)) {
+    const nick = user.tf === `FALSE` ? user.from : user.to;
+    if (nickList.includes(nick)) {
       // 이미 선택된 경우, 선택 해제 (배열에서 제거)
-      setNickList((prevList) => prevList.filter((n) => n !== user.from));
+      setNickList((prevList) => prevList.filter((n) => n !== nick));
       setSelectedUsers((prevSelected) =>
-        prevSelected.filter((from) => from !== user.from)
+        prevSelected.filter((from) => from !== nick)
       );
     } else {
       // 선택되지 않은 경우, 배열에 추가
-      setNickList((prevList) => [...prevList, user.from]);
-      setSelectedUsers((prevSelected) => [...prevSelected, user.from]);
+      setNickList((prevList) => [...prevList, nick]);
+      setSelectedUsers((prevSelected) => [...prevSelected, nick]);
     }
   };
 
@@ -121,21 +121,16 @@ const PartyUpdate = ({ closeModal, pno, memberList, setLend }) => {
           <UserBox
             key={user.email}
             onClick={() => handleUserClick(user)}
-            isSelected={selectedUsers.includes(user.from)}
+            isSelected={selectedUsers.includes(
+              user.tf === `FALSE` ? user.from : user.to
+            )}
           >
             <ProfileBox>
-              <Profile
-                size={`2rem`}
-                src={user.img}
-                // onClick={() => navigate("/my")}
-              />
+              <Profile size={`2rem`} src={user.img} />
             </ProfileBox>
-            <NickEmail>
+            <toEmail>
               <div>{user.tf === `FALSE` ? user.from : user.to}</div>
-            </NickEmail>
-            <NickEmail>
-              <div>{user.email}</div>
-            </NickEmail>
+            </toEmail>
           </UserBox>
         ))}
       </UserListDiv>

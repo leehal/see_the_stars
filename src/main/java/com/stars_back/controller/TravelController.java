@@ -24,6 +24,7 @@ public class TravelController {
     @PostMapping("/travellist")
     public ResponseEntity<Map<String, Object>> travelList (@RequestBody Map<String, String> data){
         int page = Integer.parseInt(data.get("page"));
+        log.info(String.valueOf(page));
         String category = data.get("category");
         String city = data.get("city");
         String name = data.get("name");
