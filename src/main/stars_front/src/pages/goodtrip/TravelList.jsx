@@ -219,9 +219,11 @@ const TravelList = () => {
   const context = useContext(UserContext);
   const [showNextInactive, setShowNextInactive] = useState(false);
   const [showPrevInactive, setShowPrevInactive] = useState(false);
+  const [dibs, setDibs] =useState([]);
   const {
     setCurrentPage,
     currentPage,
+    refresh,
     setRefresh,
     tno,
     setTno,
@@ -234,7 +236,6 @@ const TravelList = () => {
   const {
     travels = [],
     travelList = [],
-    dibs = [],
     city = "",
     totalPages = 1,
   } = location.state || {};
@@ -295,9 +296,21 @@ const TravelList = () => {
     navigate(`review/${tno}`);
   };
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, []);
+    useEffect(() => {
+      const dibsList = async () => {
+        try {
+          const res = await MyAxiosApi.dibsList();
+          if (res.data) {
+            setDibs(res.data);
+          } else {
+            console.log("찜정보를 못불러옴");
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      Common.getRefreshToken() && dibsList();
+    }, [refresh]);
 
   return (
     <Container>
