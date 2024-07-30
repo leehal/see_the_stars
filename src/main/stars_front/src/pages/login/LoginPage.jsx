@@ -13,7 +13,6 @@ const fadeIn = keyframes`
 `;
 
 const Container = styled.div`
-  position: relative;
   display: flex;
   width: 100%;
   height: 100vh;
@@ -24,7 +23,7 @@ const Container = styled.div`
     align-items: center;
   }
   @media screen and (max-width: 425px) {
-    min-width: 425px;
+    background: #da2b70;
   }
 `;
 const FristBack = styled.div`
@@ -35,11 +34,22 @@ const FristBack = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  @media screen and (max-width: 425px) {
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 const Color = styled.div`
   width: 22%;
   background-color: #da2b70;
   height: 100%;
+
+  @media screen and (max-width: 425px) {
+    background: none;
+  }
 `;
 
 const Box = styled.div`
@@ -66,6 +76,13 @@ const Box = styled.div`
     width: 350px;
   }
   @media screen and (max-width: 425px) {
+    width: 100%;
+    height: 90%;
+    background: #fff;
+    right: 0;
+    box-shadow: none;
+    border-radius: 0;
+    border: none;
   }
 `;
 
@@ -75,6 +92,9 @@ const Logo = styled.div`
   top: 100px;
   font-size: 3rem;
   font-weight: bold;
+`;
+const AnimatedContainer = styled.div`
+  animation: ${fadeIn} 0.5s ease-in-out;
 `;
 
 const LoginPage = () => {

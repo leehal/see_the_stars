@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.6b5ac6c5.css",
-    "main.js": "/static/js/main.c8665ef0.js",
+    "main.js": "/static/js/main.6155facb.js",
     "static/js/453.de9d4bd2.chunk.js": "/static/js/453.de9d4bd2.chunk.js",
     "static/media/retro_bg_15.jpg": "/static/media/retro_bg_15.72702db05ea785cbdd7b.jpg",
     "static/media/Silver.ttf": "/static/media/Silver.d45a6c7412c4474f72d8.ttf",
@@ -18,13 +18,14 @@
     "static/media/kakao-talk.png": "/static/media/kakao-talk.41baceab72fbc7eafd9e.png",
     "static/media/New Piskel (2).gif": "/static/media/New Piskel (2).ccff7ddf8e4be953a1eb.gif",
     "static/media/Logo.jpg": "/static/media/Logo.1c68648c8e1b29697a58.jpg",
+    "static/media/MFriend": "/static/media/MFriend.6b5133546ffd10db7f5e",
     "index.html": "/index.html",
     "main.6b5ac6c5.css.map": "/static/css/main.6b5ac6c5.css.map",
-    "main.c8665ef0.js.map": "/static/js/main.c8665ef0.js.map",
+    "main.6155facb.js.map": "/static/js/main.6155facb.js.map",
     "453.de9d4bd2.chunk.js.map": "/static/js/453.de9d4bd2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6b5ac6c5.css",
-    "static/js/main.c8665ef0.js"
+    "static/js/main.6155facb.js"
   ]
 }

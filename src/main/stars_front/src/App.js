@@ -5,6 +5,7 @@ import LoginPage from "./pages/login/LoginPage";
 import Login from "./pages/login/Login";
 import SignupPage from "./pages/login/SignupPage";
 import Party from "./pages/party/Party";
+import My from "./pages/my/My";
 import Friend from "./pages/friend/Friend";
 import UserStore from "./context/UserStore";
 import { createGlobalStyle } from "styled-components";
@@ -19,6 +20,7 @@ import ReviewFireBase from "./pages/goodtrip/ReviewFireBase";
 import "./App.css";
 import PartyChat from "./pages/party/PartyChat";
 import TravelList from "./pages/goodtrip/TravelList";
+import MFriend from "./pages/friend/MFriend";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -106,6 +108,7 @@ function App() {
               </Route>
               <Route path="my" element={<MyPage />} />
               <Route path="friend" element={<Friend />} />
+              <Route path="mfriend" element={<MFriend />} />
               <Route path="goodtrip" element={<Goodtrip />}>
                 <Route index element={<TravelList />} />
                 <Route path="review/:tno" element={<Reviews />} />

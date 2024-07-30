@@ -31,6 +31,10 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+
+  @media screen and (max-width: 425px) {
+    height: 90%;
+  }
 `;
 
 const Slide = styled.div`
@@ -40,6 +44,10 @@ const Slide = styled.div`
   transform: translate(-50%);
   width: 95%;
   height: 70%;
+
+  @media screen and (max-width: 425px) {
+    height: 80%;
+  }
 `;
 
 const Item = styled.div`
@@ -55,6 +63,7 @@ const Item = styled.div`
     width: 30%;
     height: 40%;
     @media screen and (max-width: 425px) {
+      border: 1px solid #000;
     }
   }
 
@@ -69,20 +78,36 @@ const Item = styled.div`
     border-radius: 0;
     width: 100%;
     height: 100%;
+
+    @media screen and (max-width: 425px) {
+      height: 90%;
+    }
   }
 
   &:nth-child(3) {
     right: 11%;
+    @media screen and (max-width: 425px) {
+      bottom: 12%;
+      right: 14%;
+    }
   }
 
   &:nth-child(4) {
     right: 3%;
     bottom: 2%;
+    @media screen and (max-width: 425px) {
+      bottom: 12%;
+      right: 6%;
+    }
   }
 
   &:nth-child(5) {
     right: -5%;
     bottom: 1%;
+    @media screen and (max-width: 425px) {
+      right: -2%;
+      bottom: 12%;
+    }
   }
 
   &:nth-child(n + 6) {
@@ -97,20 +122,31 @@ const Indicator = styled.div`
   left: 50%;
   transform: translate(-50%);
   bottom: 5%;
+
+  @media screen and (max-width: 425px) {
+    bottom: 0;
+  }
 `;
 
 const IndicatorDot = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background-color: ${(props) => (props.active ? "#777" : "#ddd")};
+  background-color: ${(props) => (props.active ? "#000" : "#fff")};
   margin: 0 5px;
+  box-shadow: 3px 3px 6px -4px gray;
+
+  @media screen and (max-width: 425px) {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 const Name = styled.div`
   display: flex;
   justify-content: center;
   font-size: 50px;
+  text-align: center;
   margin-top: 10px;
   text-transform: uppercase;
   font-weight: bold;
@@ -146,12 +182,16 @@ const ButtonWrapper = styled.div`
   justify-content: center;
   align-items: center;
   bottom: 12%;
+
+  @media screen and (max-width: 425px) {
+    bottom: 7%;
+  }
 `;
 
 const PrevButton = styled.button`
   width: 50px;
   height: 35px;
-  background: #f4eedd;
+  background: #fff;
   border: none;
   display: flex;
   justify-content: center;
@@ -170,7 +210,7 @@ const PrevButton = styled.button`
 const NextButton = styled.button`
   width: 50px;
   height: 35px;
-  background: #f4eedd;
+  background: #fff;
   border: none;
   display: flex;
   justify-content: center;
@@ -187,16 +227,14 @@ const NextButton = styled.button`
 
 const Window = styled.div`
   position: absolute;
-  top: 50%;
+  top: 60%;
   border: 2px solid #fff;
   box-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
-  left: 100px;
-  height: 55%;
+  height: 50%;
+  left: 7%;
   width: 30%;
-  min-width: 270px;
-  min-height: 230px;
-
   background: #ccc;
+  overflow: hidden;
   color: #333;
   transform: translate(0, -50%);
   /* font-family: system-ui; */
@@ -215,8 +253,7 @@ const Window = styled.div`
   }
   @media screen and (max-width: 425px) {
     min-width: 150px;
-    min-height: 150px;
-    top: 70%;
+    min-height: 100px;
   }
 `;
 const TitleBar = styled.div`
@@ -254,11 +291,15 @@ const ControlButton = styled.button`
 
 const Content1 = styled.div`
   padding: 10px;
+  width: 99%;
+  height: 90%;
+  display: flex;
+
+  align-items: center;
+  flex-direction: column;
   background-color: white;
   box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #000;
-  height: 90%;
-  overflow: scroll;
-
+  overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: #808080 #c0c0c0;
 

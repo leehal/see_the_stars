@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Weathers from "./Weathers";
 import Festival from "./Festival";
@@ -6,6 +7,7 @@ import Advertisement from "../advertisement/Advertisement";
 import AdInquiry from "../advertisement/AdInquiry";
 import React, { useState, useEffect } from "react";
 import Modal from "../../component/Modal";
+import Basic from "../../image/Logo.jpg";
 import Backimg from "../../image/retro_bg_15.jpg";
 import playImageActive from "../../image/재생 버튼.png";
 import playImageInactive from "../../image/배경 없는 재생.png";
@@ -15,7 +17,7 @@ import pauseImageInactive from "../../image/배경 없는 정지.png";
 const Container = styled.div`
   width: 100%;
   height: auto;
-  background: #f4eedd;
+  background: #f3f3f3;
   overflow-x: hidden;
   display: flex;
   justify-content: center;
@@ -25,6 +27,9 @@ const Container = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
 
+  @media screen and (max-width: 425px) {
+    background: none;
+  }
   @media screen and (max-width: 375px) {
     min-width: 375px;
   }
@@ -41,12 +46,16 @@ const Back = styled.div`
 const Content = styled.div`
   width: 70vw;
   display: flex;
-  background: #f4eedd;
+  background: #fff;
   flex-direction: column;
   align-items: center;
 
   @media screen and (max-width: 768px) {
     width: 90vw;
+  }
+  @media screen and (max-width: 425px) {
+    background: none;
+    width: 100%;
   }
   @media screen and (max-width: 375px) {
     min-width: 375px;
@@ -62,6 +71,10 @@ const Firstp = styled.div`
   justify-content: center;
   flex-direction: column;
   justify-content: space-between;
+  @media screen and (max-width: 425px) {
+    width: 100%;
+    height: 70vh;
+  }
   @media screen and (max-width: 375px) {
     min-width: 375px;
   }
@@ -70,7 +83,7 @@ const Firstp = styled.div`
 const MainPage = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-between;
+
   height: 60%;
   margin-bottom: 2%;
 
@@ -83,13 +96,10 @@ const MainPage = styled.div`
     align-items: center;
   }
   @media screen and (max-width: 425px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     width: 100%;
-  }
-  @media screen and (max-width: 375px) {
-    min-width: 375px;
+    height: 45%;
+    display: flex;
   }
 `;
 
@@ -100,9 +110,6 @@ const Second = styled.div`
   @media screen and (max-width: 425px) {
     width: 100%;
     height: 60vh;
-  }
-  @media screen and (max-width: 375px) {
-    min-width: 375px;
   }
 `;
 
@@ -124,11 +131,11 @@ const Login = styled.div`
     border-radius: 20px;
   }
   @media screen and (max-width: 425px) {
-    position: absolute;
     width: 50%;
     height: 80%;
-    right: 0;
     order: 2;
+    border: none;
+    box-shadow: 3px 3px 6px -4px gray;
   }
 `;
 
@@ -137,7 +144,7 @@ const Promotion = styled.div`
   justify-content: start;
   width: 60%;
   height: 20%;
-  background: #ccc;
+  background: #e7e7e7;
   overflow: hidden;
   margin-top: 25px;
   border: 5px solid #000;
@@ -153,10 +160,11 @@ const Promotion = styled.div`
   }
   @media screen and (max-width: 425px) {
     width: 100%;
-    height: 25%;
-  }
-  @media screen and (max-width: 375px) {
-    min-width: 375px;
+    height: 20%;
+    border: none;
+    bottom: 5%;
+    box-shadow: 3px 3px 8px -4px gray, -3px -3px 8px -4px gray,
+      3px -3px 8px -4px gray, -3px 3px 8px -4px gray;
   }
 `;
 
@@ -179,17 +187,17 @@ const Weather = styled.div`
     order: 1;
   }
   @media screen and (max-width: 425px) {
-    position: absolute;
-    left: 0;
     width: 45%;
     height: 80%;
     border-radius: 20px;
+    border: none;
+    box-shadow: 3px 3px 6px -4px gray;
   }
 `;
 
 const SlideImg = styled.div`
   width: 100%;
-  height: 90%;
+  height: 100%;
   display: flex;
   position: relative;
   transition: transform 1s ease-in-out;
@@ -214,43 +222,6 @@ const Slide = styled.img`
   object-fit: contain;
 `;
 
-const SlideBtnWrapper = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 10%;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-
-  @media screen and (max-width: 425px) {
-    width: 100%;
-    height: 18%;
-  }
-`;
-
-const Button = styled.button`
-  cursor: pointer;
-  background-color: transparent;
-  background-image: ${(props) =>
-    props.active ? `url(${props.activeImage})` : `url(${props.inactiveImage})`};
-  background-size: cover;
-  background-repeat: no-repeat;
-  border: none;
-  width: 42px;
-  height: 40px;
-
-  @media screen and (max-width: 1024px) {
-    width: 40px;
-    height: 35px;
-  }
-  @media screen and (max-width: 768px) {
-    width: 37px;
-    height: 35px;
-  }
-`;
-
 const RightBox = styled.div`
   display: flex;
   align-items: center;
@@ -258,7 +229,7 @@ const RightBox = styled.div`
   width: 30%;
   gap: 30px;
   height: 100%;
-  background: #f3ead2;
+  background: none;
   border: 5px solid #000;
 
   @media screen and (max-width: 1024px) {
@@ -274,16 +245,19 @@ const RightBox = styled.div`
   }
   @media screen and (max-width: 786px) {
     justify-content: center;
-    gap: 20px;
   }
 
   @media screen and (max-width: 425px) {
     display: flex;
     position: absolute;
-    flex-direction: column;
-    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    border: none;
+    width: 90%;
     height: 30%;
-    bottom: 28%;
+    bottom: 31%;
+    left: 50%;
+    transform: translate(-50%);
   }
 `;
 const LeftBox = styled.div`
@@ -293,6 +267,7 @@ const LeftBox = styled.div`
   width: 65%;
   background: #f4eedd;
   justify-content: center;
+  flex-direction: column;
   height: 100%;
   border: 5px solid #000;
   overflow: hidden;
@@ -308,9 +283,9 @@ const LeftBox = styled.div`
   }
   @media screen and (max-width: 425px) {
     position: absolute;
-    top: 10%;
     width: 100%;
-    height: 30%;
+    height: 35%;
+    border: none;
   }
 `;
 
@@ -326,6 +301,7 @@ const Spacer = styled.div`
 `;
 
 const Main = () => {
+  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -342,14 +318,6 @@ const Main = () => {
 
     return () => clearInterval(intervalId);
   }, [isPlaying]);
-
-  const stopSlide = () => {
-    setIsPlaying(false);
-  };
-
-  const playSlide = () => {
-    setIsPlaying(true);
-  };
 
   return (
     <>
@@ -377,20 +345,6 @@ const Main = () => {
                     </SlideBox>
                   ))}
                 </SlideImg>
-                <SlideBtnWrapper>
-                  <Button
-                    active={!isPlaying}
-                    onClick={playSlide}
-                    activeImage={playImageActive}
-                    inactiveImage={playImageInactive}
-                  />
-                  <Button
-                    active={isPlaying}
-                    onClick={stopSlide}
-                    activeImage={pauseImageActive}
-                    inactiveImage={pauseImageInactive}
-                  />
-                </SlideBtnWrapper>
               </LeftBox>
 
               <RightBox>

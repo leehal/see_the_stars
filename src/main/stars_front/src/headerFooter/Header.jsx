@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Friend from "../pages/friend/Friend";
 import LogoImg from "../image/LogoBPr.png";
-import Common from "../utils/Common";
 
 const StyledHeader = styled.div`
   position: relative;
@@ -139,8 +138,10 @@ const MobileHeader = styled.div`
     right: 0;
     top: 0;
     margin: 12px 10px 0 0;
-
     z-index: 999;
+
+    @media (max-width: 425px) {
+    }
   }
 
   input[type="checkbox"] {
@@ -201,17 +202,8 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const openFriendModal = () => {
-    if (Common.getRefreshToken()) {
-      setModalFriend(true);
-      console.log("모달확인");
-      console.log(modalFriend);
-    } else {
-      navigate("/login");
-    }
-  };
-  const closeFriendModal = () => {
-    setModalFriend(false);
+  const toggleFriendModal = () => {
+    setModalFriend(!modalFriend);
   };
 
   const toggleMenu = () => {
@@ -255,9 +247,9 @@ const Header = () => {
         >
           여행지추천
         </Div>
-        <Div onClick={openFriendModal}>
+        <Div onClick={toggleFriendModal}>
           친구
-          {modalFriend && <Friend closeModal={closeFriendModal} />}
+          {modalFriend && <Friend closeModal={toggleFriendModal} />}
         </Div>
         <Div onClick={() => handleNavigate("/my")}>마이페이지</Div>
       </StyledHeader>
@@ -286,8 +278,8 @@ const Header = () => {
             <ul>
               <li onClick={() => handleNavigate("/party")}>내모임</li>
               <li onClick={() => onClickTrip("/goodtrip")}>여행지추천</li>
-              <li onClick={openFriendModal}>
-                친구{modalFriend && <Friend closeModal={closeFriendModal} />}
+              <li onClick={toggleFriendModal}>
+                친구{modalFriend && <Friend closeModal={toggleFriendModal} />}
               </li>
               <li onClick={() => handleNavigate("/my")}>마이페이지</li>
             </ul>

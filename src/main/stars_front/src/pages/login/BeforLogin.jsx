@@ -8,21 +8,33 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   @media screen and (max-width: 425px) {
+    background: red;
   }
 `;
 
+const KakaoL = styled.div`
+  display: flex;
+  width: 100%;
+  height: 35%;
+
+  @media screen and (max-width: 425px) {
+    height: 50%;
+  }
+`;
 const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   border: none;
-
-  height: 40%;
+  height: 35%;
   background: #ff52ae;
   color: #fff;
   cursor: pointer;
   transition: all 0.2s ease-in;
+  @media screen and (max-width: 425px) {
+    height: 50%;
+  }
 
   &:hover {
     background: #bf00ff;
@@ -33,12 +45,11 @@ const Button = styled.button`
     justify-content: center;
     align-items: center;
     width: 80%;
-    height: 30%;
+    height: 50%;
     gap: 10px;
     padding-top: 10px;
     font-size: 30px;
     font-weight: bold;
-
     @media screen and (max-width: 1024px) {
       font-size: 25px;
     }
@@ -53,22 +64,18 @@ const Line = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 40%;
-
+  height: 30%;
   @media screen and (max-width: 425px) {
-    width: 100%;
-    height: 65%;
+    display: none;
   }
 `;
 
 const SignupBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 30%;
-  height: 20%;
+  height: 35%;
+  display: flex;
   font-size: 20px;
-  padding-top: 5px;
+  justify-content: center;
   cursor: pointer;
   &:hover {
     color: #bf00ff;
@@ -96,34 +103,34 @@ const BeforLogin = () => {
             <span>- - -</span>로그인<span>- - -</span>
           </div>
         </Button>
-        <div>
+        <KakaoL>
           <KakaoLogin />
-          <Line>
-            <SignupBox
-              onClick={() => {
-                navigate("login/find/id");
-              }}
-            >
-              아이디 찾기
-            </SignupBox>
-            <span>ㅣ</span>
-            <SignupBox
-              onClick={() => {
-                navigate("login/find/pw");
-              }}
-            >
-              비밀번호 찾기
-            </SignupBox>
-            <span>ㅣ</span>
-            <SignupBox
-              onClick={() => {
-                navigate("login/signup");
-              }}
-            >
-              회원가입
-            </SignupBox>
-          </Line>
-        </div>
+        </KakaoL>
+        <Line>
+          <SignupBox
+            onClick={() => {
+              navigate("login/find/id");
+            }}
+          >
+            아이디 찾기
+          </SignupBox>
+          <span>ㅣ</span>
+          <SignupBox
+            onClick={() => {
+              navigate("login/find/pw");
+            }}
+          >
+            비밀번호 찾기
+          </SignupBox>
+          <span>ㅣ</span>
+          <SignupBox
+            onClick={() => {
+              navigate("login/signup");
+            }}
+          >
+            회원가입
+          </SignupBox>
+        </Line>
       </Container>
     </>
   );
