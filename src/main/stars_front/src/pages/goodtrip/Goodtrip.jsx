@@ -276,9 +276,7 @@ const Goodtrip = () => {
     try {
       const res = await MyAxiosApi.dibs(tno);
       if (res.data) {
-        location.pathname.includes("/review")
-          ? setLend(!lend)
-          : setRefresh(!refresh);
+       setLend(!lend)
       } else {
         console.log("실패");
       }
@@ -291,9 +289,7 @@ const Goodtrip = () => {
     try {
       const res = await MyAxiosApi.undibs(tno);
       if (res.data) {
-        location.pathname.includes("/review")
-          ? setLend(!lend)
-          : setRefresh(!refresh);
+        setLend(!lend)
       } else {
         console.log("실패");
       }
@@ -313,11 +309,10 @@ const Goodtrip = () => {
     const travel = {
       totalPages,
       travels,
-      dibs,
       city,
     };
     navigate("", { state: travel });
-  }, [travels, dibs, city, category, currentPage, refresh]);
+  }, [travels, city, category, currentPage, refresh]);
 
   const travel = async () => {
     try {
@@ -356,7 +351,7 @@ const Goodtrip = () => {
       }
     };
     Common.getRefreshToken() && dibsList();
-  }, [refresh, lend]);
+  }, [lend]);
 
   useEffect(() => {
     const select = async () => {
@@ -373,6 +368,12 @@ const Goodtrip = () => {
     };
     tno && select();
   }, [reviewClicked]);
+
+    useEffect(() => {
+       return () => {
+          setCurrentPage(1);
+        };
+    }, []);
 
   return (
     <>
