@@ -23,12 +23,23 @@ const StyledHeader = styled.div`
   @media screen and (max-width: 768px) {
     height: 8vh;
     color: rgba(0, 0, 0, 0);
-    & > * {
+    /* & > * {
       visibility: hidden;
-    }
+    } */
   }
   @media screen and (max-width: 375px) {
     min-width: 375px;
+  }
+`;
+const LogoM = styled.div`
+  position: absolute;
+  width: 50%;
+  height: 20%;
+  top: 5%;
+
+  img {
+    width: 100%;
+    height: auto;
   }
 `;
 
@@ -50,9 +61,13 @@ const Logo = styled.div`
     display: block;
     position: absolute;
     top: 3%;
-    left: 10%;
-    width: 50%;
-    height: 17%;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    height: 90%;
+  }
+  @media (max-width: 425px) {
+    display: none;
   }
 `;
 
@@ -69,6 +84,9 @@ const Div = styled.div`
     color: #000;
     font-weight: bold;
   }
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const HamberGerContainer = styled.div`
@@ -80,6 +98,7 @@ const HamberGerContainer = styled.div`
   background: #c33740;
   transition: right 300ms;
   overflow: hidden;
+  border-radius: 0 0 0 20px;
   z-index: 1200;
 `;
 const TureBack = styled.div`
@@ -201,9 +220,23 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleFriendModal = () => {
-    setModalFriend(!modalFriend);
+    if (isMobile) {
+      navigate("/mfriend"); // 모바일 화면에서는 MFriend 페이지로 이동
+    } else {
+      setModalFriend(!modalFriend); // 데스크탑 화면에서는 모달 토글
+    }
   };
 
   const toggleMenu = () => {
@@ -268,19 +301,13 @@ const Header = () => {
         {isOpen && <TureBack />}
         <HamberGerContainer isOpen={isOpen}>
           <HamberGerMenu>
-            <Logo>
-              <img
-                src={LogoImg}
-                alt="logo"
-                onClick={() => handleNavigate("/")}
-              />
-            </Logo>
+            <LogoM>
+              <img src={LogoImg} alt="logo" onClick={() => navigate("/")} />
+            </LogoM>
             <ul>
               <li onClick={() => handleNavigate("/party")}>내모임</li>
               <li onClick={() => onClickTrip("/goodtrip")}>여행지추천</li>
-              <li onClick={toggleFriendModal}>
-                친구{modalFriend && <Friend closeModal={toggleFriendModal} />}
-              </li>
+              <li onClick={() => handleNavigate("/mfriend")}>친구</li>
               <li onClick={() => handleNavigate("/my")}>마이페이지</li>
             </ul>
           </HamberGerMenu>

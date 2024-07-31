@@ -1,22 +1,12 @@
-import { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import React, { useState, useRef, useEffect } from "react";
+import styled from "styled-components";
 import { Outlet, useNavigate } from "react-router-dom";
 import Back from "../../image/loginImg2.jpg";
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
 
 const Container = styled.div`
   display: flex;
   width: 100%;
   height: 100vh;
-  /* overflow: hidden; */
   @media screen and (max-width: 786px) {
     display: flex;
     justify-content: center;
@@ -26,6 +16,7 @@ const Container = styled.div`
     background: #da2b70;
   }
 `;
+
 const FristBack = styled.div`
   position: relative;
   background-image: url(${Back});
@@ -42,6 +33,7 @@ const FristBack = styled.div`
     align-items: center;
   }
 `;
+
 const Color = styled.div`
   width: 22%;
   background-color: #da2b70;
@@ -65,9 +57,8 @@ const Box = styled.div`
   right: 15%;
   top: 50%;
   transform: translateY(-50%);
-
   border: 3px solid black;
-  box-shadow: 4px 8px 0 #000, 8px 8px 0 #000; /* 그림자 효과 추가 */
+  box-shadow: 4px 8px 0 #000, 8px 8px 0 #000;
 
   @media screen and (max-width: 1920px) {
     right: 10%;
@@ -87,30 +78,83 @@ const Box = styled.div`
 `;
 
 const Logo = styled.div`
-  position: absolute;
   cursor: pointer;
-  top: 100px;
+  position: absolute;
+  top: 120px;
   font-size: 3rem;
   font-weight: bold;
-`;
-const AnimatedContainer = styled.div`
-  animation: ${fadeIn} 0.5s ease-in-out;
+
+  @media screen and (max-width: 425px) {
+    transform: ${(props) => (props.isHidden ? "scale(0)" : "scale(1)")};
+    transition: transform 0.3s;
+  }
 `;
 
 const LoginPage = () => {
+  const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
+  const boxRef = useRef(null);
+
+  // Handle focus and blur events
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
+
+  useEffect(() => {
+    const boxElement = boxRef.current;
+
+    // Function to add event listeners to all inputs
+    const addFocusListeners = () => {
+      if (boxElement) {
+        const inputs = boxElement.querySelectorAll("input, textarea, select");
+        inputs.forEach((input) => {
+          input.addEventListener("focus", handleFocus);
+          input.addEventListener("blur", handleBlur);
+        });
+      }
+    };
+
+    // Function to remove event listeners from all inputs
+    const removeFocusListeners = () => {
+      if (boxElement) {
+        const inputs = boxElement.querySelectorAll("input, textarea, select");
+        inputs.forEach((input) => {
+          input.removeEventListener("focus", handleFocus);
+          input.removeEventListener("blur", handleBlur);
+        });
+      }
+    };
+
+    // Use MutationObserver to detect changes in the box element
+    const observer = new MutationObserver(() => {
+      removeFocusListeners(); // Clean up old listeners
+      addFocusListeners(); // Add new listeners
+    });
+
+    if (boxElement) {
+      observer.observe(boxElement, { childList: true, subtree: true });
+      addFocusListeners(); // Initial setup
+    }
+
+    // Cleanup function
+    return () => {
+      removeFocusListeners();
+      if (boxElement) {
+        observer.disconnect();
+      }
+    };
+  }, []);
 
   return (
-    <>
-      <Container>
-        <FristBack />
-        <Box>
-          <Logo onClick={() => navigate("/")}>별보러 갈래?</Logo>
-          <Outlet />
-        </Box>
-        <Color />
-      </Container>
-    </>
+    <Container>
+      <FristBack />
+      <Box ref={boxRef}>
+        <Logo onClick={() => navigate("/")} isHidden={isFocused}>
+          별보러 갈래?
+        </Logo>
+        <Outlet />
+      </Box>
+      <Color />
+    </Container>
   );
 };
 

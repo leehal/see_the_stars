@@ -83,7 +83,7 @@ const Firstp = styled.div`
 const MainPage = styled.div`
   display: flex;
   width: 100%;
-
+  justify-content: space-between;
   height: 60%;
   margin-bottom: 2%;
 
@@ -132,7 +132,7 @@ const Login = styled.div`
   }
   @media screen and (max-width: 425px) {
     width: 50%;
-    height: 80%;
+    height: 150px;
     order: 2;
     border: none;
     box-shadow: 3px 3px 6px -4px gray;
@@ -188,7 +188,7 @@ const Weather = styled.div`
   }
   @media screen and (max-width: 425px) {
     width: 45%;
-    height: 80%;
+    height: 150px;
     border-radius: 20px;
     border: none;
     box-shadow: 3px 3px 6px -4px gray;
@@ -255,7 +255,7 @@ const RightBox = styled.div`
     border: none;
     width: 90%;
     height: 30%;
-    bottom: 31%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%);
   }

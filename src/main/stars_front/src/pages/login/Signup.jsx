@@ -5,7 +5,6 @@ import AuthAxiosApi from "../../api/AuthAxiosApi";
 import { GoPerson, GoLock, GoMail, GoEye, GoEyeClosed } from "react-icons/go";
 import { UserContext } from "../../context/UserStore";
 import { useNavigate } from "react-router-dom";
-import emailjs from "@emailjs/browser";
 
 const Container = styled.div`
   position: relative;
@@ -86,7 +85,10 @@ const InputBox = styled.div`
     font-size: 24px;
   }
 `;
-
+const Binbox = styled.div`
+  width: 21.94px;
+  height: 100%;
+`;
 const Error = styled.div`
   color: #ff3f3f;
   font-size: 24px;
@@ -96,6 +98,7 @@ const Error = styled.div`
 
 const Signup = () => {
   const navigate = useNavigate();
+  const context = useContext(UserContext);
 
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
@@ -232,33 +235,31 @@ const Signup = () => {
 
   const onClickCert = async () => {
     if (isId && isPw && isNick && isEmail) {
-      const certification = Math.floor(Math.random() * 900000) + 100000;
-      setCheckCert(certification);
-      const templateParams = {
-        email: inputEmail,
-        certification: certification,
-      };
-      try {
-        await emailjs.send(
-          "service_kr7pxmb",
-          "template_lrutw4m",
-          templateParams,
-          "WQbPpTPtl4ML1Reqd"
-        );
-        setIsClickCert(true);
-        setCheckEmail(inputEmail);
-      } catch (e) {
-        console.log(e);
-      }
+      // try {
+      //   const rsp = await LoginAxiosApi.certEmail(inputEmail);
+      //   console.log(`인증번호:` + rsp.data);
+      //   if (rsp.data) {
+      //     setCheckCert(rsp.data);
+      setIsClickCert(true);
+      setCheckEmail(inputEmail);
+      //   } else {
+      //     setCheckCert("");
+      //   }
+      // } catch (e) {
+      //   console.log(e);
+      // }
     }
   };
 
   const login = async () => {
     try {
       const res = await AuthAxiosApi.login(inputId, inputPw);
+      console.log(res.data);
       if (res.data.grantType === "Bearer") {
         Common.setAccessToken(res.data.accessToken);
+        Common.setExpiresIn(res.data.accessTokenExpiresIn);
         Common.setRefreshToken(res.data.refreshToken);
+        Common.setRefreshExpiresIn(res.data.refreshTokenExpiresIn);
         navigate("/");
       } else {
         console.log("오류");
@@ -269,17 +270,19 @@ const Signup = () => {
   };
 
   const onBlurCert = () => {
-    if (inputCert == checkCert) {
-      setIsCert(true);
-      setCertMessage("");
-    } else {
-      setCertMessage("인증번호를 정확하게 다시 입력해 주세요.");
-      setIsCert(false);
-    }
+    // console.log(inputCert, checkCert);
+    // if (inputCert == checkCert) {
+    //   setIsCert(true);
+    //   setCertMessage("");
+    // } else {
+    //   setCertMessage("인증번호를 정확하게 다시 입력해 주세요.");
+    //   setIsCert(false);
+    // }
   };
 
   const onClickJoin = async () => {
-    if (isId && isPw && isNick && isEmail&&isCert) {
+    console.log(isId, isPw, isNick, isEmail, isCert);
+    if (isId && isPw && isNick && isEmail) {
       try {
         const rsp = await AuthAxiosApi.signup(
           inputEmail,
@@ -316,6 +319,7 @@ const Signup = () => {
                 )
               }
             />
+            <Binbox />
           </InputBox>
           <InputBox>
             <GoLock style={{ color: `gray` }} />
@@ -362,6 +366,7 @@ const Signup = () => {
                 )
               }
             />
+            <Binbox />
           </InputBox>
           <InputBox>
             <GoMail style={{ color: `gray` }} />
@@ -376,8 +381,8 @@ const Signup = () => {
                   isClickCert ? onClickJoin : onClickCert
                 )
               }
-              disabled={isClickCert}
             />
+            <Binbox />
           </InputBox>
           <Error>{idMessage}</Error>
           <Error>{pwMessage}</Error>
