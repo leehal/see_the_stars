@@ -12,6 +12,9 @@ import { createGlobalStyle } from "styled-components";
 import Goodtrip from "./pages/goodtrip/Goodtrip";
 import FindPage from "./pages/login/FindPage";
 import Navi from "./pages/goodtrip/navi";
+import ChatList from "./pages/chat/ChatList";
+import ChatRoomCreate from "./pages/chat/ChatRoomCreate";
+import Chatting from "./pages/chat/Chatting";
 import Reviews from "./pages/goodtrip/Review";
 import MyPage from "./pages/my/MyPage";
 import DaumPostPopup from "./component/DaumApi";
@@ -114,6 +117,9 @@ function App() {
                 <Route path="review/:tno" element={<Reviews />} />
               </Route>
               <Route path="navi" element={<Navi />} />
+              <Route path="/Chat" element={<ChatList />} />
+              <Route path="/Chat-create" element={<ChatRoomCreate />} />
+              <Route path="/Chatting/:roomId" element={<Chatting />} />
               <Route path="review" element={<Reviews />} />
               <Route path="daum" element={<DaumPostPopup />} />
               <Route path="image" element={<ImageTest />} />
