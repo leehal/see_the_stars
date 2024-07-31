@@ -260,7 +260,7 @@ const TitleBar = styled.div`
   background: linear-gradient(to right, #000080, #0000a0);
   color: white;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 2px;
   box-shadow: inset -1px -1px 0 #000, inset 1px 1px 0 #808080;
@@ -272,13 +272,14 @@ const Title = styled.span`
 
 const Controls = styled.div`
   display: flex;
+  gap: 5px;
 `;
 
 const ControlButton = styled.button`
   background-color: #c0c0c0;
   border: 1px solid #808080;
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 20px;
   gap: 2px;
   cursor: pointer;
   display: flex;
@@ -287,6 +288,14 @@ const ControlButton = styled.button`
   font-size: 12px;
   line-height: 12px;
   box-shadow: inset -1px -1px 0 #000, inset 1px 1px 0 #fff;
+
+  &:active {
+    border-top-color: #333;
+    border-left-color: #333;
+    border-right-color: #ccc;
+    border-bottom-color: #ccc;
+    background: linear-gradient(to bottom, #dcdcdc, #f0f0f0);
+  }
 `;
 
 const Content1 = styled.div`
@@ -302,22 +311,44 @@ const Content1 = styled.div`
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: #808080 #c0c0c0;
+`;
+const WindowBar = styled.div`
+  position: absolute;
+  width: 300px;
+  font-size: 30px;
+  color: #1b2046;
+  text-align: center;
+  height: 40px;
+  bottom: 0;
+  background: linear-gradient(to bottom, #f0f0f0, #dcdcdc);
+  border: 2px solid #fff;
+  border-top-color: #ccc;
+  border-left-color: #ccc;
+  border-right-color: #333;
+  border-bottom-color: #333;
+  padding-top: 8px;
+  box-shadow: 1px 1px 0 0 #000;
+  display: none;
 
-  &::-webkit-scrollbar {
-    width: 25px;
-    height: 25px;
+  @media screen and (max-width: 768px) {
+    width: 200px;
+  }
+  @media screen and (max-width: 425px) {
+    width: 150px;
+    height: 40px;
+    font-size: 25px;
   }
 
-  &::-webkit-scrollbar-track {
-    background: #c0c0c0;
-    border: 1px solid #fff;
-    box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #fff;
+  ${Item}:nth-child(2) & {
+    display: block;
   }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: #808080;
-    border: 1px solid #fff;
-    box-shadow: inset -1px -1px 0 #000, inset 1px 1px 0 #000;
+  &:active {
+    border-top-color: #333;
+    border-left-color: #333;
+    border-right-color: #ccc;
+    border-bottom-color: #ccc;
+    background: linear-gradient(to bottom, #dcdcdc, #f0f0f0);
   }
 `;
 
@@ -327,6 +358,7 @@ const Festival = () => {
   // const [isActive, setIsActive] = useState(false);
   const [showNextInactive, setShowNextInactive] = useState(false);
   const [showPrevInactive, setShowPrevInactive] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
 
   const handleNext = () => {
     const nextItemIndex = (currentItem + 1) % itemsRefs.current.length;
@@ -349,6 +381,14 @@ const Festival = () => {
     setTimeout(() => setShowPrevInactive(false), 200);
   };
 
+  const handleMinimize = () => {
+    setIsMinimized(true);
+  };
+
+  const handleRestore = () => {
+    setIsMinimized(false);
+  };
+
   return (
     <Container>
       <Slide>
@@ -356,30 +396,28 @@ const Festival = () => {
           style={{ backgroundImage: `url(${Fastival1})` }}
           ref={(el) => (itemsRefs.current[0] = el)}
         >
-          <Window>
-            <TitleBar>
-              <Title></Title>
-              <Controls>
-                <ControlButton>
-                  <FaWindowMinimize />
-                </ControlButton>
-                <ControlButton>
-                  <BiWindow />
-                </ControlButton>
-                <ControlButton>
-                  <RiCloseLine />
-                </ControlButton>
-              </Controls>
-            </TitleBar>
-            <Content1>
-              <Name>에버랜드</Name>
-              <BinBox />
-              <Description>
-                함께 행복에너지를 만드는
-                <br /> 현실속의 에버토피아
-              </Description>
-            </Content1>
-          </Window>
+          {isMinimized ? (
+            <WindowBar onClick={handleRestore}>에버랜드</WindowBar>
+          ) : (
+            <Window>
+              <TitleBar>
+                <Title></Title>
+                <Controls>
+                  <ControlButton onClick={handleMinimize}>
+                    <FaWindowMinimize />
+                  </ControlButton>
+                </Controls>
+              </TitleBar>
+              <Content1>
+                <Name>에버랜드</Name>
+                <BinBox />
+                <Description>
+                  함께 행복에너지를 만드는
+                  <br /> 현실속의 에버토피아
+                </Description>
+              </Content1>
+            </Window>
+          )}
         </Item>
         <Item
           style={{
@@ -387,149 +425,139 @@ const Festival = () => {
           }}
           ref={(el) => (itemsRefs.current[1] = el)}
         >
-          <Window>
-            <TitleBar>
-              <Title></Title>
-              <Controls>
-                <ControlButton>
-                  <FaWindowMinimize />
-                </ControlButton>
-                <ControlButton>
-                  <BiWindow />
-                </ControlButton>
-                <ControlButton>
-                  <RiCloseLine />
-                </ControlButton>
-              </Controls>
-            </TitleBar>
-            <Content1>
-              <Name>광명동굴</Name>
-              <BinBox />
-              <Description>
-                폐광의 기적을 만들다 창조의 메카,
-                <br /> 광명동굴
-              </Description>
-            </Content1>
-          </Window>
+          {isMinimized ? (
+            <WindowBar onClick={handleRestore}>광명동굴</WindowBar>
+          ) : (
+            <Window>
+              <TitleBar>
+                <Title></Title>
+                <Controls>
+                  <ControlButton onClick={handleMinimize}>
+                    <FaWindowMinimize />
+                  </ControlButton>
+                </Controls>
+              </TitleBar>
+              <Content1>
+                <Name>광명동굴</Name>
+                <BinBox />
+                <Description>
+                  폐광의 기적을 만들다 창조의 메카,
+                  <br /> 광명동굴
+                </Description>
+              </Content1>
+            </Window>
+          )}
         </Item>
         {/* Add more items similarly */}
         <Item
           style={{ backgroundImage: `url(${Fastival3})` }}
           ref={(el) => (itemsRefs.current[2] = el)}
         >
-          <Window>
-            <TitleBar>
-              <Title></Title>
-              <Controls>
-                <ControlButton>
-                  <FaWindowMinimize />
-                </ControlButton>
-                <ControlButton>
-                  <BiWindow />
-                </ControlButton>
-                <ControlButton>
-                  <RiCloseLine />
-                </ControlButton>
-              </Controls>
-            </TitleBar>
-            <Content1>
-              <Name>공주중동성당</Name>
-              <BinBox />
-              <Description>
-                서양 중세기의 고딕건축양식으로 지어진
-                <br />
-                공주지역 최초의 천주교 성당
-              </Description>
-            </Content1>
-          </Window>
+          {isMinimized ? (
+            <WindowBar onClick={handleRestore}>공주중동성당</WindowBar>
+          ) : (
+            <Window>
+              <TitleBar>
+                <Title></Title>
+                <Controls>
+                  <ControlButton onClick={handleMinimize}>
+                    <FaWindowMinimize />
+                  </ControlButton>
+                </Controls>
+              </TitleBar>
+              <Content1>
+                <Name>공주중동성당</Name>
+                <BinBox />
+                <Description>
+                  서양 중세기의 고딕건축양식으로 지어진
+                  <br />
+                  공주지역 최초의 천주교 성당
+                </Description>
+              </Content1>
+            </Window>
+          )}
         </Item>
         <Item
           style={{ backgroundImage: `url(${Fastival4})` }}
           ref={(el) => (itemsRefs.current[3] = el)}
         >
-          <Window>
-            <TitleBar>
-              <Title></Title>
-              <Controls>
-                <ControlButton>
-                  <FaWindowMinimize />
-                </ControlButton>
-                <ControlButton>
-                  <BiWindow />
-                </ControlButton>
-                <ControlButton>
-                  <RiCloseLine />
-                </ControlButton>
-              </Controls>
-            </TitleBar>
-            <Content1>
-              <Name>한국민속촌</Name>
-              <BinBox />
-              <Description>
-                선조들의 지혜와 슬기를 체험할 수 있는
-                <br /> 국내 유일의 전통문화 테마파크!
-              </Description>
-            </Content1>
-          </Window>
+          {isMinimized ? (
+            <WindowBar onClick={handleRestore}>한국민속촌</WindowBar>
+          ) : (
+            <Window>
+              <TitleBar>
+                <Title></Title>
+                <Controls>
+                  <ControlButton onClick={handleMinimize}>
+                    <FaWindowMinimize />
+                  </ControlButton>
+                </Controls>
+              </TitleBar>
+              <Content1>
+                <Name>한국민속촌</Name>
+                <BinBox />
+                <Description>
+                  선조들의 지혜와 슬기를 체험할 수 있는
+                  <br /> 국내 유일의 전통문화 테마파크!
+                </Description>
+              </Content1>
+            </Window>
+          )}
         </Item>
         <Item
           style={{ backgroundImage: `url(${Fastival5})` }}
           ref={(el) => (itemsRefs.current[4] = el)}
         >
-          <Window>
-            <TitleBar>
-              <Title></Title>
-              <Controls>
-                <ControlButton>
-                  <FaWindowMinimize />
-                </ControlButton>
-                <ControlButton>
-                  <BiWindow />
-                </ControlButton>
-                <ControlButton>
-                  <RiCloseLine />
-                </ControlButton>
-              </Controls>
-            </TitleBar>
-            <Content1>
-              <Name>지중해 마을</Name>
-              <BinBox />
-              <Description>
-                이국적인 유럽풍 건물이 모여 <br />
-                지중해의 작은 시골 마을을 <br />
-                연상시키는 마을
-              </Description>
-            </Content1>
-          </Window>
+          {isMinimized ? (
+            <WindowBar onClick={handleRestore}>지중해 마을</WindowBar>
+          ) : (
+            <Window>
+              <TitleBar>
+                <Title></Title>
+                <Controls>
+                  <ControlButton onClick={handleMinimize}>
+                    <FaWindowMinimize />
+                  </ControlButton>
+                </Controls>
+              </TitleBar>
+              <Content1>
+                <Name>지중해 마을</Name>
+                <BinBox />
+                <Description>
+                  이국적인 유럽풍 건물이 모여 <br />
+                  지중해의 작은 시골 마을을 <br />
+                  연상시키는 마을
+                </Description>
+              </Content1>
+            </Window>
+          )}
         </Item>
         <Item
           style={{ backgroundImage: `url(${Fastival6})` }}
           ref={(el) => (itemsRefs.current[5] = el)}
         >
-          <Window>
-            <TitleBar>
-              <Title></Title>
-              <Controls>
-                <ControlButton>
-                  <FaWindowMinimize />
-                </ControlButton>
-                <ControlButton>
-                  <BiWindow />
-                </ControlButton>
-                <ControlButton>
-                  <RiCloseLine />
-                </ControlButton>
-              </Controls>
-            </TitleBar>
-            <Content1>
-              <Name>행주산성</Name>
-              <BinBox />
-              <Description>
-                권율 장군의 행주대첩으로 <br /> 널리 알려진 곳으로
-                <br /> 흙을 이용하여 쌓은 토축산성
-              </Description>
-            </Content1>
-          </Window>
+          {isMinimized ? (
+            <WindowBar onClick={handleRestore}>행주산성</WindowBar>
+          ) : (
+            <Window>
+              <TitleBar>
+                <Title></Title>
+                <Controls>
+                  <ControlButton onClick={handleMinimize}>
+                    <FaWindowMinimize />
+                  </ControlButton>
+                </Controls>
+              </TitleBar>
+              <Content1>
+                <Name>행주산성</Name>
+                <BinBox />
+                <Description>
+                  권율 장군의 행주대첩으로 <br /> 널리 알려진 곳으로
+                  <br /> 흙을 이용하여 쌓은 토축산성
+                </Description>
+              </Content1>
+            </Window>
+          )}
         </Item>
       </Slide>
       <Indicator>
