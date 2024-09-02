@@ -57,6 +57,6 @@
     <p>
       아이디와 비밀번호가 없을 시 로그인 페이지 하단의 회원가입을 누르면 회원가입 페이지로 이동하여 회원가입을 진행할 수 있습니다.
     </p>
-    <img width="583" alt="image" src="https://github.com/user-attachments/assets/3cb87d9f-adea-45ab-84a8-6d087628b062">
+    <img width="728" alt="image" src="https://github.com/user-attachments/assets/b4bc5f44-385f-4c73-92d1-663de70275cb">
     </p>
   </div>
