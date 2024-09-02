@@ -43,3 +43,20 @@
     <p>구글 URL창에 https://seethestars.store/ 검색후 접속 </p>
 	  <img width="338" alt="image" src="https://github.com/user-attachments/assets/7530c88c-0745-444b-b0f2-3037c74ab6f9">
   </div>
+  
+  <div>
+   <h2><span>💡</span>기능 소개</h2>
+	  <p>
+      <h3>1. 로그인 페이지</h3>
+      <h5>1. 로그인</h5>
+      <p>
+      첫 화면 페이지입니다. 아이디와 비밀번호를 입력받고 아이디와 비밀번호가 일치할 경우 세션에 해당 아이디를 저장하는 방식을 통해 구현 했습니다.
+      </p>
+      <img width="583" alt="image" src="https://github.com/user-attachments/assets/f96db63b-ee1c-46f1-96e4-78d91bbb6770">
+    <h5>2. 회원가입</h5>
+    <p>
+      아이디와 비밀번호가 없을 시 로그인 페이지 하단의 회원가입을 누르면 회원가입 페이지로 이동하여 회원가입을 진행할 수 있습니다.
+    </p>
+    <img width="583" alt="image" src="https://github.com/user-attachments/assets/3cb87d9f-adea-45ab-84a8-6d087628b062">
+    </p>
+  </div>
