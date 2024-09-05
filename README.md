@@ -50,8 +50,9 @@
   
   <div>
    <h2><span>💡</span>기능 소개</h2>
-	  
+	  <p>
       <h3>1. 로그인 페이지</h3>
+		  </p>
     <img width="594" alt="image" src="https://github.com/user-attachments/assets/df6954f7-2206-448e-a990-9899d5e92412">
       <h5>1. 사용 기술</h5>
       <p>
