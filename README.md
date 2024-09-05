@@ -52,9 +52,7 @@
    <h2><span>💡</span>기능 소개</h2>
 	  
       <h3>1. 로그인 페이지</h3>
-	<div>	  
-    <img width="594" alt="image" src=https://github.com/user-attachments/assets/df6954f7-2206-448e-a990-9899d5e92412">
-</div>
+    <img width="594" alt="image" src="https://github.com/user-attachments/assets/df6954f7-2206-448e-a990-9899d5e92412">
       <h5>1. 사용 기술</h5>
       <p>
       로그인은 JWT를 사용했으며, JWT는 토근 기반 인증 방식으로 쿠키는 클라이언트 측에 저장되므로, XSS(Cross-Site Scripting) 공격에 취약하기에 서버에 정보를 저장하는 세션과 토큰 인증 방식을 사용하기로 결정하였으나 세션은 서버의 메모리를 사용하기 때문에 많은 사용자가 접속할 경우 서버의 부담이 커질 수 있기에 토큰 인증 방식인 JWT를 사용하게 되었습니다.
