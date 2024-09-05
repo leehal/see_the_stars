@@ -58,7 +58,6 @@
       <p>
       로그인은 JWT를 사용했으며, JWT는 토근 기반 인증 방식으로 쿠키는 클라이언트 측에 저장되므로, XSS(Cross-Site Scripting) 공격에 취약하기에 서버에 정보를 저장하는 세션과 토큰 인증 방식을 사용하기로 결정하였으나 세션은 서버의 메모리를 사용하기 때문에 많은 사용자가 접속할 경우 서버의 부담이 커질 수 있기에 토큰 인증 방식인 JWT를 사용하게 되었습니다.
       </p>
-
       <img width="594" alt="image" src="https://github.com/user-attachments/assets/6ce7eeec-0845-4a8a-9aa4-eec8c1e34d26">
     <h5>2. 화면설명</h5>
     <p>
