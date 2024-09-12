@@ -86,12 +86,12 @@
       <h3>1. 여행 추천 페이지</h3>
 		  </p>
 	  <img width="667" alt="image" src="https://github.com/user-attachments/assets/eabbd0a2-c963-4aa7-8fbe-daa7e6c5669a">
-	  <img width="673" alt="image" src="https://github.com/user-attachments/assets/76135c13-3863-4514-b891-7615ee4669f6">
       <h5>1. 사용 기술</h5>
       <p>
-      정보를 가져오는 방법으로 
+      플라스크란 파이썬으로 작성된 마이크로 웹 프레임워크의 하나로 해당 프로젝트에선 공공 Api와 카카오 지도 Api정보를 끌어온 후 저장 작업을 하기 위한 Rest Api의 역할을 위해 사용하였습니다. 플라스크는 장고에 비하여 설정을 직접하여 제약 사항이 적고 백엔드를 스프링부트를 사용해 구축해 장고와 같은 풀스택 프레임워크보단 플라스크를 선택했습니다.
       </p>
 	  <img width="650" alt="image" src="https://github.com/user-attachments/assets/b6c507f4-e749-46a7-933f-c662e3fa1624">
+	  <img width="673" alt="image" src="https://github.com/user-attachments/assets/76135c13-3863-4514-b891-7615ee4669f6">
     <h5>2. 화면설명</h5>
     <p>
       사용방법에 나온 링크로 검색하였을 시 보여지는 첫 페이지이며 다른 페이지로 이동하기 위한 헤더와 로그인을 하기 위한 내정보 칸, 그리고 저희가 추천하는 여행지 리스트가 보여집니다.
