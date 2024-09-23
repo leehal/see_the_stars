@@ -140,3 +140,20 @@
 	    마이 페이지는 내 프로필, 찜 목록, 내가 쓴 후기로 총 3개의 카테고리로 나눠져 있으며, 내 프로필에서는 파이어베이스를 사용한 프로필 사진 변경과 비밀번호, 닉네임, 이메일 등 내 정보를 수정할 수 있고 찜목록에선 내가 찜한 여행지의 목록이 모여지게 됩니다. 내가 쓴 후기 카테고리에선 내가 쓴 후기가 보여지며 수정 및 삭제가 가능합니다.
 </p>
   </div>
+  <table>
+  <tr>
+    <td><img src="https://avatars.githubusercontent.com/u/129915370?v=4" width="150" height="150"/></td>
+    <td><img src="https://avatars.githubusercontent.com/u/161571595?v=4" width="150" height="150"/></td>
+    <td><img src="https://avatars.githubusercontent.com/u/161570923?v=4" width="150" height="150"/></td>
+    <td><img src="https://avatars.githubusercontent.com/u/161570998?v=4" width="150" height="150"/></td>
+    <td><img src="https://avatars.githubusercontent.com/u/163942942?v=4" width="150" height="150"/></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/leehal">@leehal</a></td>
+    <td>Hyewon<br/><a href="https://github.com/lhw9097">@lhw9097</a></td>
+    <td>ungyeolyang<br/><a href="https://github.com/ungyeolyang">@ungyeolyang</a></td>
+    <td><a href="https://github.com/tjdyddnr1">@tjdyddnr1</a></td>
+    <td><a href="https://github.com/hojunahn">@hojunahn</a></td>
+  </tr>
+</table>
+
