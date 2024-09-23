@@ -109,4 +109,34 @@
     <p>
       친구 관리 페이지는 모달로 이루어져 있으며, 아이디나 닉네임을 검색해 친구 신청을 걸거나 내게 온 친구 신청을 수락 또는 거절할 수 있는 페이지 입니다. 모달의 왼쪽에는 현재 친구인 사용자들의 닉네임이 보이게 되며 X버튼을 눌러 친구를 삭제하는 등 친구 관리가 가능합니다. 나의 친구 목록은 이후 내모임에서 모임을 생성하거나 기존 모임에 새로운 친구를 초대 할 때 사용하게 됩니다.
 </p>
+	   <p>
+      <h3>5. 내 모임 페이지</h3>
+		  </p>
+	  <img width="671" alt="image" src="https://github.com/user-attachments/assets/17321ff2-85c4-4188-a877-425ed9ba80ba">
+	<img width="557" alt="image" src="https://github.com/user-attachments/assets/29c390dc-5c26-4289-a8a7-91fbd87f21b2">
+      <h5>1. 사용 기술</h5>
+      <p>
+	      백엔드에서 데이터 베이스와 자바를 연결하는 방식으론 jpa를 선택했습니다. jpa는 crud 메소드를 기본 제공하여 더욱 쉽게 백엔드를 구축 할 수 있고 이번 프로젝트에선 없었지만 어려운 쿼리문에 경우 @Query라는 SQL과 유사한 JPQL (Java Persistence Query Language) 라는 객체지향 쿼리 언어를 통해 복잡한 쿼리 처리를 지원하기 때문에 My Batis가 아닌 Jpa를 선택했습니다.
+      </p>
+	  <img width="708" alt="image" src="https://github.com/user-attachments/assets/730f6c5d-7acb-40cb-8e97-75269e707958">
+   	<img width="674" alt="image" src="https://github.com/user-attachments/assets/fe8b1939-12d6-4b35-a012-29e997c15aac">
+    <h5>2. 화면설명</h5>
+    <p>
+	    내 모임 페이지는 나의 친구, 가족, 연인 등 다양한 사람과 모임을 만들고 모임 사람들과 여행의 계획을 만들어 나가는 페이지입니다. 왼쪽에는 내가 속한 모임의 리스트와 내가 새로운 모임을 만들 수 있는 + 버튼이 있습니다. 중간은 달력 또는 지도로 변하는 컴포넌트와 코스나 채팅이 보이고 각 역할에 따라 그에 맞는 모달이 나오는 컴포넌트로 이루어져 있습니다. 코스 컴포넌트 위에 모임에 참여한 사람들의 프로필 사진이 보이며 + 버튼을 눌러 내 친구 중 해당 모임에 속하지 않은 사람을 초대 할 수 있습니다.
+</p>
+	  	   <p>
+      <h3>6. 마이 페이지</h3>
+		  </p>
+	  <img width="671" alt="image" src="https://github.com/user-attachments/assets/7be0dfe7-ca1f-4506-a1f1-dfbb28950385">
+      <h5>1. 사용 기술</h5>
+      <p>
+	      런타임은 특정 언어로 만든 프로그램들을 실행할 수 있는 환경으로 자바스크립트는 자바스크립트는 HTML에 종속되어있는 언어이기 때문에 브라우저 위에서만 실행이 가능했으나 이를 가능하게 해주는 Node.js를 설치해 Java Script를 브라우저 밖에서 실행 할 수 있게 하였습니다.
+       </p>
+	  <img width="630" alt="image" src="https://github.com/user-attachments/assets/aba2487e-2698-4519-a2ab-a3813dd3428c">
+	  <img width="575" alt="image" src="https://github.com/user-attachments/assets/a8c52ea5-c534-4f26-8db5-bbabf012a9df">
+	  <img width="581" alt="image" src="https://github.com/user-attachments/assets/b96b51ec-7c16-42c5-8f0e-8f1f856e61f6">
+    <h5>2. 화면설명</h5>
+    <p>
+	    마이 페이지는 내 프로필, 찜 목록, 내가 쓴 후기로 총 3개의 카테고리로 나눠져 있으며, 내 프로필에서는 파이어베이스를 사용한 프로필 사진 변경과 비밀번호, 닉네임, 이메일 등 내 정보를 수정할 수 있고 찜목록에선 내가 찜한 여행지의 목록이 모여지게 됩니다. 내가 쓴 후기 카테고리에선 내가 쓴 후기가 보여지며 수정 및 삭제가 가능합니다.
+</p>
   </div>
