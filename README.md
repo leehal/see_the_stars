@@ -40,12 +40,24 @@
 
   <div>
    <h2><span>🚩</span>사용 방법</h2>
+	  <p>
+      <h3>1. 웹 페이지로 이용하기</h3>
+		  </p>
     <p>구글 URL창에 https://seethestars.store/ 검색후 접속 해주세요 </p>
 	  <img width="338" alt="image" src="https://github.com/user-attachments/assets/7530c88c-0745-444b-b0f2-3037c74ab6f9">
 	  <p>그러면'별 보러 갈래?'의 사용 준비가 완료 되었습니다!  </p>
 	  <p>함께 즐거운 여행을 계획, 공유 해봐요! </p>
 	  <img width="449" alt="image" src="https://github.com/user-attachments/assets/3ae369f0-d051-4167-bdb2-68f2ebab326c">
+<p>
+      <h3>2. 구글 스토어로 사용하기</h3>
+		  </p>
+    <p>구글 스토어에 별 보러 갈래 검색! </p>
+	  <img width="525" alt="image" src="https://github.com/user-attachments/assets/55a58b2c-5fd9-4077-98dc-d778b0753d9e">
+	  <p>poannapo 계정의 별 보러 갈래 어플을 클릭해주세요  </p>
+	  <img width="575" alt="image" src="https://github.com/user-attachments/assets/f3fc1467-3bfa-49b6-a535-5825fdcbca3c">
 
+	  <p>설치후 다양한 사람들과 함께 여행을 즐기고 솔직한 여행지 리뷰를 구경해 더욱 멋진 여행을 만들어 보세요!</p>
+   <img width="886" alt="image" src="https://github.com/user-attachments/assets/66f9c564-c98e-46d0-aab4-63d8fc38c1f2">
   </div>
   
   <div>
