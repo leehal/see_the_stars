@@ -55,7 +55,6 @@
 	  <img width="525" alt="image" src="https://github.com/user-attachments/assets/55a58b2c-5fd9-4077-98dc-d778b0753d9e">
 	  <p>poannapo 계정의 별 보러 갈래 어플을 클릭해주세요  </p>
 	  <img width="575" alt="image" src="https://github.com/user-attachments/assets/f3fc1467-3bfa-49b6-a535-5825fdcbca3c">
-
 	  <p>설치후 다양한 사람들과 함께 여행을 즐기고 솔직한 여행지 리뷰를 구경해 더욱 멋진 여행을 만들어 보세요!</p>
    <img width="886" alt="image" src="https://github.com/user-attachments/assets/66f9c564-c98e-46d0-aab4-63d8fc38c1f2">
   </div>
